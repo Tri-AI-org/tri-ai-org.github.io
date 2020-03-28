@@ -8,55 +8,60 @@
   </head>
   <body>
     <div id="app" class="min-h-screen">
-        <main class="bg-white">
+        <main class="bg-white h-full">
           <div class="flex flex-wrap h-screen">
-            <div class="w-full lg:w-1/2 p-8">
-              <div class="icon flex items-center">
-               <img src="logo.svg" alt="logo">
-               <p class="ml-2 text-indigo-500 text-xl">Tri-AI</p>
+            <div class="w-full lg:w-1/2">
+              <div class="container mx-auto p-8">
+                <div class="icon flex items-center">
+                 <img src="logo.svg" alt="logo">
+                 <p class="ml-2 text-indigo-500 text-xl">Tri-AI</p>
+                </div>
+                <h1 class="text-3xl text-gray-800 mt-4"> Training, Research and Innovation in Artificial Intelligence </h1>
+                <h2 class="text-base mt-4 text-gray-800"> Tri-ai organisation is an NGO committed to revolutionising the training, research and innovation in artificial intelligence in Africa. We have set out plans and agenda to achieve this.</h2>
+                <p class="text-xl mt-4 text-indigo-700">Stay tuned or reach out to us via the contact form</p>
+                <img class="w-full mt-12" src="hero-building.svg">
               </div>
-              <h1 class="text-3xl text-gray-800 mt-4"> Training, Research and Innovation in Artificial Intelligence </h1>
-              <h2 class="text-base mt-4 text-gray-800"> Tri-ai organisation is an NGO committed to revolutionising the training, research and innovation in artificial intelligence in Africa. We have set out plans and agenda to achieve this.</h2>
-              <p class="text-xl mt-4 text-indigo-700">Stay tuned or reach out to us via the contact form</p>
-              <img class="w-full mt-12" src="hero-building.svg">
             </div>
-            <div class="w-full lg:w-1/2  px-4 sm:px-12 bg-blue p-8">
-              <div class="w-full py-4 px-8 h-28 rounded shadow-lg mb-6 bg-yellow-600">
-                <p class="text-xl text-center text-white mb-2">Important information</p>
-                <p class="text-gray-100 text-base font-light">AISaturdays Lagos is one of the subsidiaries of Tri-ai. If you wish to start a version of AI saturdays in a city near you, please fill the form below:</p>
+            <div class="w-full lg:w-1/2  px-4 sm:px-12 bg-blue py-8">
+              <div class="container mx-auto">
+                <div class="w-full py-4 px-8 h-28 rounded shadow-lg mb-6 bg-yellow-600">
+                  <p class="text-xl text-center text-white mb-2">Important information</p>
+                  <p class="text-gray-100 text-base font-light">AISaturdays Lagos is one of the subsidiaries of Tri-ai. If you wish to start a version of AI saturdays in a city near you, please fill the form below:</p>
+                </div>
+                <form class="rounded px-4 sm:px-8 pt-6 pb-8 mb-4 text-left" name="submit-to-google-sheet">
+                    <div class="mb-4">
+                      <label class="block text-gray-300 text-sm font-bold mb-2" for="username">
+                        What's your name?
+                      </label>
+                      <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="name" type="text" placeholder="Your name">
+                    </div>
+                    <div class="mb-4">
+                      <label class="block text-gray-300 text-sm font-bold mb-2" for="username">
+                        Your location?
+                      </label>
+                      <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="location" type="text" placeholder="Your location">
+                    </div>
+                    <div class="mb-6">
+                      <label class="block text-gray-300 text-sm font-bold mb-2" for="password">
+                        Email, so we get back to you
+                      </label>
+                      <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name="email" type="email" placeholder="Your email address">
+                    </div>
+                    <div class="mb-6">
+                      <label class="block text-gray-300 text-sm font-bold mb-2" for="password">
+                        Do you have any message for us?
+                      </label>
+                      <textarea class="appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name="message"  placeholder="Your message">
+                      </textarea>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <button class="bg-yellow-600 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                        Send message
+                      </button>
+                    </div>
+                </form>
               </div>
-              <form class="rounded px-4 sm:px-8 pt-6 pb-8 mb-4 text-left" name="submit-to-google-sheet">
-                  <div class="mb-4">
-                    <label class="block text-gray-300 text-sm font-bold mb-2" for="username">
-                      What's your name?
-                    </label>
-                    <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="name" type="text" placeholder="Your name">
-                  </div>
-                  <div class="mb-4">
-                    <label class="block text-gray-300 text-sm font-bold mb-2" for="username">
-                      Your location?
-                    </label>
-                    <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="location" type="text" placeholder="Your location">
-                  </div>
-                  <div class="mb-6">
-                    <label class="block text-gray-300 text-sm font-bold mb-2" for="password">
-                      Email, so we get back to you
-                    </label>
-                    <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name="email" type="email" placeholder="Your email address">
-                  </div>
-                  <div class="mb-6">
-                    <label class="block text-gray-300 text-sm font-bold mb-2" for="password">
-                      Do you have any message for us?
-                    </label>
-                    <textarea class="appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name="message"  placeholder="Your message">
-                    </textarea>
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <button class="bg-yellow-600 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                      Send message
-                    </button>
-                  </div>
-              </form>
+
             </div>
           </div>
 

@@ -1,9 +1,7 @@
-/* body {
-  background-image: linear-gradient(to right, rgb(0, 210, 255,0.7), rgb(146, 141, 171));
-} */
+
 body {
-  /* background-image: linear-gradient(to right, rgb(32, 0, 44), rgb(203, 180, 212)); */
-  background-image: linear-gradient(to right, rgb(78, 84, 200), rgb(143, 148, 251));
+  /* background-image: linear-gradient(to right, rgb(78, 84, 200), rgb(143, 148, 251)); */
+  background-color: white;
 }
 .bg-linear {
   background: linear-gradient(to right, rgb(96,33,150), rgb(146, 141, 171));
