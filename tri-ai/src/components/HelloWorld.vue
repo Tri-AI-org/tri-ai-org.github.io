@@ -21,6 +21,7 @@
         <form
           class="px-4 sm:px-8 pt-6 pb-8 text-left"
           name="submit-to-google-sheet"
+          ref="contactForm"
           @submit.prevent="saveToGoogleSheet"
         >
           <div class="mb-4">
@@ -98,13 +99,28 @@ export default {
     };
   },
   methods: {
-    // saveToGoogleSheet() {
-    //   const scriptURL = 'https://script.google.com/macros/s/AKfycbw1HvvDv2a1zxtWcCuCMhjqBEyK1P2ovK60yeHB3z4n7_fnBiw/exec'
-    //   const form = this.messenger
-    //   fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-    //                       .then(response => console.log('Success!', response))
-    //                       .catch(error => console.error('Error!', error.message))
-    // }
+    async saveToGoogleSheet() {
+      const scriptURL =
+        "https://script.google.com/macros/s/AKfycbw1HvvDv2a1zxtWcCuCMhjqBEyK1P2ovK60yeHB3z4n7_fnBiw/exec";
+      const form = this.$refs.contactForm;
+      // reset form fields: could move this to a method and not repeat the initial object again.
+      this.messenger = {
+        name: "",
+        location: "",
+        email: "",
+        message: ""
+      };
+      try {
+        const response = await fetch(scriptURL, {
+          method: "POST",
+          body: new FormData(form)
+        });
+        const data = await response.json();
+        console.log("Success!", data);
+      } catch (error) {
+        console.error("Error!", error.message);
+      }
+    }
   }
 };
 </script>
