@@ -1,8 +1,8 @@
 <template>
   <div id="app" class="container mx-auto px-4">
     <div class="icon flex items-center">
-     <img src="@/assets/logo.svg" alt="logo">
-     <p class="ml-2 text-yellow-600 text-xl">Tri-AI</p>
+      <img src="@/assets/logo.svg" alt="logo" />
+      <p class="ml-2 text-yellow-600 text-xl">Tri-AI</p>
     </div>
 
     <HelloWorld />
@@ -18,7 +18,6 @@ export default {
     HelloWorld
   }
 };
-
 </script>
 
 <style>
