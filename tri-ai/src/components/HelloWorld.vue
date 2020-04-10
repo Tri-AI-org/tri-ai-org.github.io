@@ -1,8 +1,5 @@
 <template>
   <div class="container mx-auto">
-    <transition name="fade">
-      <Feedback v-if="saveToGoogleSheet" />
-    </transition>
     <div class="flex flex-wrap">
       <div
         class="w-full mb-8 lg:mb-0 lg:w-1/2 xl:w-2/3 xl:pr-56 text-left container mx-auto"
@@ -23,7 +20,8 @@
         </p>
       </div>
       <div class="bg-gray-900 w-full lg:w-1/2 xl:w-1/3 py-2 container mx-auto">
-        <p class="text-gray-500 px-2">
+        <p class="text-white" v-if="submitData === true">Message sent!</p>
+        <p class="text-gray-400 px-2" v-else>
           AISaturdays Africa is one of the subsidiaries of Tri-ai. If you wish
           to start a version of AI saturdays in an African city near you, please
           fill the form below:
@@ -44,7 +42,7 @@
               class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               v-model="messenger.name"
               type="text"
-              placeholder="Your name"
+              placeholder="Your name" required
             />
           </div>
           <div class="mb-4">
@@ -57,7 +55,7 @@
               class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               v-model="messenger.location"
               type="text"
-              placeholder="Your location"
+              placeholder="Your location" required
             />
           </div>
           <div class="mb-6">
@@ -70,7 +68,7 @@
               class="appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
               v-model="messenger.email"
               type="email"
-              placeholder="Your email address"
+              placeholder="Your email address" required
             />
           </div>
           <div class="mb-6">
@@ -100,12 +98,9 @@
 </template>
 
 <script>
-import Feedback from "./Feedback.vue";
+
 export default {
   name: "HelloWorld",
-  components: {
-    Feedback
-  },
 
   data: function() {
     return {
@@ -114,7 +109,8 @@ export default {
         location: "",
         email: "",
         message: ""
-      }
+      },
+      submitData: false
     };
   },
   methods: {
@@ -130,6 +126,7 @@ export default {
         });
         const data = await response.json();
         // reset form fields: could move this to a method and not repeat the initial object again.
+        this.submitData = true;
         this.messenger = {
           name: "",
           location: "",
