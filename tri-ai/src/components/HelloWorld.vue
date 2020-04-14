@@ -117,12 +117,10 @@ export default {
     async saveToGoogleSheet() {
       const scriptURL =
         "https://script.google.com/macros/s/AKfycbw1HvvDv2a1zxtWcCuCMhjqBEyK1P2ovK60yeHB3z4n7_fnBiw/exec";
-      const form = this.$refs.contactForm;
-
       try {
         const response = await fetch(scriptURL, {
           method: "POST",
-          body: new FormData(form)
+          body: {...this.messenger}
         });
         const data = await response.json();
         // reset form fields: could move this to a method and not repeat the initial object again.
