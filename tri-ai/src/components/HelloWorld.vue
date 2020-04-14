@@ -114,13 +114,19 @@ export default {
     };
   },
   methods: {
+    gatherFormData() {
+      const data = new FormData()
+      Object.keys(this.messenger)
+            .forEach(key => data.append(key, this.messenger[key]))
+      return data;
+    },
     async saveToGoogleSheet() {
       const scriptURL =
         "https://script.google.com/macros/s/AKfycbw1HvvDv2a1zxtWcCuCMhjqBEyK1P2ovK60yeHB3z4n7_fnBiw/exec";
       try {
         const response = await fetch(scriptURL, {
           method: "POST",
-          body: {...this.messenger}
+          body: this.gatherFormData()
         });
         const data = await response.json();
         // reset form fields: could move this to a method and not repeat the initial object again.
