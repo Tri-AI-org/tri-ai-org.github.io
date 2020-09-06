@@ -22,7 +22,7 @@
       <div class="bg-gray-900 w-full lg:w-1/2 xl:w-1/3 py-2 container mx-auto">
         <p class="text-white" v-if="submitData === true">Message sent!</p>
         <p class="text-gray-400 px-2" v-else>
-          <a href="https://aisaturdayslagos.github.io/" target="_blank">AISaturdays Lagos</a> is one of the subsidiaries of Tri-ai. If you wish
+          <a href="https://aisaturdayslagos.github.io/" target="_blank" class="text-yellow-600">AISaturdays Lagos</a> is one of the subsidiaries of Tri-ai. If you wish
           to start a version of AI saturdays in an African city near you, please
           fill the form below:
         </p>
