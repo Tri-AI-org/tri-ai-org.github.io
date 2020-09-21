@@ -42,7 +42,7 @@
               class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               v-model="messenger.name"
               type="text"
-              placeholder="Your name" required
+              placeholder="Your name" required disabled
             />
           </div>
           <div class="mb-4">
@@ -55,7 +55,7 @@
               class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               v-model="messenger.location"
               type="text"
-              placeholder="Your location" required
+              placeholder="Your location" required disabled
             />
           </div>
           <div class="mb-6">
@@ -68,7 +68,7 @@
               class="appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
               v-model="messenger.email"
               type="email"
-              placeholder="Your email address" required
+              placeholder="Your email address" required disabled
             />
           </div>
           <div class="mb-6">
@@ -80,17 +80,18 @@
             <textarea
               class="appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
               v-model="messenger.message"
-              placeholder="Your message"
+              placeholder="Your message" disabled
             ></textarea>
           </div>
           <div class="flex items-center justify-between">
             <button
-              class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-              type="submit"
+              class="bg-yellow-600 text-white font-bold cursor-not-allowed py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+              type="submit" disabled
             >
               Send message
             </button>
           </div>
+          <div>This form is currently not available. Have an inquiry? Send us an email at <a href="mailto:hello@tri-ai.org" class="text-yellow-600">hello@tri-ai.org</a></div>
         </form>
       </div>
     </div>
@@ -102,47 +103,47 @@
 export default {
   name: "HelloWorld",
 
-  // data: function() {
-  //   return {
-  //     messenger: {
-  //       name: "",
-  //       location: "",
-  //       email: "",
-  //       message: ""
-  //     },
-  //     submitData: false
-  //   };
-  // },
-  // methods: {
-  //   gatherFormData() {
-  //     const data = new FormData()
-  //     Object.keys(this.messenger)
-  //           .forEach(key => data.append(key, this.messenger[key]))
-  //     return data;
-  //   },
-  //   async saveToGoogleSheet() {
-  //     const scriptURL =
-  //       "https://script.google.com/macros/s/AKfycbw1HvvDv2a1zxtWcCuCMhjqBEyK1P2ovK60yeHB3z4n7_fnBiw/exec";
-  //     try {
-  //       const response = await fetch(scriptURL, {
-  //         method: "POST",
-  //         body: this.gatherFormData()
-  //       });
-  //       const data = await response.json();
-  //       // reset form fields: could move this to a method and not repeat the initial object again.
-  //       this.submitData = true;
-  //       this.messenger = {
-  //         name: "",
-  //         location: "",
-  //         email: "",
-  //         message: ""
-  //       };
-  //       console.log("Success!", data);
-  //     } catch (error) {
-  //       console.error("Error!", error.message);
-  //     }
-  //   }
-  // }
+  data: function() {
+    return {
+      messenger: {
+        name: "",
+        location: "",
+        email: "",
+        message: ""
+      },
+      submitData: false
+    };
+  },
+  methods: {
+    // gatherFormData() {
+    //   const data = new FormData()
+    //   Object.keys(this.messenger)
+    //         .forEach(key => data.append(key, this.messenger[key]))
+    //   return data;
+    // },
+    // async saveToGoogleSheet() {
+    //   const scriptURL =
+    //     "https://script.google.com/macros/s/AKfycbw1HvvDv2a1zxtWcCuCMhjqBEyK1P2ovK60yeHB3z4n7_fnBiw/exec";
+    //   try {
+    //     const response = await fetch(scriptURL, {
+    //       method: "POST",
+    //       body: this.gatherFormData()
+    //     });
+    //     const data = await response.json();
+    //     // reset form fields: could move this to a method and not repeat the initial object again.
+    //     this.submitData = true;
+    //     this.messenger = {
+    //       name: "",
+    //       location: "",
+    //       email: "",
+    //       message: ""
+    //     };
+    //     console.log("Success!", data);
+    //   } catch (error) {
+    //     console.error("Error!", error.message);
+    //   }
+    // }
+  }
 };
 </script>
 
@@ -159,7 +160,6 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-a {
-  color: ##718096;
-}
+
+/* btn hover style: hover:bg-yellow-700 */
 </style>
