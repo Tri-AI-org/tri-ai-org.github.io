@@ -26,6 +26,73 @@
           to start a version of AI saturdays in an African city near you, please
           fill the form below:
         </p>
+        <form
+          class="px-4 sm:px-8 pt-6 pb-8 text-left"
+          name="submit-to-google-sheet"
+          ref="contactForm"
+          @submit.prevent="saveToGoogleSheet"
+        >
+          <div class="mb-4">
+            <label
+              class="block text-gray-300 text-sm font-bold mb-2"
+              for="username"
+              >What's your name?</label
+            >
+            <input
+              class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              v-model="messenger.name"
+              type="text"
+              placeholder="Your name" required disabled
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              class="block text-gray-300 text-sm font-bold mb-2"
+              for="username"
+              >Your location?</label
+            >
+            <input
+              class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              v-model="messenger.location"
+              type="text"
+              placeholder="Your location" required disabled
+            />
+          </div>
+          <div class="mb-6">
+            <label
+              class="block text-gray-300 text-sm font-bold mb-2"
+              for="password"
+              >Email, so we get back to you</label
+            >
+            <input
+              class="appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              v-model="messenger.email"
+              type="email"
+              placeholder="Your email address" required disabled
+            />
+          </div>
+          <div class="mb-6">
+            <label
+              class="block text-gray-300 text-sm font-bold mb-2"
+              for="password"
+              >Do you have any message for us?</label
+            >
+            <textarea
+              class="appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              v-model="messenger.message"
+              placeholder="Your message" disabled
+            ></textarea>
+          </div>
+          <div class="flex items-center justify-between">
+            <button
+              class="bg-yellow-600 text-white font-bold cursor-not-allowed py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+              type="submit" disabled
+            >
+              Send message
+            </button>
+          </div>
+          <div>This form is currently not available. Have an inquiry? Send us an email at <a href="mailto:hello@tri-ai.org" class="text-yellow-600">hello@tri-ai.org</a></div>
+        </form>
       </div>
     </div>
   </div>
