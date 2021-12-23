@@ -104,7 +104,7 @@ body {
   border-radius: 4px;
 }
 .bg-primary {
-  background-color: #a57c00 !important;
+  background-color: #dba738 !important;
 }
 .bg-success {
   background-color: #40b0bf !important;
@@ -120,8 +120,8 @@ body {
 }
 .btn-primary,
 .btn-primary:active {
-  background-color: #a57c00 !important;
-  border-color: #a57c00 !important;
+  background-color: #dba738 !important;
+  border-color: #dba738 !important;
   color: #ffffff !important;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
 }
@@ -130,15 +130,15 @@ body {
 .btn-primary.focus,
 .btn-primary.active {
   color: #ffffff !important;
-  background-color: #725600 !important;
-  border-color: #725600 !important;
+  background-color: #be8c22 !important;
+  border-color: #be8c22 !important;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
 }
 .btn-primary.disabled,
 .btn-primary:disabled {
   color: #ffffff !important;
-  background-color: #725600 !important;
-  border-color: #725600 !important;
+  background-color: #be8c22 !important;
+  border-color: #be8c22 !important;
 }
 .btn-secondary,
 .btn-secondary:active {
@@ -354,13 +354,13 @@ body {
 .btn-primary-outline:active {
   background-color: transparent !important;
   border-color: transparent;
-  color: #a57c00;
+  color: #dba738;
 }
 .btn-primary-outline:hover,
 .btn-primary-outline:focus,
 .btn-primary-outline.focus,
 .btn-primary-outline.active {
-  color: #725600 !important;
+  color: #be8c22 !important;
   background-color: transparent!important;
   border-color: transparent!important;
   box-shadow: none!important;
@@ -368,8 +368,8 @@ body {
 .btn-primary-outline.disabled,
 .btn-primary-outline:disabled {
   color: #ffffff !important;
-  background-color: #a57c00 !important;
-  border-color: #a57c00 !important;
+  background-color: #dba738 !important;
+  border-color: #dba738 !important;
 }
 .btn-secondary-outline,
 .btn-secondary-outline:active {
@@ -505,7 +505,7 @@ body {
   border-color: transparent;
 }
 .text-primary {
-  color: #a57c00 !important;
+  color: #dba738 !important;
 }
 .text-secondary {
   color: #ff6666 !important;
@@ -531,7 +531,7 @@ body {
 a.text-primary:hover,
 a.text-primary:focus,
 a.text-primary.active {
-  color: #3f2f00 !important;
+  color: #926c1b !important;
 }
 a.text-secondary:hover,
 a.text-secondary:focus,
@@ -582,7 +582,7 @@ a[class*="text-"]:not(.nav-link):not(.dropdown-item):not([role]):hover {
   background-position: 0px 1.2em;
 }
 .nav-tabs .nav-link.active {
-  color: #a57c00;
+  color: #dba738;
 }
 .nav-tabs .nav-link:not(.active) {
   color: #232323;
@@ -600,8 +600,8 @@ a[class*="text-"]:not(.nav-link):not(.dropdown-item):not([role]):hover {
   background-color: #ff9966;
 }
 .mbr-gallery-filter li.active .btn {
-  background-color: #a57c00;
-  border-color: #a57c00;
+  background-color: #dba738;
+  border-color: #dba738;
   color: #ffffff;
 }
 .mbr-gallery-filter li.active .btn:focus {
@@ -609,11 +609,11 @@ a[class*="text-"]:not(.nav-link):not(.dropdown-item):not([role]):hover {
 }
 a,
 a:hover {
-  color: #a57c00;
+  color: #dba738;
 }
 .mbr-plan-header.bg-primary .mbr-plan-subtitle,
 .mbr-plan-header.bg-primary .mbr-plan-price-desc {
-  color: #ffc925;
+  color: #faf3e5;
 }
 .mbr-plan-header.bg-success .mbr-plan-subtitle,
 .mbr-plan-header.bg-success .mbr-plan-price-desc {
@@ -647,7 +647,7 @@ a:hover {
 .form-control:hover,
 .form-control:focus {
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px 0px, rgba(0, 0, 0, 0.07) 0px 1px 3px 0px, rgba(0, 0, 0, 0.03) 0px 0px 0px 1px;
-  border-color: #a57c00 !important;
+  border-color: #dba738 !important;
 }
 .form-control:-webkit-input-placeholder {
   font-family: 'Poppins', sans-serif;
@@ -659,19 +659,19 @@ a:hover {
   font-size: 1.375rem;
 }
 blockquote {
-  border-color: #a57c00;
+  border-color: #dba738;
 }
 /* Forms */
 .jq-selectbox li:hover,
 .jq-selectbox li.selected {
-  background-color: #a57c00;
+  background-color: #dba738;
   color: #ffffff;
 }
 .jq-number__spin {
   transition: 0.25s ease;
 }
 .jq-number__spin:hover {
-  border-color: #a57c00;
+  border-color: #dba738;
 }
 .jq-selectbox .jq-selectbox__trigger-arrow,
 .jq-number__spin.minus:after,
@@ -683,14 +683,14 @@ blockquote {
 .jq-selectbox:hover .jq-selectbox__trigger-arrow,
 .jq-number__spin.minus:hover:after,
 .jq-number__spin.plus:hover:after {
-  border-top-color: #a57c00;
-  border-bottom-color: #a57c00;
+  border-top-color: #dba738;
+  border-bottom-color: #dba738;
 }
 .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_default,
 .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_current,
 .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box > div > div.xdsoft_current {
-  color: #ffffff !important;
-  background-color: #a57c00 !important;
+  color: #000000 !important;
+  background-color: #dba738 !important;
   box-shadow: none !important;
 }
 .xdsoft_datetimepicker .xdsoft_calendar td:hover,
@@ -721,7 +721,7 @@ iframe.lazy-placeholder,
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='32' height='32' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg' stroke='%23a57c00' %3e%3cg fill='none' fill-rule='evenodd'%3e%3cg transform='translate(16 16)' stroke-width='2'%3e%3ccircle stroke-opacity='.5' cx='16' cy='16' r='16'/%3e%3cpath d='M32 16c0-9.94-8.06-16-16-16'%3e%3canimateTransform attributeName='transform' type='rotate' from='0 16 16' to='360 16 16' dur='1s' repeatCount='indefinite'/%3e%3c/path%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='32' height='32' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg' stroke='%23dba738' %3e%3cg fill='none' fill-rule='evenodd'%3e%3cg transform='translate(16 16)' stroke-width='2'%3e%3ccircle stroke-opacity='.5' cx='16' cy='16' r='16'/%3e%3cpath d='M32 16c0-9.94-8.06-16-16-16'%3e%3canimateTransform attributeName='transform' type='rotate' from='0 16 16' to='360 16 16' dur='1s' repeatCount='indefinite'/%3e%3c/path%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
 }
 section.lazy-placeholder:after {
   opacity: 0.5;
@@ -770,7 +770,7 @@ a {
 .cid-sSiJKcxJP7 .mbr-iconfont {
   display: block;
   font-size: 5rem;
-  color: #a57c00;
+  color: #dba738;
   margin-bottom: 2rem;
 }
 .cid-sSiJKcxJP7 .card-wrapper {
@@ -826,7 +826,7 @@ a {
 }
 .cid-s48OLK6784 .dropdown-item:hover,
 .cid-s48OLK6784 .dropdown-item:focus {
-  background: #a57c00 !important;
+  background: #dba738 !important;
   color: white !important;
 }
 .cid-s48OLK6784 .nav-dropdown .link {
