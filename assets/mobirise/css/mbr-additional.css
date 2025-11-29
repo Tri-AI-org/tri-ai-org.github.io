@@ -1203,3 +1203,8 @@ a {
 .cid-s48P1Icc8J .media-container-row .row-copirayt p {
   width: 100%;
 }
+
+#logos-section a:hover img {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
