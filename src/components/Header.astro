@@ -199,37 +199,48 @@ const nav = [
 </style>
 
 <script is:inline>
-  // Theme: read saved → fallback to OS
+  // Theme bootstrap: read saved → apply (OS pref handled by CSS @media when no data-theme set)
   (function () {
-    const saved = localStorage.getItem('triai-theme');
+    var saved = localStorage.getItem('triai-theme');
     if (saved === 'light' || saved === 'dark') {
       document.documentElement.setAttribute('data-theme', saved);
     }
   })();
 
-  document.addEventListener('astro:page-load', () => {
-    const toggle = document.querySelector('[data-theme-toggle]');
-    if (toggle && !toggle.dataset.bound) {
-      toggle.dataset.bound = 'true';
-      toggle.addEventListener('click', () => {
-        const cur = document.documentElement.getAttribute('data-theme');
-        const next = cur === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('triai-theme', next);
-      });
+  // Bind toggle + burger handlers as soon as the DOM is ready.
+  (function () {
+    function bind() {
+      var toggle = document.querySelector('[data-theme-toggle]');
+      if (toggle && !toggle.dataset.bound) {
+        toggle.dataset.bound = 'true';
+        toggle.addEventListener('click', function () {
+          // Resolve current effective theme: explicit attr wins, else OS pref
+          var cur = document.documentElement.getAttribute('data-theme');
+          if (!cur) {
+            cur = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          var next = cur === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          try { localStorage.setItem('triai-theme', next); } catch (e) {}
+        });
+      }
+
+      var burger = document.querySelector('[data-burger]');
+      var drawer = document.querySelector('[data-drawer]');
+      if (burger && drawer && !burger.dataset.bound) {
+        burger.dataset.bound = 'true';
+        burger.addEventListener('click', function () {
+          var open = burger.getAttribute('aria-expanded') === 'true';
+          burger.setAttribute('aria-expanded', String(!open));
+          drawer.hidden = open;
+        });
+      }
     }
 
-    const burger = document.querySelector('[data-burger]');
-    const drawer = document.querySelector('[data-drawer]');
-    if (burger && drawer && !burger.dataset.bound) {
-      burger.dataset.bound = 'true';
-      burger.addEventListener('click', () => {
-        const open = burger.getAttribute('aria-expanded') === 'true';
-        burger.setAttribute('aria-expanded', String(!open));
-        drawer.hidden = open;
-      });
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bind);
+    } else {
+      bind();
     }
-  });
-  // Run once on first load too (no astro:page-load on hard nav)
-  window.dispatchEvent(new Event('astro:page-load'));
+  })();
 </script>
