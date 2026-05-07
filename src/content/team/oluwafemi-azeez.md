@@ -1,10 +1,10 @@
 ---
-name: "Oluwafemi Azeez"
-role: "Board Member"
+name: Oluwafemi Azeez
+role: Co-founder
+affiliation: TRI AI
 photo: https://picsum.photos/seed/triai-team-oluwafemi-azeez/800/800
-affiliation: "TRI AI"
-division: "research"
-group: "board"
+division: research
+group: board
 order: 2
 ---
 
