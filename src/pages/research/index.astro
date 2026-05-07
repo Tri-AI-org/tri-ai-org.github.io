@@ -59,7 +59,7 @@ const fmt = (d: Date) =>
           <ul class="rp-list">
             {recentPubs.map(p => (
               <li>
-                <a href={`/publications/${p.id}`} class="rp-link">
+                <a href={`/research/publications/${p.id}`} class="rp-link">
                   <span class="rp-date mono">{fmt(p.data.date)}</span>
                   <span class="rp-title">{p.data.title}</span>
                   <span class="rp-arrow" aria-hidden="true">→</span>
@@ -68,7 +68,7 @@ const fmt = (d: Date) =>
             ))}
           </ul>
           <div style="margin-top: 32px">
-            <a href="/publications" class="btn btn-ghost btn-arrow">All publications</a>
+            <a href="/research/publications" class="btn btn-ghost btn-arrow">All publications</a>
           </div>
         </div>
       </section>

@@ -1,5 +1,5 @@
 ---
-import Base from '../../layouts/Base.astro';
+import Base from '../../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -29,7 +29,7 @@ const related = all
   <article class="pub">
     <!-- Breadcrumb -->
     <nav class="pub-bread container" aria-label="Breadcrumb">
-      <a href="/publications">Publications</a>
+      <a href="/research/publications">Research · Publications</a>
       <span aria-hidden="true">·</span>
       <span class={`tag tag-${d.division}`}>{d.division}</span>
     </nav>
@@ -110,7 +110,7 @@ const related = all
           <ul class="pub-related-list">
             {related.map(r => (
               <li>
-                <a href={`/publications/${r.id}`} class="pub-related-link">
+                <a href={`/research/publications/${r.id}`} class="pub-related-link">
                   <span class="pub-related-date mono">{fmt(r.data.date)}</span>
                   <span class="pub-related-title">{r.data.title}</span>
                   <span class="pub-related-arrow" aria-hidden="true">→</span>
