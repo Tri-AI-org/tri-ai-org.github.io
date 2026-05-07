@@ -11,7 +11,7 @@ const publications = defineCollection({
     division: z.enum(['research', 'teaching', 'innovation']).default('research'),
     project: z.string().optional(),
     abstract: z.string(),
-    pdfUrl: z.string().url().optional(),
+    pdfUrl: z.string().optional(),         // accepts /uploads/... or full URL
     externalUrl: z.string().url().optional(),
     datasetUrl: z.string().url().optional(),  // e.g. Zenodo
     codeUrl: z.string().url().optional(),     // e.g. GitHub
@@ -43,7 +43,7 @@ const programmes = defineCollection({
     cohortInfo: z.string().optional(),  // e.g. "Cohort 9 — applications open"
     cadence: z.string().optional(),     // e.g. "Quarterly", "Monthly", "Weekly"
     partner: z.string().optional(),     // e.g. "Google DeepMind" for courses
-    applyUrl: z.string().url().optional(),
+    applyUrl: z.string().optional(),       // url, mailto:, or internal /apply path
     githubUrl: z.string().url().optional(),
     websiteUrl: z.string().url().optional(),
     order: z.number().default(0),
@@ -64,7 +64,7 @@ const cohorts = defineCollection({
     learners: z.number().optional(),
     projectsUrl: z.string().url().optional(),
     blogUrl: z.string().url().optional(),
-    photoUrl: z.string().url().optional(),
+    photoUrl: z.string().optional(),       // internal /uploads/... or external Google Photos link
     summary: z.string(),
     status: z.enum(['completed', 'running', 'upcoming']).default('completed'),
   }),
@@ -80,7 +80,7 @@ const courses = defineCollection({
     summary: z.string(),
     duration: z.string().optional(),
     level: z.enum(['beginner', 'intermediate', 'advanced']).default('beginner'),
-    enrollUrl: z.string().url().optional(),
+    enrollUrl: z.string().optional(),
     order: z.number().default(0),
   }),
 });
