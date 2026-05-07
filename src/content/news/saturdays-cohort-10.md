@@ -3,7 +3,6 @@ title: "Cohort 10 — TRI AI Saturdays Lagos partners with Google DeepMind"
 date: 2026-04-25
 division: teaching
 excerpt: "The tenth cohort of TRI AI Saturdays Lagos is delivered in partnership with Google DeepMind, taking learners through DeepMind's AI Research Foundations Course 1–4 over sixteen weeks. Applications close May 17."
-cover: /uploads/cohorts/cohort-10-flyer.jpg
 ---
 
 The tenth cohort of TRI AI Saturdays Lagos is delivered in partnership with Google DeepMind. Over sixteen weeks beginning May 31, learners will work through DeepMind's AI Research Foundations Course 1–4, building and fine-tuning Small Language Models, exploring generative AI, and shipping capstone projects.

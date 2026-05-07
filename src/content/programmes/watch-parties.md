@@ -7,7 +7,7 @@ description: TRI AI Watch Parties bring the community together to watch and disc
 status: active
 location: Lagos and online
 cadence: Monthly during conference seasons
-cover: /uploads/placeholders/watch-parties.jpg
+cover: https://picsum.photos/seed/triai-watchparties/1600/1200
 order: 4
 ---
 

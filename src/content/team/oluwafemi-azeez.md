@@ -1,7 +1,7 @@
 ---
 name: "Oluwafemi Azeez"
 role: "Board Member"
-photo: /uploads/placeholders/team-portrait.jpg
+photo: https://picsum.photos/seed/triai-team-oluwafemi-azeez/800/800
 affiliation: "TRI AI"
 division: "research"
 group: "board"

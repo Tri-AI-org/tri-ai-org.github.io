@@ -12,7 +12,7 @@ partner: Google DeepMind (Cohort 10)
 applyUrl: https://tinyurl.com/triaicohort10
 githubUrl: https://github.com/AISaturdaysLagos
 websiteUrl: https://www.aisaturdayslagos.com/
-cover: /uploads/placeholders/saturdays.jpg
+cover: https://picsum.photos/seed/triai-saturdays/1600/1200
 order: 1
 ---
 

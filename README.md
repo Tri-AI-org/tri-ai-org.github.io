@@ -161,14 +161,20 @@ Light mode is the default. The toggle in the header switches to dark mode and pe
 
 ## Replacing placeholder images
 
-The site ships with brand-correct placeholder images at `public/uploads/placeholders/`. They're flat coloured fields with division-correct accent bars and a typed label — readable at a glance, but obviously placeholders. To replace them with real photography:
+The site currently uses two layers of placeholder imagery:
 
-- **Programme covers** (`saturdays.jpg`, `watch-parties.jpg`, `colloquium.jpg`, `sauti.jpg`, `chownet.jpg`) — drop a real 1200×800 JPG with the same filename and the programme cards will pick it up automatically. Or edit the programme through the CMS and point its `cover` field at a different file.
-- **Team headshots** — every team member currently points at `team-portrait.jpg`. Upload individual headshots (square, 800×800 ideally) and update each team member's `photo` field through the CMS. They'll show up in the About page team grid.
-- **News covers** (`news-default.jpg`) — same pattern. Each news item has a `cover` field; either replace the default file or point individual items at their own cover.
-- **Cohort 10 flyer** (`/uploads/cohorts/cohort-10-flyer.jpg`) — this is a real asset, not a placeholder. Subsequent cohort flyers should follow the same naming convention: `/uploads/cohorts/cohort-N-flyer.jpg`.
+- **Brand-correct flat tiles** at `public/uploads/placeholders/` — used on cards and as fallbacks. Editorial, identifiable as TRI AI, but obviously placeholders.
+- **Picsum-served live photos** for editorial sections, programme covers, team headshots, and news covers. These pull real photos from `picsum.photos` using deterministic seed names (e.g. `https://picsum.photos/seed/triai-saturdays/1600/1200`). The same seed always returns the same photo, so the design is stable.
 
-The placeholders are intentionally flat — no stock photography, no fake faces. When real images aren't ready, brand-correct flatness reads better than generic stock.
+To replace either with real photography:
+
+- **Programme covers:** edit the programme entry through the CMS at `/admin`. Change the `cover` field from the Picsum URL to either a relative path (e.g. `/uploads/programmes/saturdays-cohort-photo.jpg`, after uploading the file) or a different external URL.
+- **Team headshots:** same pattern — each team member's `photo` field. Replace the Picsum URL with the path to the uploaded headshot.
+- **News covers:** the `cover` field on each news article.
+- **About page editorial photos:** these live in `src/pages/about.astro` directly (not in the CMS). Edit the `imageSrc` props on the three `<EditorialSplit>` components.
+- **Homepage division panels:** edit the `featuredImage` props on the `<DivisionPanel>` calls in `src/pages/index.astro`.
+
+The flat brand placeholders at `public/uploads/placeholders/` are kept for any future cards that need a fallback when no `cover` is set.
 
 ---
 

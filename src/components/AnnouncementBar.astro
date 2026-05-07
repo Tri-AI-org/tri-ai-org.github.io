@@ -1,0 +1,226 @@
+---
+/**
+ * AnnouncementBar — a thin, dismissable strip below the header
+ * that surfaces a time-sensitive call to action.
+ *
+ * Driven by a programme that has both `applyUrl` and a deadline
+ * encoded in `cohortInfo` ("…close May 17, 2026"). When no programme
+ * fits, the bar renders nothing.
+ *
+ * Visual treatment: division-coloured left bar + mono eyebrow + plain
+ * editorial sentence + apply CTA. No image, no graphic. Brand-correct.
+ *
+ * Behaviour: dismissable per-visitor via localStorage; auto-hides
+ * after the deadline passes (client-side check).
+ */
+import { getCollection } from 'astro:content';
+
+interface Props {
+  programmeSlug?: string;  // optional override; otherwise picks first active+applyUrl
+}
+
+const { programmeSlug } = Astro.props;
+
+const programmes = await getCollection('programmes');
+
+let target = null;
+if (programmeSlug) {
+  target = programmes.find(p => p.id === programmeSlug);
+} else {
+  // Pick the first active programme that has an applyUrl set
+  target = programmes
+    .filter(p => p.data.status === 'active' && !!p.data.applyUrl)
+    .sort((a, b) => a.data.order - b.data.order)[0];
+}
+
+const showBar = target && !!target.data.applyUrl;
+const division = target?.data.division ?? 'teaching';
+---
+
+{showBar && target && (
+  <div
+    class={`anb anb-${division}`}
+    data-anb
+    data-anb-key={`anb-dismissed-${target.id}`}
+    role="region"
+    aria-label="Announcement"
+  >
+    <div class="container anb-inner">
+      <span class={`anb-stripe anb-stripe-${division}`} aria-hidden="true"></span>
+
+      <p class="anb-eyebrow mono">
+        <span class={`anb-dot anb-dot-${division}`} aria-hidden="true"></span>
+        Now open
+      </p>
+
+      <p class="anb-message">
+        <strong class="anb-strong">{target.data.title}</strong>
+        {target.data.cohortInfo && <span class="anb-detail"> · {target.data.cohortInfo}</span>}
+        {target.data.partner && <span class="anb-detail"> · with {target.data.partner}</span>}
+      </p>
+
+      <a href={target.data.applyUrl} class={`anb-cta anb-cta-${division}`}>
+        Apply <span aria-hidden="true">→</span>
+      </a>
+
+      <button
+        type="button"
+        class="anb-close"
+        aria-label="Dismiss announcement"
+        data-anb-close
+      >
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+          <path d="M3 3l8 8M11 3l-8 8" />
+        </svg>
+      </button>
+    </div>
+  </div>
+)}
+
+<script is:inline>
+  (function () {
+    var bar = document.querySelector('[data-anb]');
+    if (!bar) return;
+    var key = bar.getAttribute('data-anb-key');
+
+    // Hide if already dismissed
+    try {
+      if (key && localStorage.getItem(key) === '1') {
+        bar.style.display = 'none';
+        return;
+      }
+    } catch (e) {}
+
+    // Wire close button
+    var close = bar.querySelector('[data-anb-close]');
+    if (close) {
+      close.addEventListener('click', function () {
+        bar.style.display = 'none';
+        try { if (key) localStorage.setItem(key, '1'); } catch (e) {}
+      });
+    }
+  })();
+</script>
+
+<style>
+  .anb {
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-soft);
+    position: relative;
+  }
+  .anb-inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-block: 12px 13px;
+    position: relative;
+    flex-wrap: nowrap;
+  }
+  .anb-stripe {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+  }
+  .anb-stripe-teaching { background: var(--teaching); }
+  .anb-stripe-research { background: var(--research-text); }
+  .anb-stripe-innovation { background: var(--innovation); }
+
+  .anb-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+    flex-shrink: 0;
+    font-weight: 700;
+  }
+  .anb-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    animation: anb-pulse 1.8s ease-in-out infinite;
+  }
+  .anb-dot-teaching { background: var(--teaching); }
+  .anb-dot-research { background: var(--research-text); }
+  .anb-dot-innovation { background: var(--innovation); }
+  @keyframes anb-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.55; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .anb-dot { animation: none; }
+  }
+
+  .anb-message {
+    font-size: 13.5px;
+    line-height: 1.4;
+    color: var(--ink-mid);
+    flex: 1;
+    min-width: 0;
+    /* Truncate on narrow screens */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .anb-strong { color: var(--ink); font-weight: 600; }
+  .anb-detail { color: var(--ink-mid); }
+
+  .anb-cta {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid var(--ink);
+    border-radius: 4px;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .anb-cta:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  [data-theme='dark'] .anb-cta:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .anb-close {
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    padding: 6px;
+    color: var(--ink-faint);
+    cursor: pointer;
+    line-height: 0;
+    border-radius: 4px;
+    transition: color 0.2s, background 0.2s;
+  }
+  .anb-close:hover {
+    color: var(--ink);
+    background: var(--line);
+  }
+
+  @media (max-width: 720px) {
+    .anb-inner {
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .anb-message {
+      flex-basis: 100%;
+      order: 3;
+      white-space: normal;
+      font-size: 13px;
+    }
+    .anb-eyebrow { order: 1; }
+    .anb-cta { order: 2; margin-left: auto; font-size: 10px; padding: 5px 10px; }
+    .anb-close { order: 4; }
+  }
+</style>

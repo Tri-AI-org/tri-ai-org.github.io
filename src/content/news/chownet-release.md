@@ -3,7 +3,7 @@ title: "ChowNet: a new image dataset for African cuisine"
 date: 2025-11-12
 division: research
 excerpt: "TRI AI researchers have released ChowNet, an image dataset and benchmark for recognising African cuisine — a category that is consistently under-represented in mainstream food recognition systems."
-cover: /uploads/placeholders/news-default.jpg
+cover: https://picsum.photos/seed/triai-news-chownet/1600/900
 ---
 
 TRI AI researchers have released ChowNet, an image dataset and benchmark for recognising African cuisine.

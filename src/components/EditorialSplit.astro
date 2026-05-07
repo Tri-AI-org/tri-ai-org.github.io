@@ -1,0 +1,193 @@
+---
+/**
+ * EditorialSplit — a section with one image and one text block,
+ * alternating which side the image sits on. Use repeatedly down a
+ * page to create a DeepMind-style editorial rhythm.
+ *
+ * Pass `imageRight={true}` to flip. Default is image-left.
+ *
+ * The image scales subtly on hover. Both image and text reveal on scroll.
+ */
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  body: string;             // first paragraph
+  bodyExtra?: string;       // optional second paragraph
+  ctaLabel?: string;
+  ctaHref?: string;
+  ctaTarget?: string;       // for outbound links
+  imageSrc: string;
+  imageAlt?: string;
+  imageCaption?: string;
+  imageRight?: boolean;     // default: image left
+  accent?: 'gold' | 'teaching' | 'research' | 'innovation';
+}
+
+const {
+  eyebrow,
+  title,
+  body,
+  bodyExtra,
+  ctaLabel,
+  ctaHref,
+  ctaTarget,
+  imageSrc,
+  imageAlt = '',
+  imageCaption,
+  imageRight = false,
+  accent = 'gold',
+} = Astro.props;
+---
+
+<section class={`es ${imageRight ? 'es-right' : 'es-left'}`}>
+  <div class="container es-grid">
+    <div class="es-media" data-reveal>
+      <figure class="es-fig">
+        <img src={imageSrc} alt={imageAlt} class="es-img" loading="lazy" />
+        {imageCaption && (
+          <figcaption class="es-cap mono">{imageCaption}</figcaption>
+        )}
+      </figure>
+    </div>
+
+    <div class="es-text" data-reveal>
+      {eyebrow && (
+        <p class={`es-eyebrow mono es-eyebrow-${accent}`}>
+          <span class={`es-bar es-bar-${accent}`} aria-hidden="true"></span>
+          {eyebrow}
+        </p>
+      )}
+      <h2 class="es-title">{title}</h2>
+      <p class="es-body">{body}</p>
+      {bodyExtra && <p class="es-body">{bodyExtra}</p>}
+      {ctaLabel && ctaHref && (
+        <a
+          href={ctaHref}
+          class="es-cta"
+          target={ctaTarget}
+          rel={ctaTarget === '_blank' ? 'noopener' : undefined}
+        >
+          {ctaLabel} <span aria-hidden="true">→</span>
+        </a>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .es {
+    padding-block: clamp(64px, 8vw, 112px);
+    border-bottom: 1px solid var(--line);
+  }
+  .es:last-of-type { border-bottom: none; }
+
+  .es-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 80px);
+    align-items: center;
+  }
+  .es-right .es-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); }
+  .es-right .es-media { order: 2; }
+  .es-right .es-text { order: 1; }
+
+  /* Media */
+  .es-fig {
+    margin: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--bg-soft);
+  }
+  .es-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s var(--ease);
+  }
+  .es:hover .es-img { transform: scale(1.02); }
+  .es-cap {
+    padding: 12px 18px 14px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    border-top: 1px solid var(--line);
+    background: var(--bg-elev);
+  }
+
+  /* Text */
+  .es-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+  }
+  .es-bar {
+    display: inline-block;
+    width: 24px;
+    height: 2px;
+  }
+  .es-bar-gold { background: var(--gold); }
+  .es-bar-teaching { background: var(--teaching); }
+  .es-bar-research { background: var(--research-text); }
+  .es-bar-innovation { background: var(--innovation); }
+  .es-eyebrow-gold { color: var(--gold-deep); }
+  [data-theme='dark'] .es-eyebrow-gold { color: var(--gold); }
+  .es-eyebrow-teaching { color: var(--teaching); }
+  .es-eyebrow-research { color: var(--research-text); }
+  .es-eyebrow-innovation { color: var(--innovation); }
+
+  .es-title {
+    font-size: clamp(26px, 3.4vw, 40px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 22px;
+    max-width: 18ch;
+  }
+  .es-body {
+    font-size: clamp(15px, 1.3vw, 17px);
+    line-height: 1.7;
+    color: var(--ink-mid);
+    margin-bottom: 18px;
+    max-width: 52ch;
+  }
+  .es-body:last-of-type { margin-bottom: 28px; }
+
+  .es-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--ink);
+    transition: gap 0.2s var(--ease-quick), border-color 0.2s, color 0.2s;
+  }
+  .es-cta:hover {
+    gap: 14px;
+  }
+  .es-eyebrow-teaching ~ .es-cta:hover { color: var(--teaching); border-color: var(--teaching); }
+  /* Simpler: target by parent class */
+
+  @media (max-width: 880px) {
+    .es-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .es-right .es-media { order: 1; }
+    .es-right .es-text { order: 2; }
+    .es-title { max-width: none; }
+  }
+</style>

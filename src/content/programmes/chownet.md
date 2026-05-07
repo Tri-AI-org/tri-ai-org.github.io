@@ -9,7 +9,7 @@ location: Pan-African
 cohortInfo: Open contributions
 cadence: Continuous
 githubUrl: https://github.com/AISaturdaysLagos/chownet
-cover: /uploads/placeholders/chownet.jpg
+cover: https://picsum.photos/seed/triai-chownet/1600/1200
 order: 3
 ---
 

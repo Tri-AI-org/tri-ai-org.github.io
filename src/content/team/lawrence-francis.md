@@ -1,7 +1,7 @@
 ---
 name: "Lawrence Francis"
 role: "Research Lead, Sauti Project"
-photo: /uploads/placeholders/team-portrait.jpg
+photo: https://picsum.photos/seed/triai-team-lawrence-francis/800/800
 affiliation: "TRI AI"
 division: "research"
 group: "leadership"

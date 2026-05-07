@@ -1,7 +1,7 @@
 ---
 name: "Akintayo Jabar"
 role: "Board Member"
-photo: /uploads/placeholders/team-portrait.jpg
+photo: https://picsum.photos/seed/triai-team-akintayo-jabar/800/800
 affiliation: "TRI AI"
 division: "parent"
 group: "board"

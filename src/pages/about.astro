@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import Newsletter from '../components/Newsletter.astro';
+import EditorialSplit from '../components/EditorialSplit.astro';
 import { getCollection } from 'astro:content';
 
 const team = (await getCollection('team')).sort((a, b) => a.data.order - b.data.order);
@@ -35,34 +36,42 @@ const values = [
 
   <hr class="divider-rule" />
 
-  <!-- Story / Mission / Vision in editorial layout -->
-  <section class="section">
-    <div class="container about-grid" data-reveal-stagger>
-      <div class="about-cell">
-        <div class="accent-bar accent-gold"></div>
-        <h2>Our story</h2>
-        <p>
-          TRI AI was founded to address the growing need for accessible and locally relevant AI education in Africa. What began as a community initiative has evolved into a structured institution supporting learning, research, and innovation.
-        </p>
-        <p>
-          Through programmes like TRI AI Saturdays Lagos and initiatives like the Sauti Project, TRI AI continues to build a strong ecosystem where learners, researchers, and collaborators can grow and contribute meaningfully.
-        </p>
-      </div>
+  <!-- Editorial sections — alternating image-text -->
+  <EditorialSplit
+    eyebrow="Our story"
+    title="From a community study group to an institution."
+    body="TRI AI was founded to address the growing need for accessible and locally relevant AI education in Africa. What began as a community initiative — a Saturday study group in Lagos — has evolved into a structured institution supporting learning, research, and innovation across the continent."
+    bodyExtra="Through programmes like TRI AI Saturdays Lagos and initiatives like the Sauti Project, TRI AI continues to build an ecosystem where learners, researchers, and collaborators can grow and contribute meaningfully."
+    ctaLabel="Watch our story"
+    ctaHref="https://www.youtube.com/watch?v=8t_lpN6KJNM"
+    ctaTarget="_blank"
+    imageSrc="https://picsum.photos/seed/triai-story/1200/900"
+    imageAlt="TRI AI community gathering in Lagos"
+    imageCaption="AI Saturdays Lagos — community-led learning, since 2017"
+    accent="gold"
+  />
 
-      <div class="about-cell">
-        <div class="accent-bar accent-gold"></div>
-        <h2>Mission</h2>
-        <p class="ms-quote">
-          To democratise artificial intelligence by building African AI communities that enable learning, research, and the development of AI solutions for local and global impact.
-        </p>
+  <EditorialSplit
+    eyebrow="Mission"
+    title="Democratising AI by building African communities."
+    body="To democratise artificial intelligence by building African AI communities that enable learning, research, and the development of AI solutions for local and global impact."
+    bodyExtra="Every programme we run, every paper we publish, and every dataset we release is part of this mission — making the field accessible to people who would otherwise be locked out, and ensuring African contexts are represented in the technologies that shape the future."
+    imageSrc="https://picsum.photos/seed/triai-mission/1200/900"
+    imageAlt="Researchers collaborating on a project"
+    imageCaption="Open research, openly distributed"
+    imageRight={true}
+    accent="gold"
+  />
 
-        <h2 style="margin-top:48px">Vision</h2>
-        <p class="ms-quote">
-          To be at the forefront of artificial intelligence research and development in Africa and for Africa.
-        </p>
-      </div>
-    </div>
-  </section>
+  <EditorialSplit
+    eyebrow="Vision"
+    title="At the forefront of AI research in Africa, for Africa."
+    body="To be at the forefront of artificial intelligence research and development in Africa and for Africa — producing work that holds up against any global standard while remaining grounded in problems that matter on the continent."
+    imageSrc="https://picsum.photos/seed/triai-vision/1200/900"
+    imageAlt="Speaker presenting research at a conference"
+    imageCaption="Research presented at NeurIPS, the Deep Learning Indaba, and beyond"
+    accent="gold"
+  />
 
   <hr class="divider-rule" />
 
@@ -80,6 +89,31 @@ const values = [
             <p class="value-body">{v.body}</p>
           </div>
         ))}
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider-rule" />
+
+  <!-- Watch our story — YouTube embed -->
+  <section class="section video-sec">
+    <div class="container">
+      <div data-reveal>
+        <p class="mono video-eyebrow">A short film</p>
+        <h2 class="video-title">Building learning communities for AI in Nigeria.</h2>
+        <p class="video-lede">
+          A short documentary from 2021, made with Dr. Opeyemi Emoruwa, telling the story of how AI Saturdays Lagos came to be.
+        </p>
+      </div>
+      <div class="video-frame" data-reveal>
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/8t_lpN6KJNM"
+          title="Our Story — Building Learning Communities for AI in Nigeria"
+          frameborder="0"
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
       </div>
     </div>
   </section>
@@ -172,6 +206,49 @@ const values = [
     color: var(--ink);
   }
   .about-lede { color: var(--ink-mid); max-width: 60ch; }
+
+  /* Video section */
+  .video-sec { background: var(--bg-soft); }
+  .video-eyebrow {
+    color: var(--gold-deep);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  [data-theme='dark'] .video-eyebrow { color: var(--gold); }
+  .video-title {
+    font-size: clamp(26px, 3.4vw, 40px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 16px;
+    max-width: 22ch;
+  }
+  .video-lede {
+    font-size: clamp(15px, 1.3vw, 17px);
+    line-height: 1.6;
+    color: var(--ink-mid);
+    max-width: 56ch;
+    margin-bottom: 36px;
+  }
+  .video-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .video-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
 
   .about-grid {
     display: grid;

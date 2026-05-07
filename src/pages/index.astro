@@ -73,10 +73,10 @@ const stats = [
     statement="Cohort programmes, partner-delivered courses, watch parties, and an expert colloquium series — all free, all community-led."
     ctaLabel="Explore Teaching"
     ctaHref="/programmes"
-    featuredImage="/uploads/cohorts/cohort-10-flyer.jpg"
-    featuredImageAlt="Call for application — TRI AI Saturdays Cohort 10 with Google DeepMind"
-    featuredCaption="Now open · Cohort 10 with Google DeepMind"
-    featuredHref="https://tinyurl.com/triaicohort10"
+    featuredImage="https://picsum.photos/seed/triai-teaching/1200/900"
+    featuredImageAlt="Inside a TRI AI Saturdays cohort session"
+    featuredCaption="Inside the cohorts · Lagos"
+    featuredHref="/programmes"
   />
 
   <CohortMarquee />
@@ -88,6 +88,10 @@ const stats = [
     statement="Long-running research initiatives building open datasets, models, and benchmarks for problems mainstream AI has overlooked."
     ctaLabel="Explore Research"
     ctaHref="/research"
+    featuredImage="https://picsum.photos/seed/triai-research/1200/900"
+    featuredImageAlt="Researcher at work — Sauti and ChowNet"
+    featuredCaption="From Sauti to ChowNet · open research"
+    featuredHref="/research"
   />
 
   <DivisionPanel
@@ -179,7 +183,7 @@ const stats = [
   }
 
   .hero-h {
-    font-size: clamp(40px, 5.6vw, 64px);
+    font-size: var(--t-display);
     font-weight: 800;
     line-height: 1.02;
     letter-spacing: -0.03em;
@@ -226,7 +230,6 @@ const stats = [
       grid-template-columns: 1fr;
       gap: 0;
     }
-    .hero-h { font-size: clamp(36px, 9vw, 52px); }
     .hero-lede { max-width: 60ch; }
   }
 
