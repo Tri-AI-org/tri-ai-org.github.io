@@ -22,15 +22,27 @@ const values = [
 <Base title="About — TRI AI" description="An institution advancing artificial intelligence in Africa through teaching, research, and innovation.">
   <!-- Eyebrow hero -->
   <section class="about-hero">
-    <div class="container">
-      <p class="mono">About</p>
-      <h1 class="display about-h">
-        An institution advancing<br/>
-        AI in Africa.
-      </h1>
-      <p class="lede about-lede">
-        TRI AI is a non-governmental organisation registered as Artificial Intelligence Teaching Research and Innovation for Africa Ltd/Gte. Through three divisions, the organisation advances AI education, research, and innovation across Africa.
-      </p>
+    <div class="container about-hero-grid">
+      <div class="about-hero-text">
+        <p class="mono">About</p>
+        <h1 class="display about-h">
+          An institution advancing AI in Africa.
+        </h1>
+        <p class="lede about-lede">
+          TRI AI is a non-governmental organisation registered as Artificial Intelligence Teaching Research and Innovation for Africa Ltd/Gte. Through three divisions, the organisation advances AI education, research, and innovation across Africa.
+        </p>
+        <p class="mono about-since">Lagos · since 2017 · independent</p>
+      </div>
+      <div class="about-hero-media">
+        <figure class="about-hero-fig">
+          <img
+            src="https://picsum.photos/seed/triai-about-hero/900/1100"
+            alt="TRI AI community in Lagos"
+            loading="eager"
+          />
+          <figcaption class="about-hero-cap mono">The community in Lagos</figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
@@ -195,17 +207,66 @@ const values = [
 
 <style>
   .about-hero {
-    padding-block: clamp(72px, 9vw, 120px);
+    padding-block: clamp(56px, 7vw, 96px);
   }
+  .about-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: clamp(40px, 6vw, 96px);
+    align-items: center;
+  }
+  .about-hero-text { display: flex; flex-direction: column; }
   .about-hero .mono { margin-bottom: 16px; }
   .about-h {
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.05;
-    margin-bottom: 28px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 24px;
     color: var(--ink);
+    max-width: 16ch;
   }
-  .about-lede { color: var(--ink-mid); max-width: 60ch; }
+  .about-lede {
+    color: var(--ink-mid);
+    max-width: 52ch;
+    margin-bottom: 28px;
+  }
+  .about-since {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    align-self: flex-start;
+  }
+
+  .about-hero-fig {
+    margin: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--bg-soft);
+  }
+  .about-hero-fig img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    display: block;
+  }
+  .about-hero-cap {
+    padding: 12px 18px 14px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    border-top: 1px solid var(--line);
+    background: var(--bg-elev);
+  }
+
+  @media (max-width: 880px) {
+    .about-hero-grid { grid-template-columns: 1fr; gap: 32px; }
+    .about-h { max-width: none; }
+  }
 
   /* Video section */
   .video-sec { background: var(--bg-soft); }

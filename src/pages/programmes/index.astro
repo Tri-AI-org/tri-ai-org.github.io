@@ -28,19 +28,25 @@ const cohortArchive = (await getCollection('cohorts'))
       <div class="accent-bar accent-teaching"></div>
       <p class="mono" style="color: var(--teaching)">TRI AI Teaching</p>
       <h1 class="display hero-pg-h">
-        Building the next generation of<br/>
+        Building the next generation of
         <span class="hero-pg-em">African AI practitioners.</span>
       </h1>
       <p class="lede">
         Teaching is the largest of TRI AI's three divisions. It's structured around four kinds of programmes — long-running cohorts, partner-delivered courses, recurring watch parties, and an invited expert colloquium.
       </p>
+      <nav class="hero-pg-index mono" aria-label="Section index">
+        <a href="#cohorts"><span class="hero-pg-num">01</span> Cohorts</a>
+        <a href="#courses"><span class="hero-pg-num">02</span> Courses</a>
+        <a href="#watch-parties"><span class="hero-pg-num">03</span> Watch parties</a>
+        <a href="#colloquium"><span class="hero-pg-num">04</span> Colloquium</a>
+      </nav>
     </div>
   </section>
 
   <hr class="divider-rule" />
 
   {cohorts.length > 0 && (
-    <section class="section">
+    <section class="section" id="cohorts">
       <div class="container">
         <div data-reveal>
           <SectionHeader
@@ -91,7 +97,7 @@ const cohortArchive = (await getCollection('cohorts'))
   <hr class="divider-rule" />
 
   {courses.length > 0 && (
-    <section class="section">
+    <section class="section" id="courses">
       <div class="container">
         <div data-reveal>
           <SectionHeader
@@ -121,7 +127,7 @@ const cohortArchive = (await getCollection('cohorts'))
   <hr class="divider-rule" />
 
   {watchParties.length > 0 && (
-    <section class="section">
+    <section class="section" id="watch-parties">
       <div class="container">
         <div data-reveal>
           <SectionHeader
@@ -160,7 +166,7 @@ const cohortArchive = (await getCollection('cohorts'))
   <hr class="divider-rule" />
 
   {colloquia.length > 0 && (
-    <section class="section">
+    <section class="section" id="colloquium">
       <div class="container">
         <div data-reveal>
           <SectionHeader
@@ -210,15 +216,49 @@ const cohortArchive = (await getCollection('cohorts'))
   .hero-pg .accent-bar { margin-bottom: 16px; }
   .hero-pg .mono { margin-bottom: 16px; }
   .hero-pg-h {
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
     margin-bottom: 24px;
     color: var(--ink);
   }
   .hero-pg-em {
+    display: inline-block;
     color: var(--teaching);
     font-style: italic;
+    font-weight: 600;
+    font-size: 0.78em;
+    line-height: 1.15;
+    margin-top: 4px;
+  }
+
+  .hero-pg-index {
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px 32px;
+  }
+  .hero-pg-index a {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    transition: color 0.2s;
+  }
+  .hero-pg-index a:hover { color: var(--teaching); }
+  .hero-pg-num {
+    color: var(--teaching);
+    font-weight: 700;
+  }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
   }
 
   .prog-list {

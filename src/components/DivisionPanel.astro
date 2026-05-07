@@ -19,6 +19,7 @@ interface Props {
   number: string;             // "01" / "02" / "03"
   division: 'teaching' | 'research' | 'innovation';
   title: string;
+  titleAccent?: string;       // optional second line — italic, division-coloured, smaller
   statement: string;          // one-sentence positioning statement
   ctaLabel: string;
   ctaHref: string;
@@ -31,7 +32,7 @@ interface Props {
   featuredHref?: string;      // optional link wrapping the featured image
 }
 
-const { number, division, title, statement, ctaLabel, ctaHref, items: itemsProp, emptyState, featuredImage, featuredImageAlt, featuredCaption, featuredHref } = Astro.props;
+const { number, division, title, titleAccent, statement, ctaLabel, ctaHref, items: itemsProp, emptyState, featuredImage, featuredImageAlt, featuredCaption, featuredHref } = Astro.props;
 
 let items: Item[] = itemsProp ?? [];
 
@@ -87,7 +88,12 @@ if (!itemsProp) {
       <header class="dp-head" data-reveal>
         <span class={`dp-num mono dp-num-${division}`}>{number}</span>
         <p class={`mono dp-eyebrow dp-eyebrow-${division}`}>TRI AI {division.charAt(0).toUpperCase() + division.slice(1)}</p>
-        <h2 class="dp-title">{title}</h2>
+        <h2 class="dp-title">
+          {title}
+          {titleAccent && (
+            <><br/><span class={`dp-em dp-em-${division}`}>{titleAccent}</span></>
+          )}
+        </h2>
         <p class="dp-statement">{statement}</p>
         <a href={ctaHref} class="dp-cta">
           {ctaLabel} <span aria-hidden="true">→</span>
@@ -181,14 +187,26 @@ if (!itemsProp) {
   .dp-eyebrow-innovation { color: var(--innovation); }
 
   .dp-title {
-    font-size: clamp(28px, 3.8vw, 44px);
+    font-size: var(--t-display-m);
     font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.025em;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
     color: var(--ink);
     margin-bottom: 18px;
-    max-width: 14ch;
+    max-width: 18ch;
   }
+  .dp-em {
+    display: inline-block;
+    font-style: italic;
+    font-weight: 600;
+    /* One tier smaller than the primary title line */
+    font-size: 0.78em;
+    line-height: 1.15;
+    margin-top: 4px;
+  }
+  .dp-em-teaching { color: var(--teaching); }
+  .dp-em-research { color: var(--research-text); }
+  .dp-em-innovation { color: var(--innovation); }
   .dp-statement {
     font-size: clamp(15.5px, 1.3vw, 17px);
     line-height: 1.6;

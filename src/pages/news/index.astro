@@ -8,6 +8,10 @@ const items = (await getCollection('news', ({ data }) => !data.draft))
 
 const fmt = (date: Date) =>
   date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+const oldestYear = items.length > 0
+  ? Math.min(...items.map(n => n.data.date.getFullYear()))
+  : null;
 ---
 
 <Base
@@ -22,6 +26,14 @@ const fmt = (date: Date) =>
         <p class="news-lede">
           Programme launches, research releases, and community announcements — in chronological order.
         </p>
+        {items.length > 0 && oldestYear && (
+          <p class="news-stat mono">
+            <span class="news-stat-num">{items.length}</span>
+            {items.length === 1 ? 'entry' : 'entries'}
+            <span class="news-stat-sep" aria-hidden="true">·</span>
+            From {oldestYear} to today
+          </p>
+        )}
       </header>
 
       {items.length === 0 ? (
@@ -63,7 +75,7 @@ const fmt = (date: Date) =>
     margin-bottom: 14px;
   }
   .news-title {
-    font-size: var(--t-display);
+    font-size: var(--t-display-l);
     font-weight: 700;
     line-height: 1.05;
     letter-spacing: -0.025em;
@@ -71,11 +83,31 @@ const fmt = (date: Date) =>
     margin-bottom: 18px;
   }
   .news-lede {
-    font-size: clamp(17px, 1.6vw, 20px);
-    line-height: 1.55;
+    font-size: clamp(15.5px, 1.3vw, 18px);
+    line-height: 1.6;
     color: var(--ink-mid);
     max-width: 56ch;
+    margin-bottom: 24px;
   }
+  .news-stat {
+    margin-top: 4px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+  }
+  .news-stat-num {
+    color: var(--gold-deep);
+    font-weight: 700;
+    font-size: 13px;
+  }
+  [data-theme='dark'] .news-stat-num { color: var(--gold); }
+  .news-stat-sep { color: var(--ink-faint); opacity: 0.5; }
   .news-list {
     list-style: none;
     padding: 0;

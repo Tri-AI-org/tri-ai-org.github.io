@@ -29,10 +29,18 @@
   --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
   /* Type scale (digital, per brand spec) */
-  --t-display: clamp(36px, 5vw, 56px);
-  --t-h1: clamp(26px, 3.6vw, 36px);
-  --t-h2: clamp(20px, 2.4vw, 26px);
-  --t-h3: 20px;
+  /* Three-tier display hierarchy: */
+  /*  - display-xl: homepage hero only */
+  /*  - display-l:  sub-page heroes (about, programmes, research, etc.) */
+  /*  - display-m:  mid-page section titles, division panels */
+  --t-display-xl: clamp(36px, 5vw, 56px);
+  --t-display-l: clamp(30px, 4vw, 44px);
+  --t-display-m: clamp(24px, 3vw, 34px);
+  /* Legacy alias — still resolves to xl for any existing references */
+  --t-display: var(--t-display-xl);
+  --t-h1: clamp(24px, 3vw, 32px);
+  --t-h2: clamp(19px, 2.2vw, 24px);
+  --t-h3: 18px;
   --t-body: 16px;
   --t-small: 13px;
   --t-mono: 11px;
@@ -191,16 +199,16 @@ h1 { font-size: var(--t-h1); font-weight: 700; }
 h2 { font-size: var(--t-h2); font-weight: 700; }
 h3 { font-size: var(--t-h3); font-weight: 600; }
 .display {
-  font-size: var(--t-display);
-  font-weight: 800;
+  font-size: var(--t-display-l);
+  font-weight: 700;
   letter-spacing: -0.025em;
   line-height: 1.05;
 }
 
 p { color: var(--ink-mid); }
 .lede {
-  font-size: clamp(17px, 1.6vw, 20px);
-  line-height: 1.55;
+  font-size: clamp(15.5px, 1.3vw, 18px);
+  line-height: 1.6;
   color: var(--ink-mid);
   max-width: 56ch;
 }

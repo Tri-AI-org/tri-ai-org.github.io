@@ -69,7 +69,8 @@ const stats = [
   <DivisionPanel
     number="01"
     division="teaching"
-    title="Building the next generation of African AI practitioners."
+    title="Building the next generation of"
+    titleAccent="African AI practitioners."
     statement="Cohort programmes, partner-delivered courses, watch parties, and an expert colloquium series — all free, all community-led."
     ctaLabel="Explore Teaching"
     ctaHref="/programmes"
@@ -84,7 +85,8 @@ const stats = [
   <DivisionPanel
     number="02"
     division="research"
-    title="African questions, global answers."
+    title="African questions,"
+    titleAccent="global answers."
     statement="Long-running research initiatives building open datasets, models, and benchmarks for problems mainstream AI has overlooked."
     ctaLabel="Explore Research"
     ctaHref="/research"
@@ -97,7 +99,8 @@ const stats = [
   <DivisionPanel
     number="03"
     division="innovation"
-    title="Turning research into things that ship."
+    title="Turning research"
+    titleAccent="into things that ship."
     statement="TRI AI Innovation will translate teaching and research into products and tools that serve African contexts directly. The first ones are in development."
     ctaLabel="Get notified"
     ctaHref="/innovation"
@@ -183,18 +186,23 @@ const stats = [
   }
 
   .hero-h {
-    font-size: var(--t-display);
-    font-weight: 800;
-    line-height: 1.02;
+    font-size: var(--t-display-xl);
+    font-weight: 700;
+    line-height: 1.05;
     letter-spacing: -0.03em;
     color: var(--ink);
     max-width: 13ch;
     margin-bottom: 22px;
   }
   .hero-h-accent {
+    display: inline-block;
     color: var(--gold);
     font-style: italic;
-    font-weight: 800;
+    font-weight: 600;
+    /* One tier smaller than the primary line */
+    font-size: 0.78em;
+    line-height: 1.1;
+    margin-top: 6px;
   }
 
   .hero-lede {
@@ -309,7 +317,7 @@ const stats = [
   .stat { text-align: center; }
   .stat-num {
     font-size: clamp(32px, 4vw, 48px);
-    font-weight: 800;
+    font-weight: 700;
     color: var(--ink);
     letter-spacing: -0.02em;
     line-height: 1;

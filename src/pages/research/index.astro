@@ -22,12 +22,24 @@ const fmt = (d: Date) =>
       <div class="accent-bar accent-research"></div>
       <p class="mono">Research</p>
       <h1 class="display hero-r-h">
-        African questions,<br/>
+        African questions,
         <span class="hero-r-em">global answers.</span>
       </h1>
       <p class="lede">
         TRI AI Research drives initiatives that address African challenges while contributing to the global AI ecosystem — building datasets, tools, and methods that move the field forward.
       </p>
+
+      {researchProgs.length > 0 && (
+        <p class="hero-r-current mono">
+          <span class="hero-r-current-label">Currently studying</span>
+          {researchProgs.map((p, i) => (
+            <>
+              <a href={`/programmes/${p.id}`} class="hero-r-current-item">{p.data.title}</a>
+              {i < researchProgs.length - 1 && <span class="hero-r-current-sep" aria-hidden="true">·</span>}
+            </>
+          ))}
+        </p>
+      )}
     </div>
   </section>
 
@@ -94,17 +106,51 @@ const fmt = (d: Date) =>
   .hero-r .accent-bar { margin-bottom: 16px; }
   .hero-r .mono { margin-bottom: 16px; color: var(--research-text); }
   .hero-r-h {
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: -0.03em;
     line-height: 1.05;
     margin-bottom: 24px;
     color: var(--ink);
   }
   .hero-r-em {
+    display: inline-block;
     color: var(--research);
     font-style: italic;
+    font-weight: 600;
+    font-size: 0.78em;
+    line-height: 1.15;
+    margin-top: 4px;
   }
   [data-theme='dark'] .hero-r-em { color: var(--research-text); }
+
+  .hero-r-current {
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 14px;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .hero-r-current-label {
+    color: var(--ink-faint);
+    margin-right: 6px;
+  }
+  .hero-r-current-item {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 2px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .hero-r-current-item:hover {
+    color: var(--research-text);
+    border-bottom-color: var(--research-text);
+  }
+  .hero-r-current-sep { color: var(--ink-faint); opacity: 0.5; }
 
   .r-list {
     display: grid;
