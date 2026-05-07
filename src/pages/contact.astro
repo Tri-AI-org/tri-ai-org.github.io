@@ -1,0 +1,186 @@
+---
+import Base from '../layouts/Base.astro';
+import Newsletter from '../components/Newsletter.astro';
+
+const contacts = [
+  { label: 'General', email: 'hello@tri-ai.org' },
+  { label: 'Programmes', email: 'programmes@tri-ai.org' },
+  { label: 'Research', email: 'research@tri-ai.org' },
+  { label: 'Partnerships', email: 'partnerships@tri-ai.org' },
+  { label: 'Press', email: 'press@tri-ai.org' },
+];
+---
+
+<Base title="Contact — TRI AI">
+  <section class="hero-c">
+    <div class="container">
+      <p class="mono">Contact</p>
+      <h1 class="display hero-c-h">Get in touch.</h1>
+      <p class="lede">
+        We'd love to hear from you. Use the form below or write to the team directly at one of the addresses on the right.
+      </p>
+    </div>
+  </section>
+
+  <hr class="divider-rule" />
+
+  <section class="section">
+    <div class="container c-grid">
+      <form
+        class="c-form"
+        name="contact"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+      >
+        <input type="hidden" name="form-name" value="contact" />
+        <p class="hp" aria-hidden="true">
+          <label>Don't fill this: <input name="bot-field" /></label>
+        </p>
+
+        <div class="c-row">
+          <label class="c-field">
+            <span class="mono-faint">Name</span>
+            <input type="text" name="name" required autocomplete="name" />
+          </label>
+          <label class="c-field">
+            <span class="mono-faint">Email</span>
+            <input type="email" name="email" required autocomplete="email" />
+          </label>
+        </div>
+        <label class="c-field">
+          <span class="mono-faint">Subject</span>
+          <input type="text" name="subject" required />
+        </label>
+        <label class="c-field">
+          <span class="mono-faint">Message</span>
+          <textarea name="message" rows="6" required></textarea>
+        </label>
+
+        <button type="submit" class="btn btn-primary btn-arrow">Send message</button>
+      </form>
+
+      <aside class="c-side">
+        <div class="c-side-block">
+          <p class="mono-faint">Direct emails</p>
+          <ul class="c-emails">
+            {contacts.map(c => (
+              <li>
+                <span class="c-email-label">{c.label}</span>
+                <a href={`mailto:${c.email}`}>{c.email}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="c-side-block">
+          <p class="mono-faint">Office</p>
+          <p class="c-side-text">
+            TRI AI<br/>
+            Lagos, Nigeria
+          </p>
+        </div>
+
+        <div class="c-side-block">
+          <p class="mono-faint">Social</p>
+          <div class="c-socials">
+            <a href="https://linkedin.com/company/tri-ai">LinkedIn</a>
+            <a href="https://x.com/triai">X</a>
+            <a href="https://youtube.com/@triai">YouTube</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <Newsletter />
+</Base>
+
+<style>
+  .hero-c { padding-block: clamp(64px, 8vw, 112px); }
+  .hero-c .mono { margin-bottom: 16px; }
+  .hero-c-h {
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 24px;
+    color: var(--ink);
+  }
+
+  .c-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 64px;
+  }
+
+  .c-form { display: flex; flex-direction: column; gap: 18px; }
+  .c-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .c-field { display: block; }
+  .c-field .mono-faint { display: block; margin-bottom: 8px; }
+  .c-field input,
+  .c-field textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    background: var(--bg-elev);
+    color: var(--ink);
+    font-size: 14.5px;
+    font-family: inherit;
+    resize: vertical;
+    transition: border-color 0.2s var(--ease-quick);
+  }
+  .c-field input:focus,
+  .c-field textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+  .hp { display: none; }
+
+  .c-side {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding: 28px;
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    align-self: start;
+    position: sticky;
+    top: 96px;
+  }
+  .c-side-block .mono-faint { margin-bottom: 10px; }
+  .c-side-text { font-size: 14px; line-height: 1.6; color: var(--ink); }
+
+  .c-emails { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .c-emails li { display: flex; flex-direction: column; gap: 2px; }
+  .c-email-label {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--ink-faint);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .c-emails a {
+    font-size: 14px;
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--line-strong);
+  }
+  .c-emails a:hover { color: var(--gold-deep); }
+  [data-theme='dark'] .c-emails a:hover { color: var(--gold); }
+
+  .c-socials { display: flex; flex-direction: column; gap: 6px; }
+  .c-socials a {
+    font-size: 13px;
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--line-strong);
+  }
+
+  @media (max-width: 920px) {
+    .c-grid { grid-template-columns: 1fr; gap: 32px; }
+    .c-row { grid-template-columns: 1fr; }
+    .c-side { position: static; }
+  }
+</style>

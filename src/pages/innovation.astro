@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+import Newsletter from '../components/Newsletter.astro';
+---
+
+<Base title="Innovation — TRI AI">
+  <section class="hero-i">
+    <div class="container">
+      <div class="accent-bar accent-innovation"></div>
+      <p class="mono" style="color: var(--innovation)">Innovation</p>
+      <h1 class="display hero-i-h">
+        From research<br/>
+        <span class="hero-i-em">to real-world.</span>
+      </h1>
+      <p class="lede">
+        TRI AI Innovation supports the development of tools, datasets, and systems that translate research into deployable AI applications across the continent.
+      </p>
+    </div>
+  </section>
+
+  <hr class="divider-rule" />
+
+  <section class="section">
+    <div class="container">
+      <div class="i-soon">
+        <p class="mono">Status</p>
+        <h2 class="i-soon-h">Launching with our first initiative.</h2>
+        <p class="i-soon-body">
+          The Innovation division is a structural placeholder while we ready our first launch. Until then, we're focused on the work happening in Teaching and Research. Subscribe to TRI AI Dispatch to be the first to hear when Innovation goes live.
+        </p>
+        <div style="margin-top: 28px; display: flex; gap: 10px">
+          <a href="#newsletter" class="btn btn-primary btn-arrow">Subscribe</a>
+          <a href="/research" class="btn btn-ghost btn-arrow">Explore research</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Newsletter />
+</Base>
+
+<style>
+  .hero-i { padding-block: clamp(64px, 8vw, 112px); }
+  .hero-i .accent-bar { margin-bottom: 16px; }
+  .hero-i .mono { margin-bottom: 16px; }
+  .hero-i-h {
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 24px;
+    color: var(--ink);
+  }
+  .hero-i-em {
+    color: var(--innovation);
+    font-style: italic;
+  }
+
+  .i-soon {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--innovation);
+    border-radius: 10px;
+    padding: 40px 40px 44px;
+    background: var(--bg-elev);
+    max-width: 720px;
+  }
+  .i-soon .mono { color: var(--innovation); margin-bottom: 14px; }
+  .i-soon-h {
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: var(--ink);
+  }
+  .i-soon-body {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ink-mid);
+  }
+</style>

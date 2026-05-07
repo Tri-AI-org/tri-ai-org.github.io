@@ -1,0 +1,177 @@
+---
+import Wordmark from './Wordmark.astro';
+
+const year = new Date().getFullYear();
+
+const cols = [
+  {
+    title: 'Organisation',
+    links: [
+      { label: 'About', href: '/about' },
+      { label: 'Team', href: '/about#team' },
+      { label: 'Partners', href: '/about#partners' },
+      { label: 'Contact', href: '/contact' },
+    ],
+  },
+  {
+    title: 'Teaching',
+    accent: 'teaching',
+    links: [
+      { label: 'TRI AI Saturdays', href: '/programmes/tri-ai-saturdays' },
+      { label: 'Courses', href: '/courses' },
+      { label: 'Fellowships', href: '/programmes#fellowships' },
+    ],
+  },
+  {
+    title: 'Research',
+    accent: 'research',
+    links: [
+      { label: 'Sauti Project', href: '/research/sauti-project' },
+      { label: 'ChowNet', href: '/research/chownet' },
+      { label: 'Publications', href: '/publications' },
+    ],
+  },
+  {
+    title: 'Get Involved',
+    links: [
+      { label: 'Donate', href: '/donate' },
+      { label: 'Apply', href: '/get-involved#apply' },
+      { label: 'Partner with us', href: '/get-involved#partner' },
+      { label: 'Newsletter', href: '#newsletter' },
+    ],
+  },
+];
+---
+
+<footer class="ftr">
+  <div class="container ftr-inner">
+    <div class="ftr-top">
+      <div class="ftr-brand">
+        <Wordmark size={36} showDots={true} />
+        <p class="mono-faint ftr-descriptor">
+          Teaching · Research · Innovation
+        </p>
+        <p class="ftr-blurb">
+          Advancing AI education, research, and innovation across Africa.
+        </p>
+      </div>
+
+      <div class="ftr-cols">
+        {cols.map(col => (
+          <div class="ftr-col">
+            {col.accent && <div class={`accent-bar accent-${col.accent}`}></div>}
+            <h4 class="ftr-col-title">{col.title}</h4>
+            <ul>
+              {col.links.map(l => (
+                <li><a href={l.href}>{l.label}</a></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <hr class="divider-rule" />
+
+    <div class="ftr-bot">
+      <p class="ftr-copy">
+        © {year} TRI AI — Artificial Intelligence Teaching Research and Innovation for Africa Ltd/Gte.
+      </p>
+      <div class="ftr-social" aria-label="Social">
+        <a href="https://linkedin.com/company/tri-ai" aria-label="LinkedIn">LinkedIn</a>
+        <a href="https://x.com/triai" aria-label="X / Twitter">X</a>
+        <a href="https://youtube.com/@triai" aria-label="YouTube">YouTube</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .ftr {
+    margin-top: auto;
+    padding-block: 80px 32px;
+    background: var(--bg-soft);
+    border-top: 1px solid var(--line);
+  }
+  .ftr-top {
+    display: grid;
+    grid-template-columns: 1.2fr 3fr;
+    gap: 64px;
+    margin-bottom: 56px;
+  }
+  .ftr-brand {
+    align-self: start;
+  }
+  .ftr-descriptor {
+    margin-top: 14px;
+    font-size: 9px;
+    letter-spacing: 0.32em;
+  }
+  .ftr-blurb {
+    margin-top: 14px;
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 28ch;
+    color: var(--ink-mid);
+  }
+
+  .ftr-cols {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+  .ftr-col-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    color: var(--ink);
+  }
+  .ftr-col ul { list-style: none; }
+  .ftr-col li { margin-bottom: 8px; }
+  .ftr-col a {
+    font-size: 13.5px;
+    color: var(--ink-mid);
+    transition: color 0.15s var(--ease-quick);
+  }
+  .ftr-col a:hover { color: var(--ink); }
+
+  .ftr-bot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-top: 24px;
+  }
+  .ftr-copy {
+    font-size: 12px;
+    color: var(--ink-faint);
+    max-width: 70ch;
+  }
+  .ftr-social { display: flex; gap: 18px; }
+  .ftr-social a {
+    font-size: 12px;
+    color: var(--ink-mid);
+    font-family: var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .ftr-social a:hover { color: var(--gold-deep); }
+  [data-theme='dark'] .ftr-social a:hover { color: var(--gold); }
+
+  @media (max-width: 920px) {
+    .ftr-top {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .ftr-cols {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+  }
+  @media (max-width: 480px) {
+    .ftr-cols { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,246 @@
+---
+import Base from '../layouts/Base.astro';
+import Newsletter from '../components/Newsletter.astro';
+
+const tiers = [
+  { amount: 25, label: 'Sponsor a learner for a week' },
+  { amount: 100, label: 'Equip a study group with materials' },
+  { amount: 500, label: 'Fund a cohort scholarship' },
+  { amount: 2500, label: 'Underwrite a research milestone' },
+];
+---
+
+<Base title="Donate — TRI AI" description="Support AI education, research, and innovation across Africa.">
+  <section class="hero-d">
+    <div class="container hero-d-inner">
+      <div>
+        <p class="mono">Donate</p>
+        <h1 class="display hero-d-h">
+          Fund the<br/>
+          <span class="hero-d-em">future of AI</span><br/>
+          in Africa.
+        </h1>
+        <p class="lede">
+          Every contribution, large or small, expands access to AI education and research for African learners and researchers. TRI AI is a registered non-governmental organisation.
+        </p>
+      </div>
+
+      <aside class="donate-card">
+        <p class="mono-faint">Choose an amount</p>
+        <div class="tiers">
+          {tiers.map(t => (
+            <button type="button" class="tier" data-tier data-amount={t.amount}>
+              <span class="tier-amt">${t.amount}</span>
+              <span class="tier-label">{t.label}</span>
+            </button>
+          ))}
+        </div>
+        <label class="tier-custom">
+          <span class="mono-faint">Custom amount (USD)</span>
+          <input type="number" min="1" placeholder="Enter amount" id="custom-amt" />
+        </label>
+        <a href="#" class="btn btn-primary btn-arrow donate-cta" id="donate-go">
+          Continue
+        </a>
+        <p class="donate-note">
+          You'll be redirected to our secure payment processor. Tax-deductibility varies by jurisdiction — see receipt details after payment.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <hr class="divider-rule" />
+
+  <section class="section">
+    <div class="container">
+      <h2 class="d-h2">Other ways to give.</h2>
+      <div class="d-other">
+        <div class="d-other-card">
+          <div class="accent-bar accent-gold"></div>
+          <h3>Bank transfer</h3>
+          <p>For organisational gifts and recurring institutional support, contact <a href="mailto:finance@tri-ai.org">finance@tri-ai.org</a>.</p>
+        </div>
+        <div class="d-other-card">
+          <div class="accent-bar accent-gold"></div>
+          <h3>In-kind</h3>
+          <p>Cloud credits, GPU access, training datasets, and venue sponsorship all extend our reach. Email <a href="mailto:partnerships@tri-ai.org">partnerships@tri-ai.org</a>.</p>
+        </div>
+        <div class="d-other-card">
+          <div class="accent-bar accent-gold"></div>
+          <h3>Time</h3>
+          <p>Mentor a cohort, review research, or run a workshop. <a href="/get-involved">Get involved</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Newsletter />
+</Base>
+
+<script is:inline>
+  document.addEventListener('astro:page-load', () => {
+    const tiers = document.querySelectorAll('[data-tier]');
+    const custom = document.getElementById('custom-amt');
+    const cta = document.getElementById('donate-go');
+    let selected = null;
+
+    tiers.forEach(t => {
+      t.addEventListener('click', () => {
+        tiers.forEach(x => x.classList.remove('is-on'));
+        t.classList.add('is-on');
+        selected = t.dataset.amount;
+        if (custom) custom.value = '';
+      });
+    });
+
+    if (custom) {
+      custom.addEventListener('input', () => {
+        tiers.forEach(x => x.classList.remove('is-on'));
+        selected = custom.value;
+      });
+    }
+
+    if (cta) {
+      cta.addEventListener('click', e => {
+        e.preventDefault();
+        const amt = selected || custom?.value;
+        if (!amt || amt <= 0) {
+          alert('Please choose or enter an amount.');
+          return;
+        }
+        // Wire up to Stripe / Paystack / Flutterwave at deploy time
+        alert(`Continuing with $${amt}. Payment integration to be configured.`);
+      });
+    }
+  });
+  window.dispatchEvent(new Event('astro:page-load'));
+</script>
+
+<style>
+  .hero-d { padding-block: clamp(64px, 8vw, 112px); }
+  .hero-d-inner {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .hero-d .mono { margin-bottom: 16px; }
+  .hero-d-h {
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    margin-bottom: 24px;
+    color: var(--ink);
+  }
+  .hero-d-em {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .donate-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 28px;
+    position: sticky;
+    top: 96px;
+  }
+  .donate-card .mono-faint { margin-bottom: 12px; }
+
+  .tiers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .tier {
+    text-align: left;
+    padding: 14px 14px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--bg);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .tier:hover { border-color: var(--line-strong); }
+  .tier.is-on {
+    border-color: var(--gold);
+    background: var(--gold-light);
+  }
+  [data-theme='dark'] .tier.is-on { background: rgba(212, 160, 23, 0.1); }
+  .tier-amt {
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .tier-label {
+    font-size: 11px;
+    color: var(--ink-mid);
+    line-height: 1.4;
+  }
+
+  .tier-custom { display: block; margin-bottom: 18px; }
+  .tier-custom .mono-faint { margin-bottom: 8px; }
+  .tier-custom input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 14px;
+  }
+  .tier-custom input:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+
+  .donate-cta { width: 100%; justify-content: center; }
+  .donate-note {
+    font-size: 11px;
+    color: var(--ink-faint);
+    margin-top: 14px;
+    line-height: 1.5;
+  }
+
+  .d-h2 {
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: var(--ink);
+  }
+  .d-other {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .d-other-card {
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg-elev);
+  }
+  .d-other-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .d-other-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-mid);
+  }
+  .d-other-card a {
+    color: var(--gold-deep);
+    text-decoration: underline;
+  }
+  [data-theme='dark'] .d-other-card a { color: var(--gold); }
+
+  @media (max-width: 920px) {
+    .hero-d-inner { grid-template-columns: 1fr; }
+    .donate-card { position: static; }
+    .d-other { grid-template-columns: 1fr; }
+  }
+</style>

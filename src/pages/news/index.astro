@@ -1,0 +1,124 @@
+---
+import Base from '../../layouts/Base.astro';
+import Newsletter from '../../components/Newsletter.astro';
+import { getCollection } from 'astro:content';
+
+const items = (await getCollection('news', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const fmt = (date: Date) =>
+  date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+---
+
+<Base
+  title="News — TRI AI"
+  description="The latest from TRI AI — programme launches, research output, and community announcements."
+>
+  <section class="section">
+    <div class="container">
+      <header class="news-head">
+        <p class="eyebrow mono">News</p>
+        <h1 class="news-title">Updates from TRI&nbsp;AI.</h1>
+        <p class="news-lede">
+          Programme launches, research releases, and community announcements — in chronological order.
+        </p>
+      </header>
+
+      {items.length === 0 ? (
+        <p class="news-empty">News will appear here as it is published.</p>
+      ) : (
+        <ul class="news-list">
+          {items.map(n => (
+            <li class="news-row">
+              <a href={`/news/${n.id}`} class="news-link">
+                <div class="news-meta">
+                  <time class="news-date mono" datetime={n.data.date.toISOString()}>{fmt(n.data.date)}</time>
+                  <span class={`tag tag-${n.data.division === 'parent' ? 'gold' : n.data.division}`}>
+                    {n.data.division}
+                  </span>
+                </div>
+                <h2 class="news-row-title">{n.data.title}</h2>
+                <p class="news-row-excerpt">{n.data.excerpt}</p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </section>
+
+  <Newsletter />
+</Base>
+
+<style>
+  .news-head {
+    max-width: 720px;
+    padding-block: clamp(40px, 6vw, 72px) 48px;
+  }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 14px;
+  }
+  .news-title {
+    font-size: clamp(40px, 6vw, 64px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .news-lede {
+    font-size: clamp(17px, 1.6vw, 20px);
+    line-height: 1.55;
+    color: var(--ink-mid);
+    max-width: 56ch;
+  }
+  .news-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .news-row { border-bottom: 1px solid var(--rule); }
+  .news-link {
+    display: block;
+    padding-block: 28px;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.15s ease;
+  }
+  .news-link:hover { opacity: 0.7; }
+  .news-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+  .news-date {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .news-row-title {
+    font-size: clamp(22px, 2.5vw, 30px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .news-row-excerpt {
+    color: var(--ink-mid);
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 70ch;
+  }
+  .news-empty {
+    color: var(--ink-faint);
+    padding-block: 40px;
+  }
+</style>

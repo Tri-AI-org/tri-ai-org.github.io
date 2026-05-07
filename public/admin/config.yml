@@ -1,0 +1,179 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Editor previews use the live site
+site_url: https://tri-ai.org
+display_url: https://tri-ai.org
+logo_url: /favicon.svg
+
+# Where uploaded media is stored
+media_folder: 'public/uploads'
+public_folder: '/uploads'
+
+# Open editorial workflow → drafts go through PR review on GitHub
+publish_mode: editorial_workflow
+
+# Brand the CMS
+locale: en
+
+collections:
+  # ─────────── Publications ───────────
+  - name: publications
+    label: Publications
+    label_singular: Publication
+    folder: src/content/publications
+    create: true
+    delete: true
+    slug: '{{slug}}'
+    summary: '{{title}} — {{year}}'
+    sortable_fields: [date, title]
+    view_filters:
+      - label: Research
+        field: division
+        pattern: research
+      - label: Teaching
+        field: division
+        pattern: teaching
+      - label: Drafts
+        field: draft
+        pattern: 'true'
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime, date_format: 'YYYY-MM-DD', time_format: false, picker_utc: false }
+      - { label: Authors, name: authors, widget: list, default: ['Author Name'] }
+      - { label: Venue, name: venue, widget: string, required: false, hint: 'e.g. ICLR 2026, NeurIPS, arXiv' }
+      - label: Division
+        name: division
+        widget: select
+        options: [research, teaching, innovation]
+        default: research
+      - { label: Project, name: project, widget: string, required: false, hint: 'e.g. Sauti Project' }
+      - { label: Abstract, name: abstract, widget: text }
+      - { label: 'PDF URL', name: pdfUrl, widget: string, required: false }
+      - { label: 'External URL', name: externalUrl, widget: string, required: false }
+      - { label: Featured, name: featured, widget: boolean, default: false }
+      - { label: Draft, name: draft, widget: boolean, default: false }
+      - { label: Body, name: body, widget: markdown, required: false, hint: 'Optional extended content beyond the abstract.' }
+
+  # ─────────── Programmes ───────────
+  - name: programmes
+    label: Programmes
+    label_singular: Programme
+    folder: src/content/programmes
+    create: true
+    delete: true
+    slug: '{{slug}}'
+    fields:
+      - { label: Title, name: title, widget: string }
+      - label: Division
+        name: division
+        widget: select
+        options: [teaching, research, innovation]
+      - { label: Tagline, name: tagline, widget: string, hint: 'One-line summary' }
+      - { label: Description, name: description, widget: text, hint: 'Sidebar paragraph for the detail page.' }
+      - label: Status
+        name: status
+        widget: select
+        options: [active, upcoming, archived]
+        default: active
+      - { label: Cover image, name: cover, widget: image, required: false }
+      - { label: Location, name: location, widget: string, required: false, hint: 'e.g. Lagos, Nigeria' }
+      - { label: Cohort info, name: cohortInfo, widget: string, required: false, hint: 'e.g. Cohort 9 — Sept 2026' }
+      - { label: Apply URL, name: applyUrl, widget: string, required: false }
+      - { label: Order, name: order, widget: number, default: 0, value_type: int }
+      - { label: Body, name: body, widget: markdown, hint: 'Full programme detail content' }
+
+  # ─────────── Courses ───────────
+  - name: courses
+    label: Courses
+    label_singular: Course
+    folder: src/content/courses
+    create: true
+    delete: true
+    slug: '{{slug}}'
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Track, name: track, widget: string, hint: 'e.g. AI Foundations, Machine Learning' }
+      - { label: Partner, name: partner, widget: string, required: false, hint: 'e.g. Google DeepMind' }
+      - { label: Cover image, name: cover, widget: image, required: false }
+      - { label: Summary, name: summary, widget: text }
+      - { label: Duration, name: duration, widget: string, required: false, hint: 'e.g. 8 weeks' }
+      - label: Level
+        name: level
+        widget: select
+        options: [beginner, intermediate, advanced]
+        default: beginner
+      - { label: Enrol URL, name: enrollUrl, widget: string, required: false }
+      - { label: Order, name: order, widget: number, default: 0, value_type: int }
+      - { label: Body, name: body, widget: markdown }
+
+  # ─────────── Team ───────────
+  - name: team
+    label: Team
+    label_singular: Team member
+    folder: src/content/team
+    create: true
+    delete: true
+    slug: '{{slug}}'
+    fields:
+      - { label: Name, name: name, widget: string }
+      - { label: Role, name: role, widget: string }
+      - { label: Affiliation, name: affiliation, widget: string, required: false }
+      - { label: Photo, name: photo, widget: image, required: false }
+      - { label: LinkedIn URL, name: linkedin, widget: string, required: false }
+      - { label: Twitter URL, name: twitter, widget: string, required: false }
+      - label: Division
+        name: division
+        widget: select
+        options: [parent, teaching, research, innovation]
+        default: parent
+      - label: Group
+        name: group
+        widget: select
+        options: [board, leadership, team]
+        default: team
+      - { label: Order, name: order, widget: number, default: 0, value_type: int }
+      - { label: Bio, name: body, widget: markdown, required: false }
+
+  # ─────────── Partners ───────────
+  - name: partners
+    label: Partners
+    label_singular: Partner
+    folder: src/content/partners
+    create: true
+    delete: true
+    slug: '{{slug}}'
+    fields:
+      - { label: Name, name: name, widget: string }
+      - { label: Logo, name: logo, widget: image }
+      - { label: URL, name: url, widget: string, required: false }
+      - label: Tier
+        name: tier
+        widget: select
+        options: [lead, partner, supporter]
+        default: partner
+      - { label: Order, name: order, widget: number, default: 0, value_type: int }
+      - { label: Body, name: body, widget: markdown, required: false }
+
+  # ─────────── News ───────────
+  - name: news
+    label: News & Updates
+    label_singular: Article
+    folder: src/content/news
+    create: true
+    delete: true
+    slug: '{{slug}}'
+    sortable_fields: [date, title]
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
+      - label: Division
+        name: division
+        widget: select
+        options: [parent, teaching, research, innovation]
+        default: parent
+      - { label: Excerpt, name: excerpt, widget: text }
+      - { label: Cover image, name: cover, widget: image, required: false }
+      - { label: Draft, name: draft, widget: boolean, default: false }
+      - { label: Body, name: body, widget: markdown }

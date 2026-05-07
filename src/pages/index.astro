@@ -1,0 +1,310 @@
+---
+import Base from '../layouts/Base.astro';
+import Wordmark from '../components/Wordmark.astro';
+import Pillars from '../components/Pillars.astro';
+import FeaturedFeed from '../components/FeaturedFeed.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { getCollection } from 'astro:content';
+
+const programmes = (await getCollection('programmes'))
+  .filter(p => p.data.status === 'active')
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 2);
+
+const stats = [
+  { num: '1,500+', label: 'Learners and community members' },
+  { num: '8', label: 'Cohorts completed' },
+  { num: '2', label: 'Active research initiatives' },
+  { num: '5+', label: 'Years building AI communities' },
+];
+---
+
+<Base
+  title="TRI AI — Advancing AI for Africa through Teaching, Research, Innovation"
+  description="TRI AI builds African communities that enable learning, research, and the development of AI solutions for local and global impact."
+>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <div class="hero-mark reveal reveal-1">
+        <Wordmark size={64} showDots={true} />
+      </div>
+
+      <h1 class="hero-h reveal reveal-2">
+        Advancing AI<br/>
+        <span class="hero-h-accent">for Africa.</span>
+      </h1>
+
+      <p class="hero-lede reveal reveal-3">
+        TRI AI is a non-governmental institution democratising artificial intelligence by building African communities that enable learning, research, and the development of AI solutions for local and global impact.
+      </p>
+
+      <div class="hero-actions reveal reveal-4">
+        <a href="/programmes" class="btn btn-primary btn-arrow">Explore programmes</a>
+        <a href="/research" class="btn btn-ghost btn-arrow">Our research</a>
+      </div>
+
+      <p class="hero-foot mono reveal reveal-5">
+        Teaching <span class="hero-foot-dot d-t" aria-hidden="true"></span>
+        Research <span class="hero-foot-dot d-r" aria-hidden="true"></span>
+        Innovation
+      </p>
+    </div>
+  </section>
+
+  <hr class="divider-rule" />
+
+  <!-- Three pillars -->
+  <section class="section">
+    <div class="container">
+      <SectionHeader
+        num="01"
+        eyebrow="What we do"
+        title="Three divisions, one mission."
+        description="TRI AI is a branded house. Every initiative we run lives under one of three divisions that map directly to the name."
+      />
+      <Pillars />
+    </div>
+  </section>
+
+  <hr class="divider-rule" />
+
+  <!-- Featured programmes -->
+  {programmes.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <SectionHeader
+          num="02"
+          eyebrow="Programmes"
+          title="Where the work happens."
+          description="Active initiatives shaping AI knowledge across the continent."
+        />
+        <div class="prog-grid">
+          {programmes.map(p => (
+            <a href={`/programmes/${p.id}`} class={`prog-card prog-${p.data.division}`}>
+              {p.data.cover && <div class="prog-cover" style={`background-image:url(${p.data.cover})`}></div>}
+              <div class="prog-body">
+                <span class={`tag tag-${p.data.division}`}>
+                  triAI {p.data.division.charAt(0).toUpperCase() + p.data.division.slice(1)} programme
+                </span>
+                <h3 class="prog-title">{p.data.title}</h3>
+                <p class="prog-tag">{p.data.tagline}</p>
+                <span class="prog-link">Explore <span aria-hidden="true">→</span></span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <hr class="divider-rule" />
+
+  <!-- Recent / featured feed -->
+  <section class="section">
+    <div class="container">
+      <SectionHeader
+        num="03"
+        eyebrow="Recent"
+        title="Publications & updates."
+      />
+      <FeaturedFeed />
+      <div class="see-all">
+        <a href="/publications" class="btn btn-ghost btn-arrow">All publications</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider-rule" />
+
+  <!-- Impact -->
+  <section class="section impact">
+    <div class="container">
+      <SectionHeader
+        num="04"
+        eyebrow="Our impact"
+        title="By the numbers."
+        align="center"
+      />
+      <div class="stats">
+        {stats.map(s => (
+          <div class="stat">
+            <p class="stat-num">{s.num}</p>
+            <p class="stat-label">{s.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Newsletter />
+</Base>
+
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    padding-block: clamp(80px, 12vw, 160px);
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 30%,
+        color-mix(in oklab, var(--gold) 7%, transparent) 0%,
+        transparent 60%);
+  }
+  [data-theme='dark'] .hero-bg {
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 30%,
+        color-mix(in oklab, var(--gold) 12%, transparent) 0%,
+        transparent 60%);
+  }
+
+  .hero-inner {
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .hero-mark { margin-bottom: 40px; }
+
+  .hero-h {
+    font-size: var(--t-display);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    max-width: 14ch;
+    margin-bottom: 28px;
+  }
+  .hero-h-accent {
+    color: var(--gold);
+    font-style: italic;
+    font-weight: 800;
+  }
+
+  .hero-lede {
+    font-size: clamp(16px, 1.4vw, 19px);
+    line-height: 1.55;
+    color: var(--ink-mid);
+    max-width: 56ch;
+    margin-bottom: 36px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 56px;
+  }
+
+  .hero-foot {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--ink-faint);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+  }
+  .hero-foot-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .hero-foot-dot.d-t { background: var(--teaching); }
+  .hero-foot-dot.d-r { background: var(--research-text); }
+
+  /* Programmes */
+  .prog-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .prog-card {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg-elev);
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.25s var(--ease-quick), transform 0.25s var(--ease-quick);
+  }
+  .prog-card:hover {
+    border-color: var(--line-strong);
+    transform: translateY(-2px);
+  }
+  .prog-cover {
+    aspect-ratio: 16/9;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--bg-soft);
+  }
+  .prog-body {
+    padding: 24px 26px 28px;
+  }
+  .prog-body .tag { margin-bottom: 14px; }
+  .prog-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .prog-tag {
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ink-mid);
+    margin-bottom: 18px;
+  }
+  .prog-link {
+    font-size: 12px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .see-all {
+    margin-top: 36px;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Impact */
+  .impact { background: var(--bg-soft); }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-top: 16px;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-size: clamp(36px, 4.5vw, 56px);
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .stat-label {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.5;
+    max-width: 22ch;
+    margin-inline: auto;
+  }
+
+  @media (max-width: 820px) {
+    .prog-grid { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .hero-h { font-size: clamp(40px, 12vw, 64px); }
+  }
+</style>

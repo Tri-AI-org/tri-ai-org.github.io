@@ -1,0 +1,159 @@
+---
+import Base from '../../layouts/Base.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import Newsletter from '../../components/Newsletter.astro';
+import { getCollection } from 'astro:content';
+
+const researchProgs = (await getCollection('programmes'))
+  .filter(p => p.data.division === 'research')
+  .sort((a, b) => a.data.order - b.data.order);
+
+const recentPubs = (await getCollection('publications', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 4);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+---
+
+<Base title="Research — TRI AI">
+  <section class="hero-r">
+    <div class="container">
+      <div class="accent-bar accent-research"></div>
+      <p class="mono">Research</p>
+      <h1 class="display hero-r-h">
+        African questions,<br/>
+        <span class="hero-r-em">global answers.</span>
+      </h1>
+      <p class="lede">
+        TRI AI Research drives initiatives that address African challenges while contributing to the global AI ecosystem — building datasets, tools, and methods that move the field forward.
+      </p>
+    </div>
+  </section>
+
+  <hr class="divider-rule" />
+
+  {researchProgs.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <SectionHeader num="01" eyebrow="Initiatives" title="What we're working on." />
+        <div class="r-list">
+          {researchProgs.map(p => (
+            <a href={`/programmes/${p.id}`} class="r-card">
+              <h2 class="r-card-title">{p.data.title}</h2>
+              <p class="r-card-tag">{p.data.tagline}</p>
+              <span class="r-card-link">Read more →</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {recentPubs.length > 0 && (
+    <>
+      <hr class="divider-rule" />
+      <section class="section">
+        <div class="container">
+          <SectionHeader num="02" eyebrow="Publications" title="Recent papers." />
+          <ul class="rp-list">
+            {recentPubs.map(p => (
+              <li>
+                <a href={`/publications/${p.id}`} class="rp-link">
+                  <span class="rp-date mono">{fmt(p.data.date)}</span>
+                  <span class="rp-title">{p.data.title}</span>
+                  <span class="rp-arrow" aria-hidden="true">→</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div style="margin-top: 32px">
+            <a href="/publications" class="btn btn-ghost btn-arrow">All publications</a>
+          </div>
+        </div>
+      </section>
+    </>
+  )}
+
+  <Newsletter />
+</Base>
+
+<style>
+  .hero-r { padding-block: clamp(64px, 8vw, 112px); }
+  .hero-r .accent-bar { margin-bottom: 16px; }
+  .hero-r .mono { margin-bottom: 16px; color: var(--research-text); }
+  .hero-r-h {
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 24px;
+    color: var(--ink);
+  }
+  .hero-r-em {
+    color: var(--research);
+    font-style: italic;
+  }
+  [data-theme='dark'] .hero-r-em { color: var(--research-text); }
+
+  .r-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .r-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--research);
+    border-radius: 8px;
+    padding: 28px 28px 26px;
+    transition: border-color 0.25s var(--ease-quick), transform 0.25s var(--ease-quick);
+  }
+  .r-card:hover {
+    border-color: var(--line-strong);
+    border-left-color: var(--research);
+    transform: translateY(-2px);
+  }
+  .r-card-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .r-card-tag {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-mid);
+    margin-bottom: 18px;
+  }
+  .r-card-link {
+    font-size: 12px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .rp-list { list-style: none; border-top: 1px solid var(--line); }
+  .rp-link {
+    display: grid;
+    grid-template-columns: 110px 1fr 24px;
+    gap: 20px;
+    align-items: center;
+    padding: 22px 8px;
+    border-bottom: 1px solid var(--line);
+    transition: padding-left 0.2s var(--ease-quick);
+  }
+  .rp-link:hover { padding-left: 16px; background: var(--bg-soft); }
+  .rp-date { color: var(--ink-faint); font-size: 10px; }
+  .rp-title { font-size: 16px; font-weight: 500; color: var(--ink); line-height: 1.4; }
+  .rp-arrow { color: var(--ink-faint); font-size: 18px; transition: transform 0.2s; }
+  .rp-link:hover .rp-arrow { transform: translateX(4px); color: var(--gold-deep); }
+
+  @media (max-width: 820px) {
+    .r-list { grid-template-columns: 1fr; }
+    .rp-link {
+      grid-template-columns: 1fr 24px;
+    }
+    .rp-date { grid-column: 1 / -1; margin-bottom: -8px; }
+  }
+</style>

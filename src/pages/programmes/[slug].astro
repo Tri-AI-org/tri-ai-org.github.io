@@ -1,0 +1,222 @@
+---
+import Base from '../../layouts/Base.astro';
+import Newsletter from '../../components/Newsletter.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const programmes = await getCollection('programmes');
+  return programmes.map(p => ({
+    params: { slug: p.id },
+    props: { programme: p },
+  }));
+}
+
+const { programme } = Astro.props;
+const { Content } = await render(programme);
+const d = programme.data;
+---
+
+<Base title={`${d.title} — TRI AI`} description={d.tagline}>
+  <article class="prog-detail">
+    <!-- Header band — division coloured -->
+    <header class={`prog-hd prog-hd-${d.division}`}>
+      <div class="container">
+        <p class="prog-hd-bread">
+          <a href="/programmes">Programmes</a>
+          <span aria-hidden="true">·</span>
+          <span class="prog-hd-div">{d.division}</span>
+        </p>
+        <h1 class="prog-hd-title">{d.title}</h1>
+        <p class="prog-hd-tag">{d.tagline}</p>
+
+        <div class="prog-hd-meta">
+          {d.location && (
+            <div class="prog-meta-item">
+              <p class="mono-faint">Location</p>
+              <p>{d.location}</p>
+            </div>
+          )}
+          {d.cohortInfo && (
+            <div class="prog-meta-item">
+              <p class="mono-faint">Cohort</p>
+              <p>{d.cohortInfo}</p>
+            </div>
+          )}
+          <div class="prog-meta-item">
+            <p class="mono-faint">Status</p>
+            <p style="text-transform:capitalize">{d.status}</p>
+          </div>
+        </div>
+
+        {d.applyUrl && (
+          <a href={d.applyUrl} class="btn btn-primary btn-arrow prog-hd-cta">Apply</a>
+        )}
+      </div>
+    </header>
+
+    {d.cover && (
+      <div class="container prog-cover-wrap">
+        <img src={d.cover} alt="" class="prog-cover-img" />
+      </div>
+    )}
+
+    <!-- Body content (markdown) -->
+    <section class="section prog-body-sec">
+      <div class="container prog-body-grid">
+        <aside class="prog-side">
+          <p class="mono-faint">About this programme</p>
+          <p class="prog-side-text">{d.description}</p>
+        </aside>
+        <div class="prog-prose">
+          <Content />
+        </div>
+      </div>
+    </section>
+  </article>
+
+  <Newsletter />
+</Base>
+
+<style is:global>
+  .prog-prose {
+    font-size: 16.5px;
+    line-height: 1.75;
+    color: var(--ink-mid);
+  }
+  .prog-prose h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 40px 0 14px;
+    letter-spacing: -0.01em;
+  }
+  .prog-prose h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 28px 0 10px;
+  }
+  .prog-prose p { margin-bottom: 18px; }
+  .prog-prose ul, .prog-prose ol { padding-left: 22px; margin-bottom: 18px; }
+  .prog-prose li { margin-bottom: 6px; }
+  .prog-prose a {
+    color: var(--gold-deep);
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+  }
+  [data-theme='dark'] .prog-prose a { color: var(--gold); }
+  .prog-prose blockquote {
+    border-left: 3px solid var(--gold);
+    padding-left: 20px;
+    font-style: italic;
+    color: var(--ink);
+    margin: 24px 0;
+  }
+  .prog-prose img {
+    border-radius: 10px;
+    margin: 28px 0;
+  }
+  .prog-prose code {
+    background: var(--bg-soft);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+</style>
+
+<style>
+  .prog-hd {
+    padding-block: clamp(64px, 8vw, 112px);
+    border-bottom: 1px solid var(--line);
+  }
+  .prog-hd-teaching { background: var(--teaching-light); }
+  .prog-hd-research { background: var(--research-light); }
+  .prog-hd-innovation { background: var(--innovation-light); }
+
+  [data-theme='dark'] .prog-hd-teaching { background: rgba(254, 102, 18, 0.08); }
+  [data-theme='dark'] .prog-hd-research { background: rgba(74, 124, 201, 0.08); }
+  [data-theme='dark'] .prog-hd-innovation { background: rgba(46, 205, 184, 0.08); }
+
+  .prog-hd-bread {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 22px;
+  }
+  .prog-hd-bread a { color: var(--ink-mid); }
+  .prog-hd-bread a:hover { color: var(--ink); }
+  .prog-hd-div { color: var(--ink); }
+
+  .prog-hd-title {
+    font-size: clamp(36px, 5.5vw, 64px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    max-width: 18ch;
+    margin-bottom: 18px;
+  }
+  .prog-hd-tag {
+    font-size: clamp(17px, 1.6vw, 20px);
+    line-height: 1.5;
+    color: var(--ink-mid);
+    max-width: 60ch;
+    margin-bottom: 36px;
+  }
+
+  .prog-hd-meta {
+    display: flex;
+    gap: 56px;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+  }
+  .prog-meta-item p:first-child { margin-bottom: 4px; }
+  .prog-meta-item p:last-child {
+    font-size: 14px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .prog-cover-wrap {
+    margin-top: -1px;
+  }
+  .prog-cover-img {
+    width: 100%;
+    aspect-ratio: 16/8;
+    object-fit: cover;
+    border-radius: 0;
+    margin-block: 0;
+  }
+
+  .prog-body-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .prog-side {
+    position: sticky;
+    top: 96px;
+  }
+  .prog-side .mono-faint { margin-bottom: 12px; }
+  .prog-side-text {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink-mid);
+  }
+
+  @media (max-width: 920px) {
+    .prog-body-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .prog-side { position: static; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+  }
+</style>

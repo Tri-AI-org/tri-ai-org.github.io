@@ -1,0 +1,142 @@
+---
+import Base from '../../layouts/Base.astro';
+import Newsletter from '../../components/Newsletter.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const courses = await getCollection('courses');
+  return courses.map(c => ({
+    params: { slug: c.id },
+    props: { course: c },
+  }));
+}
+
+const { course } = Astro.props;
+const { Content } = await render(course);
+const d = course.data;
+---
+
+<Base title={`${d.title} — TRI AI Courses`}>
+  <article class="course">
+    <header class="course-hd">
+      <div class="container">
+        <p class="course-bread">
+          <a href="/courses">Courses</a>
+          <span aria-hidden="true">·</span>
+          <span class="tag tag-teaching">{d.track}</span>
+          {d.partner && <span class="course-partner">In collaboration with {d.partner}</span>}
+        </p>
+        <h1 class="course-title">{d.title}</h1>
+        <p class="course-sum">{d.summary}</p>
+
+        <div class="course-meta">
+          {d.duration && (
+            <div><p class="mono-faint">Duration</p><p>{d.duration}</p></div>
+          )}
+          <div><p class="mono-faint">Level</p><p style="text-transform:capitalize">{d.level}</p></div>
+        </div>
+
+        {d.enrollUrl && (
+          <a href={d.enrollUrl} class="btn btn-primary btn-arrow course-cta">Enrol</a>
+        )}
+      </div>
+    </header>
+
+    {d.cover && (
+      <div class="container">
+        <img src={d.cover} alt="" class="course-cover" />
+      </div>
+    )}
+
+    <section class="section">
+      <div class="container course-prose">
+        <Content />
+      </div>
+    </section>
+  </article>
+
+  <Newsletter />
+</Base>
+
+<style is:global>
+  .course-prose {
+    max-width: 720px;
+    font-size: 16.5px;
+    line-height: 1.8;
+    color: var(--ink-mid);
+  }
+  .course-prose h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 36px 0 12px;
+    letter-spacing: -0.01em;
+  }
+  .course-prose h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 24px 0 8px;
+  }
+  .course-prose p { margin-bottom: 16px; }
+  .course-prose ul, .course-prose ol { padding-left: 22px; margin-bottom: 16px; }
+  .course-prose li { margin-bottom: 6px; }
+  .course-prose a { color: var(--gold-deep); text-decoration: underline; }
+  [data-theme='dark'] .course-prose a { color: var(--gold); }
+</style>
+
+<style>
+  .course-hd {
+    padding-block: clamp(56px, 7vw, 96px);
+    background: var(--teaching-light);
+    border-bottom: 1px solid var(--line);
+  }
+  [data-theme='dark'] .course-hd { background: rgba(254, 102, 18, 0.06); }
+
+  .course-bread {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .course-bread a { color: var(--ink-mid); }
+  .course-partner { color: var(--ink-mid); text-transform: none; letter-spacing: 0.05em; font-size: 12px; }
+
+  .course-title {
+    font-size: clamp(32px, 4.5vw, 52px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    max-width: 22ch;
+    margin-bottom: 16px;
+  }
+  .course-sum {
+    font-size: clamp(16px, 1.5vw, 19px);
+    line-height: 1.55;
+    color: var(--ink-mid);
+    max-width: 60ch;
+    margin-bottom: 28px;
+  }
+  .course-meta {
+    display: flex;
+    gap: 48px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .course-meta .mono-faint { margin-bottom: 4px; }
+  .course-meta p:last-child { font-size: 14px; color: var(--ink); font-weight: 500; }
+
+  .course-cover {
+    width: 100%;
+    aspect-ratio: 16/8;
+    object-fit: cover;
+    margin-block: 0;
+  }
+</style>

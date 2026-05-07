@@ -1,0 +1,107 @@
+---
+// Posts to a Netlify form (set up at deploy)
+---
+
+<section class="nl" id="newsletter" aria-labelledby="nl-h">
+  <div class="container nl-inner">
+    <div class="nl-head">
+      <p class="mono">Stay connected</p>
+      <h2 id="nl-h" class="nl-title">TRI AI Dispatch</h2>
+      <p class="nl-desc">
+        Monthly updates on programmes, research, and opportunities — delivered straight to your inbox.
+      </p>
+    </div>
+    <form
+      class="nl-form"
+      name="newsletter"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+    >
+      <input type="hidden" name="form-name" value="newsletter" />
+      <p class="nl-honey" aria-hidden="true">
+        <label>Don't fill this out: <input name="bot-field" /></label>
+      </p>
+      <label class="nl-field">
+        <span class="nl-label">Email</span>
+        <input
+          type="email"
+          name="email"
+          required
+          placeholder="you@example.com"
+          autocomplete="email"
+        />
+      </label>
+      <button type="submit" class="btn btn-primary nl-submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .nl {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-soft);
+    padding-block: 80px;
+  }
+  .nl-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .nl-head .mono { margin-bottom: 12px; }
+  .nl-title {
+    font-size: clamp(28px, 3.5vw, 40px);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+  .nl-desc {
+    margin-top: 12px;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--ink-mid);
+    max-width: 44ch;
+  }
+
+  .nl-form {
+    display: flex;
+    gap: 8px;
+    align-items: end;
+    flex-wrap: wrap;
+  }
+  .nl-field { flex: 1; min-width: 220px; }
+  .nl-label {
+    display: block;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+  .nl-form input[type='email'] {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 14px;
+    transition: border-color 0.2s var(--ease-quick);
+  }
+  .nl-form input[type='email']:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+  .nl-submit { padding: 14px 24px; }
+  .nl-honey { display: none; }
+
+  @media (max-width: 820px) {
+    .nl-inner {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+  }
+</style>

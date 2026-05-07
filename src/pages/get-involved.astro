@@ -1,0 +1,194 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import Newsletter from '../components/Newsletter.astro';
+
+const ways = [
+  {
+    division: 'teaching',
+    label: 'Apply to learn',
+    title: 'Join a programme',
+    body: 'Applications open seasonally for TRI AI Saturdays cohorts and partner courses.',
+    cta: 'View programmes',
+    href: '/programmes',
+  },
+  {
+    division: 'research',
+    label: 'Collaborate',
+    title: 'Research partnerships',
+    body: 'Universities, labs, and independent researchers — get in touch about joint work, datasets, and grant collaboration.',
+    cta: 'Email research',
+    href: 'mailto:research@tri-ai.org',
+  },
+  {
+    division: 'innovation',
+    label: 'Mentor',
+    title: 'Share your expertise',
+    body: 'Volunteer as a mentor, instructor, or technical reviewer. Open to AI/ML practitioners worldwide.',
+    cta: 'Volunteer',
+    href: 'mailto:volunteer@tri-ai.org',
+  },
+];
+---
+
+<Base title="Get Involved — TRI AI">
+  <section class="hero-gi">
+    <div class="container">
+      <p class="mono">Get involved</p>
+      <h1 class="display hero-gi-h">
+        Join the work.
+      </h1>
+      <p class="lede">
+        TRI AI is built by a community of learners, researchers, mentors, and supporters. There are several ways to be part of it.
+      </p>
+    </div>
+  </section>
+
+  <hr class="divider-rule" />
+
+  <section class="section" id="apply">
+    <div class="container">
+      <SectionHeader num="01" eyebrow="Three paths" title="Find your way in." />
+      <div class="gi-grid">
+        {ways.map((w, i) => (
+          <a href={w.href} class={`gi-card gi-${w.division}`}>
+            <div class={`accent-bar accent-${w.division}`}></div>
+            <p class="mono gi-tag">0{i + 1} — {w.label}</p>
+            <h2 class="gi-title">{w.title}</h2>
+            <p class="gi-body">{w.body}</p>
+            <span class="gi-cta">{w.cta} <span aria-hidden="true">→</span></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider-rule" />
+
+  <section class="section gi-partner" id="partner">
+    <div class="container gi-partner-grid">
+      <div>
+        <p class="mono">Partner with us</p>
+        <h2 class="gi-partner-h">For organisations.</h2>
+        <p class="gi-partner-body">
+          Companies, foundations, and institutions: TRI AI partners on cohort sponsorship, joint research, hackathons, and capacity-building programmes. We've worked with global names and grassroots networks alike.
+        </p>
+        <a href="mailto:partnerships@tri-ai.org" class="btn btn-primary btn-arrow" style="margin-top: 24px">
+          partnerships@tri-ai.org
+        </a>
+      </div>
+      <div class="gi-partner-side">
+        <div class="gi-side-block">
+          <p class="mono-faint">Recent partners</p>
+          <p class="gi-side-text">Google DeepMind, Data Science Africa, and a growing network of African universities and research labs.</p>
+        </div>
+        <div class="gi-side-block">
+          <p class="mono-faint">Funding</p>
+          <p class="gi-side-text">TRI AI is a registered non-governmental organisation. Donations are tax-deductible in select jurisdictions.</p>
+          <a href="/donate" class="btn btn-ghost btn-arrow" style="margin-top: 12px">Donate</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Newsletter />
+</Base>
+
+<style>
+  .hero-gi { padding-block: clamp(64px, 8vw, 112px); }
+  .hero-gi .mono { margin-bottom: 16px; }
+  .hero-gi-h {
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 24px;
+    color: var(--ink);
+  }
+
+  .gi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .gi-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 32px 28px;
+    transition: border-color 0.25s var(--ease-quick), transform 0.25s var(--ease-quick);
+    display: flex;
+    flex-direction: column;
+  }
+  .gi-card:hover {
+    border-color: var(--line-strong);
+    transform: translateY(-2px);
+  }
+  .gi-tag { margin-bottom: 12px; }
+  .gi-teaching .gi-tag { color: var(--teaching); }
+  .gi-research .gi-tag { color: var(--research-text); }
+  .gi-innovation .gi-tag { color: var(--innovation); }
+
+  .gi-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .gi-body {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-mid);
+    flex: 1;
+    margin-bottom: 22px;
+  }
+  .gi-cta {
+    font-size: 12px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .gi-partner { background: var(--bg-soft); }
+  .gi-partner-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .gi-partner-h {
+    font-size: clamp(28px, 3.4vw, 40px);
+    font-weight: 700;
+    margin-block: 14px 18px;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+  .gi-partner-body {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ink-mid);
+    max-width: 50ch;
+  }
+
+  .gi-partner-side {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+  .gi-side-block .mono-faint { margin-bottom: 8px; }
+  .gi-side-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-mid);
+  }
+
+  @media (max-width: 920px) {
+    .gi-grid { grid-template-columns: 1fr; }
+    .gi-partner-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+</style>

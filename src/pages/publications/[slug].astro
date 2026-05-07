@@ -1,0 +1,312 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const pubs = await getCollection('publications', ({ data }) => !data.draft);
+  return pubs.map(p => ({
+    params: { slug: p.id },
+    props: { pub: p },
+  }));
+}
+
+const { pub } = Astro.props;
+const { Content } = await render(pub);
+const d = pub.data;
+
+const fmt = (date: Date) =>
+  date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+// Related: same division, exclude self, most recent 3
+const all = await getCollection('publications', ({ data }) => !data.draft);
+const related = all
+  .filter(p => p.data.division === d.division && p.id !== pub.id)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+---
+
+<Base title={`${d.title} — TRI AI`} description={d.abstract.slice(0, 160)}>
+  <article class="pub">
+    <!-- Breadcrumb -->
+    <nav class="pub-bread container" aria-label="Breadcrumb">
+      <a href="/publications">Publications</a>
+      <span aria-hidden="true">·</span>
+      <span class={`tag tag-${d.division}`}>{d.division}</span>
+    </nav>
+
+    <!-- Title block -->
+    <header class="pub-head container">
+      <p class="pub-date mono">{fmt(d.date)}</p>
+      <h1 class="pub-title">{d.title}</h1>
+
+      <div class="pub-actions">
+        {d.pdfUrl && (
+          <a href={d.pdfUrl} class="btn btn-primary btn-arrow" target="_blank" rel="noopener">
+            View PDF
+          </a>
+        )}
+        {d.externalUrl && (
+          <a href={d.externalUrl} class="btn btn-ghost btn-arrow" target="_blank" rel="noopener">
+            View publication
+          </a>
+        )}
+        <button type="button" class="btn btn-ghost" data-share data-title={d.title}>
+          Share
+        </button>
+      </div>
+    </header>
+
+    <hr class="divider-rule" />
+
+    <!-- Two-column body: prose + metadata sidebar -->
+    <div class="container pub-grid">
+      <div class="pub-prose">
+        <h2 class="pub-section-h">Abstract</h2>
+        <p class="pub-abstract">{d.abstract}</p>
+
+        <Content />
+      </div>
+
+      <aside class="pub-side">
+        <div class="pub-side-block">
+          <p class="mono-faint">Authors</p>
+          <p class="pub-side-text">{d.authors.join(', ')}</p>
+        </div>
+
+        {d.venue && (
+          <div class="pub-side-block">
+            <p class="mono-faint">Venue</p>
+            <p class="pub-side-text">{d.venue}</p>
+          </div>
+        )}
+
+        {d.project && (
+          <div class="pub-side-block">
+            <p class="mono-faint">Project</p>
+            <p class="pub-side-text">{d.project}</p>
+          </div>
+        )}
+
+        <div class="pub-side-block">
+          <p class="mono-faint">Division</p>
+          <p class="pub-side-text" style="text-transform:capitalize">
+            <span class={`tag tag-${d.division}`}>{d.division}</span>
+          </p>
+        </div>
+
+        <div class="pub-side-block">
+          <p class="mono-faint">Cite</p>
+          <p class="pub-side-text pub-cite">
+            {d.authors[0]?.split(' ').pop()}{d.authors.length > 1 && ' et al.'} ({d.date.getFullYear()}). {d.title}.{d.venue && ` ${d.venue}.`}
+          </p>
+        </div>
+      </aside>
+    </div>
+
+    {related.length > 0 && (
+      <section class="section pub-related">
+        <div class="container">
+          <h2 class="pub-related-h">Related publications</h2>
+          <ul class="pub-related-list">
+            {related.map(r => (
+              <li>
+                <a href={`/publications/${r.id}`} class="pub-related-link">
+                  <span class="pub-related-date mono">{fmt(r.data.date)}</span>
+                  <span class="pub-related-title">{r.data.title}</span>
+                  <span class="pub-related-arrow" aria-hidden="true">→</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )}
+  </article>
+</Base>
+
+<script is:inline>
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-share]');
+    if (!t) return;
+    const title = t.dataset.title || document.title;
+    const url = location.href;
+    if (navigator.share) {
+      navigator.share({ title, url }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(url).then(() => {
+        t.textContent = 'Copied';
+        setTimeout(() => (t.textContent = 'Share'), 1800);
+      });
+    }
+  });
+</script>
+
+<style is:global>
+  .pub-prose h2:not(.pub-section-h) {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 40px 0 14px;
+    letter-spacing: -0.01em;
+  }
+  .pub-prose h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 28px 0 10px;
+  }
+  .pub-prose p {
+    font-size: 16.5px;
+    line-height: 1.8;
+    color: var(--ink-mid);
+    margin-bottom: 18px;
+  }
+  .pub-prose a {
+    color: var(--gold-deep);
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+  }
+  [data-theme='dark'] .pub-prose a { color: var(--gold); }
+</style>
+
+<style>
+  .pub { padding-bottom: 60px; }
+  .pub-bread {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 32px;
+    padding-bottom: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .pub-bread a { color: var(--ink-mid); }
+  .pub-bread a:hover { color: var(--ink); }
+
+  .pub-head {
+    padding-block: 32px 56px;
+  }
+  .pub-date {
+    color: var(--ink-faint);
+    margin-bottom: 16px;
+  }
+  .pub-title {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 36px;
+    max-width: 24ch;
+  }
+  .pub-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .pub-grid {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 80px;
+    padding-block: 56px 32px;
+  }
+  .pub-section-h {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 14px;
+    letter-spacing: -0.005em;
+  }
+  .pub-abstract {
+    font-size: 16.5px;
+    line-height: 1.8;
+    color: var(--ink-mid);
+    margin-bottom: 32px;
+  }
+
+  .pub-side {
+    position: sticky;
+    top: 96px;
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+    background: var(--bg-soft);
+    border-radius: 10px;
+    border: 1px solid var(--line);
+  }
+  .pub-side-block .mono-faint { margin-bottom: 6px; }
+  .pub-side-text {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .pub-cite {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
+
+  .pub-related {
+    margin-top: 60px;
+    border-top: 1px solid var(--line);
+  }
+  .pub-related-h {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: var(--ink);
+  }
+  .pub-related-list { list-style: none; }
+  .pub-related-link {
+    display: grid;
+    grid-template-columns: 140px 1fr 24px;
+    gap: 20px;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+    transition: padding-left 0.2s var(--ease-quick);
+  }
+  .pub-related-link:hover { padding-left: 8px; }
+  .pub-related-date { color: var(--ink-faint); font-size: 10px; }
+  .pub-related-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .pub-related-arrow {
+    color: var(--ink-faint);
+    font-size: 18px;
+    transition: transform 0.2s, color 0.2s;
+  }
+  .pub-related-link:hover .pub-related-arrow {
+    transform: translateX(4px);
+    color: var(--gold-deep);
+  }
+
+  @media (max-width: 920px) {
+    .pub-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .pub-side {
+      position: static;
+      order: -1;
+    }
+    .pub-related-link {
+      grid-template-columns: 1fr 24px;
+    }
+    .pub-related-date {
+      grid-column: 1 / -1;
+      margin-bottom: -8px;
+    }
+  }
+</style>

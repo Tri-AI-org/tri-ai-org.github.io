@@ -1,0 +1,76 @@
+---
+/**
+ * Wordmark — the brand-correct triAI lockup.
+ *
+ * Brand rules honoured here:
+ * - "tri" lowercase, weight 500 (Plus Jakarta Sans)
+ * - "AI" uppercase, weight 800, always gold
+ * - No word-space, no hyphen between "tri" and "AI"
+ * - Three division dots (orange, blue, teal) — but only on focal-point uses.
+ *   In nav bars, footers, small contexts: dots dropped (per spec).
+ * - Below 24px: dots drop automatically.
+ */
+interface Props {
+  size?: number;          // wordmark height in px (controls scale)
+  showDots?: boolean;     // override; otherwise auto by size
+  className?: string;
+}
+
+const { size = 32, showDots, className = '' } = Astro.props;
+const dots = showDots ?? size >= 36;       // brand: dots only when focal
+const dotSize = Math.max(5, Math.round(size * 0.18));
+const dotGap = Math.max(4, Math.round(size * 0.12));
+---
+
+<span class={`wm ${className}`} style={`--wm-size:${size}px`}>
+  <span class="wm-text" aria-label="triAI">
+    <span class="wm-tri">tri</span><span class="wm-ai">AI</span>
+  </span>
+  {dots && (
+    <span class="wm-dots" aria-hidden="true" style={`--dot-size:${dotSize}px;--dot-gap:${dotGap}px`}>
+      <span class="wm-dot d-teaching"></span>
+      <span class="wm-dot d-research"></span>
+      <span class="wm-dot d-innovation"></span>
+    </span>
+  )}
+</span>
+
+<style>
+  .wm {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+    user-select: none;
+  }
+  .wm-text {
+    font-family: var(--font-sans);
+    font-size: var(--wm-size);
+    line-height: 1;
+    display: inline-flex;
+  }
+  .wm-tri {
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--wm-tri);
+  }
+  .wm-ai {
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: var(--gold);
+  }
+  .wm-dots {
+    display: inline-flex;
+    gap: var(--dot-gap);
+    margin-top: calc(var(--wm-size) * 0.18);
+  }
+  .wm-dot {
+    width: var(--dot-size);
+    height: var(--dot-size);
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .d-teaching { background: var(--teaching); }
+  .d-research { background: var(--research-text); }
+  .d-innovation { background: var(--innovation); }
+</style>

@@ -1,0 +1,150 @@
+---
+import Base from '../../layouts/Base.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import Newsletter from '../../components/Newsletter.astro';
+import { getCollection } from 'astro:content';
+
+const programmes = (await getCollection('programmes'))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const active = programmes.filter(p => p.data.status === 'active');
+const upcoming = programmes.filter(p => p.data.status === 'upcoming');
+---
+
+<Base title="Programmes — TRI AI">
+  <section class="hero-pg">
+    <div class="container">
+      <p class="mono">Programmes</p>
+      <h1 class="display hero-pg-h">
+        Where the work<br/>
+        meets the world.
+      </h1>
+      <p class="lede">
+        Active and upcoming initiatives across TRI AI's three divisions — Teaching, Research, and Innovation.
+      </p>
+    </div>
+  </section>
+
+  <hr class="divider-rule" />
+
+  <section class="section">
+    <div class="container">
+      {active.length > 0 && (
+        <>
+          <SectionHeader num="01" eyebrow="Active" title="Currently running." />
+          <div class="prog-list">
+            {active.map(p => (
+              <a href={`/programmes/${p.id}`} class={`prog-row prog-${p.data.division}`}>
+                <div class={`accent-bar accent-${p.data.division}`}></div>
+                <div class="prog-row-meta">
+                  <span class={`tag tag-${p.data.division}`}>{p.data.division}</span>
+                  {p.data.location && <span class="prog-row-loc mono">{p.data.location}</span>}
+                </div>
+                <h2 class="prog-row-title">{p.data.title}</h2>
+                <p class="prog-row-desc">{p.data.tagline}</p>
+                <span class="prog-row-cta">Read more <span aria-hidden="true">→</span></span>
+              </a>
+            ))}
+          </div>
+        </>
+      )}
+
+      {upcoming.length > 0 && (
+        <div style="margin-top: 80px">
+          <SectionHeader num="02" eyebrow="Upcoming" title="What's next." />
+          <div class="prog-list">
+            {upcoming.map(p => (
+              <div class={`prog-row prog-row-soon prog-${p.data.division}`}>
+                <div class={`accent-bar accent-${p.data.division}`}></div>
+                <div class="prog-row-meta">
+                  <span class={`tag tag-${p.data.division}`}>{p.data.division}</span>
+                  <span class="prog-row-loc mono">Coming soon</span>
+                </div>
+                <h2 class="prog-row-title">{p.data.title}</h2>
+                <p class="prog-row-desc">{p.data.tagline}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {active.length === 0 && upcoming.length === 0 && (
+        <p class="empty">Programmes will appear here. Add them via the CMS at /admin.</p>
+      )}
+    </div>
+  </section>
+
+  <Newsletter />
+</Base>
+
+<style>
+  .hero-pg { padding-block: clamp(64px, 8vw, 112px); }
+  .hero-pg .mono { margin-bottom: 16px; }
+  .hero-pg-h {
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 24px;
+    color: var(--ink);
+  }
+
+  .prog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .prog-row {
+    display: block;
+    padding: 32px 32px 28px;
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    transition: border-color 0.25s var(--ease-quick), transform 0.25s var(--ease-quick);
+  }
+  .prog-row:hover {
+    border-color: var(--line-strong);
+    transform: translateY(-1px);
+  }
+  .prog-row-soon { opacity: 0.7; pointer-events: none; }
+
+  .prog-row-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .prog-row-loc {
+    color: var(--ink-faint);
+    font-size: 10px;
+  }
+
+  .prog-row-title {
+    font-size: clamp(22px, 2.4vw, 28px);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .prog-row-desc {
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--ink-mid);
+    margin-bottom: 18px;
+    max-width: 80ch;
+  }
+  .prog-row-cta {
+    font-size: 12px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .empty {
+    padding: 40px;
+    text-align: center;
+    color: var(--ink-faint);
+    border: 1px dashed var(--line);
+    border-radius: 10px;
+  }
+</style>

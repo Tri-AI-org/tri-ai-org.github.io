@@ -1,0 +1,53 @@
+---
+interface Props {
+  num?: string;        // e.g. "01"
+  eyebrow: string;     // e.g. "What we do"
+  title: string;
+  description?: string;
+  align?: 'left' | 'center';
+}
+const { num, eyebrow, title, description, align = 'left' } = Astro.props;
+---
+
+<header class={`sh sh-${align}`}>
+  <p class="sh-mono mono">
+    {num && <span class="sh-num">{num} —</span>}
+    {eyebrow}
+  </p>
+  <h2 class="sh-title">{title}</h2>
+  {description && <p class="sh-desc">{description}</p>}
+</header>
+
+<style>
+  .sh { margin-bottom: 48px; }
+  .sh-center { text-align: center; }
+  .sh-center .sh-desc { margin-inline: auto; }
+
+  .sh-mono {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sh-center .sh-mono { justify-content: center; }
+  .sh-num {
+    color: var(--ink-faint);
+    font-family: var(--font-mono);
+  }
+  .sh-title {
+    font-size: var(--t-h1);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+    color: var(--ink);
+    max-width: 22ch;
+  }
+  .sh-center .sh-title { max-width: none; }
+  .sh-desc {
+    margin-top: 18px;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink-mid);
+    max-width: 56ch;
+  }
+</style>

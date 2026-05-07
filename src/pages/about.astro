@@ -1,0 +1,300 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { getCollection } from 'astro:content';
+
+const team = (await getCollection('team')).sort((a, b) => a.data.order - b.data.order);
+const board = team.filter(t => t.data.group === 'board');
+const leadership = team.filter(t => t.data.group === 'leadership');
+const partners = (await getCollection('partners')).sort((a, b) => a.data.order - b.data.order);
+
+const values = [
+  { title: 'Innovation', body: 'We embrace new ideas and continuously explore ways to advance AI knowledge.' },
+  { title: 'Accessibility', body: 'We believe AI education should be open and available to everyone.' },
+  { title: 'Community', body: 'We grow through shared learning and collective progress.' },
+  { title: 'Collaboration', body: 'We partner with organisations and individuals to amplify impact.' },
+  { title: 'Empowerment', body: 'We equip individuals with the tools to build and lead.' },
+];
+---
+
+<Base title="About — TRI AI" description="An institution advancing artificial intelligence in Africa through teaching, research, and innovation.">
+  <!-- Eyebrow hero -->
+  <section class="about-hero">
+    <div class="container">
+      <p class="mono">About</p>
+      <h1 class="display about-h">
+        An institution advancing<br/>
+        AI in Africa.
+      </h1>
+      <p class="lede about-lede">
+        TRI AI is a non-governmental organisation registered as Artificial Intelligence Teaching Research and Innovation for Africa Ltd/Gte. Through three divisions, the organisation advances AI education, research, and innovation across Africa.
+      </p>
+    </div>
+  </section>
+
+  <hr class="divider-rule" />
+
+  <!-- Story / Mission / Vision in editorial layout -->
+  <section class="section">
+    <div class="container about-grid">
+      <div class="about-cell">
+        <div class="accent-bar accent-gold"></div>
+        <h2>Our story</h2>
+        <p>
+          TRI AI was founded to address the growing need for accessible and locally relevant AI education in Africa. What began as a community initiative has evolved into a structured institution supporting learning, research, and innovation.
+        </p>
+        <p>
+          Through programmes like TRI AI Saturdays Lagos and initiatives like the Sauti Project, TRI AI continues to build a strong ecosystem where learners, researchers, and collaborators can grow and contribute meaningfully.
+        </p>
+      </div>
+
+      <div class="about-cell">
+        <div class="accent-bar accent-gold"></div>
+        <h2>Mission</h2>
+        <p class="ms-quote">
+          To democratise artificial intelligence by building African AI communities that enable learning, research, and the development of AI solutions for local and global impact.
+        </p>
+
+        <h2 style="margin-top:48px">Vision</h2>
+        <p class="ms-quote">
+          To be at the forefront of artificial intelligence research and development in Africa and for Africa.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider-rule" />
+
+  <!-- Values -->
+  <section class="section">
+    <div class="container">
+      <SectionHeader num="02" eyebrow="What we stand for" title="Our values." />
+      <div class="values">
+        {values.map((v, i) => (
+          <div class="value-cell">
+            <p class="value-num mono">0{i + 1}</p>
+            <h3 class="value-h">{v.title}</h3>
+            <p class="value-body">{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider-rule" />
+
+  <!-- Team -->
+  <section class="section" id="team">
+    <div class="container">
+      <SectionHeader
+        num="03"
+        eyebrow="Leadership"
+        title="A growing network."
+        description="Educators, researchers, and volunteers committed to advancing AI across Africa."
+      />
+
+      {board.length > 0 && (
+        <>
+          <p class="mono team-group-label">Board of trustees</p>
+          <div class="team-grid">
+            {board.map(t => (
+              <div class="team-card">
+                {t.data.photo && <img src={t.data.photo} alt={t.data.name} class="team-photo" loading="lazy" />}
+                <h3 class="team-name">{t.data.name}</h3>
+                <p class="team-role">{t.data.role}</p>
+                {t.data.linkedin && <a href={t.data.linkedin} class="team-link">LinkedIn →</a>}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {leadership.length > 0 && (
+        <>
+          <p class="mono team-group-label" style="margin-top: 64px">Leadership team</p>
+          <div class="team-grid">
+            {leadership.map(t => (
+              <div class="team-card">
+                {t.data.photo && <img src={t.data.photo} alt={t.data.name} class="team-photo" loading="lazy" />}
+                <h3 class="team-name">{t.data.name}</h3>
+                <p class="team-role">{t.data.role}</p>
+                {t.data.linkedin && <a href={t.data.linkedin} class="team-link">LinkedIn →</a>}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {team.length === 0 && (
+        <p class="empty">Team members will be listed here. Add them via the CMS.</p>
+      )}
+    </div>
+  </section>
+
+  {partners.length > 0 && (
+    <>
+      <hr class="divider-rule" />
+      <section class="section partners-sec" id="partners">
+        <div class="container">
+          <SectionHeader num="04" eyebrow="Partners & supporters" title="We don't do this alone." align="center" />
+          <div class="partner-row">
+            {partners.map(p => (
+              <a href={p.data.url || '#'} class="partner-logo">
+                <img src={p.data.logo} alt={p.data.name} loading="lazy" />
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  )}
+
+  <Newsletter />
+</Base>
+
+<style>
+  .about-hero {
+    padding-block: clamp(72px, 9vw, 120px);
+  }
+  .about-hero .mono { margin-bottom: 16px; }
+  .about-h {
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 28px;
+    color: var(--ink);
+  }
+  .about-lede { color: var(--ink-mid); max-width: 60ch; }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+  .about-cell h2 {
+    font-size: var(--t-h2);
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+  .about-cell p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink-mid);
+    margin-bottom: 14px;
+  }
+  .ms-quote {
+    font-size: 17px !important;
+    font-style: italic;
+    color: var(--ink) !important;
+    line-height: 1.55 !important;
+    border-left: 3px solid var(--gold);
+    padding-left: 16px;
+  }
+
+  .values {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg-elev);
+  }
+  .value-cell {
+    padding: 28px 24px 32px;
+    border-right: 1px solid var(--line);
+  }
+  .value-cell:last-child { border-right: 0; }
+  .value-num { color: var(--gold-deep); margin-bottom: 18px; }
+  [data-theme='dark'] .value-num { color: var(--gold); }
+  .value-h {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .value-body {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink-mid);
+  }
+
+  .team-group-label {
+    margin-bottom: 24px;
+    color: var(--ink-faint);
+  }
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px 24px;
+  }
+  .team-card { text-align: left; }
+  .team-photo {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 14px;
+    background: var(--bg-soft);
+  }
+  .team-name {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+  .team-role {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+  .team-link {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+  }
+  [data-theme='dark'] .team-link { color: var(--gold); }
+
+  .partners-sec { background: var(--bg-soft); }
+  .partner-row {
+    display: flex;
+    gap: 56px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .partner-logo img {
+    max-height: 44px;
+    width: auto;
+    opacity: 0.75;
+    filter: grayscale(20%);
+    transition: opacity 0.2s, filter 0.2s;
+  }
+  .partner-logo:hover img {
+    opacity: 1;
+    filter: grayscale(0);
+  }
+
+  .empty {
+    padding: 32px;
+    text-align: center;
+    color: var(--ink-faint);
+    border: 1px dashed var(--line);
+    border-radius: 10px;
+  }
+
+  @media (max-width: 920px) {
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .values { grid-template-columns: repeat(2, 1fr); }
+    .value-cell { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .values { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr 1fr; gap: 20px 14px; }
+  }
+</style>

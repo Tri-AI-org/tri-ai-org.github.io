@@ -1,0 +1,103 @@
+---
+const pillars = [
+  {
+    division: 'teaching',
+    label: 'Teaching',
+    title: 'Equipping a generation',
+    body: 'We equip African learners with practical AI skills through structured programmes, mentorship, and community-led learning experiences.',
+    href: '/programmes',
+  },
+  {
+    division: 'research',
+    label: 'Research',
+    title: 'African questions, global answers',
+    body: 'Driving research initiatives that address African challenges while contributing to the global AI ecosystem.',
+    href: '/research',
+  },
+  {
+    division: 'innovation',
+    label: 'Innovation',
+    title: 'From research to real-world',
+    body: 'Supporting the development of tools, datasets, and systems that translate research into deployable AI applications.',
+    href: '/innovation',
+  },
+];
+---
+
+<div class="pillars">
+  {pillars.map((p, i) => (
+    <a href={p.href} class={`pillar pillar-${p.division}`} style={`--i:${i}`}>
+      <div class={`accent-bar accent-${p.division}`}></div>
+      <p class={`mono pillar-tag`}>{String(i + 1).padStart(2, '0')} — {p.label}</p>
+      <h3 class="pillar-title">{p.title}</h3>
+      <p class="pillar-body">{p.body}</p>
+      <span class="pillar-link">Learn more <span aria-hidden="true">→</span></span>
+    </a>
+  ))}
+</div>
+
+<style>
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg-elev);
+  }
+  .pillar {
+    padding: 36px 32px 32px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--line);
+    transition: background 0.25s var(--ease-quick);
+    position: relative;
+  }
+  .pillar:last-child { border-right: 0; }
+  .pillar:hover { background: var(--bg-soft); }
+
+  .pillar-tag {
+    color: var(--ink-faint);
+    margin-bottom: 12px;
+  }
+  .pillar-teaching .pillar-tag { color: var(--teaching); }
+  .pillar-research .pillar-tag { color: var(--research-text); }
+  .pillar-innovation .pillar-tag { color: var(--innovation); }
+
+  .pillar-title {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+    color: var(--ink);
+    max-width: 14ch;
+  }
+  .pillar-body {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--ink-mid);
+    flex: 1;
+    margin-bottom: 24px;
+  }
+  .pillar-link {
+    font-size: 12px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    align-self: flex-start;
+  }
+  .pillar:hover .pillar-link { color: var(--gold-deep); }
+  [data-theme='dark'] .pillar:hover .pillar-link { color: var(--gold); }
+
+  @media (max-width: 820px) {
+    .pillars { grid-template-columns: 1fr; }
+    .pillar {
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .pillar:last-child { border-bottom: 0; }
+  }
+</style>
