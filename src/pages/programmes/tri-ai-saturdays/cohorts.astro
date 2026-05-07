@@ -35,11 +35,11 @@ const yearsRange = cohorts.length > 0
       <div class="accent-bar accent-teaching"></div>
       <p class="mono" style="color: var(--teaching)">Cohort archive</p>
       <h1 class="ca-title">
-        Nine cohorts.<br/>
+        {cohorts.length} cohorts.
         <span class="ca-em">All in the open.</span>
       </h1>
       <p class="ca-lede">
-        Every cohort of TRI AI Saturdays Lagos, in reverse chronological order. Projects from each cohort live on GitHub; cohort writeups are published on Medium where available.
+        Every cohort of TRI AI Saturdays Lagos, in reverse chronological order. Each cohort has its own page with curriculum, capstone projects, and instructor credits — preserved as a public record of nearly a decade of community-led AI learning.
       </p>
 
       <div class="ca-stats">
@@ -71,37 +71,24 @@ const yearsRange = cohorts.length > 0
           <ul class="ca-list" data-reveal-stagger>
             {cohorts.map(c => (
               <li class="ca-row">
-                <div class="ca-row-meta">
-                  <span class="ca-num mono">C{String(c.data.number).padStart(2, '0')}</span>
-                  <span class="ca-year mono">{c.data.year}</span>
-                  {c.data.status === 'running' && (
-                    <span class="ca-badge ca-badge-active">Currently running</span>
-                  )}
-                  {c.data.status === 'upcoming' && (
-                    <span class="ca-badge ca-badge-soon">Upcoming</span>
-                  )}
-                </div>
-                <h2 class="ca-row-title">{c.data.title || `Cohort ${c.data.number}`}</h2>
-                <p class="ca-row-summary">{c.data.summary}</p>
-                {(c.data.projectsUrl || c.data.blogUrl || c.data.photoUrl) && (
-                  <div class="ca-row-links">
-                    {c.data.projectsUrl && (
-                      <a href={c.data.projectsUrl} target="_blank" rel="noopener" class="ca-link">
-                        Projects on GitHub <span aria-hidden="true">↗</span>
-                      </a>
+                <a href={`/programmes/tri-ai-saturdays/cohorts/${c.data.number}`} class="ca-row-link">
+                  <div class="ca-row-meta">
+                    <span class="ca-num mono">C{String(c.data.number).padStart(2, '0')}</span>
+                    <span class="ca-year mono">{c.data.year}</span>
+                    {c.data.status === 'running' && (
+                      <span class="ca-badge ca-badge-active">Currently running</span>
                     )}
-                    {c.data.blogUrl && (
-                      <a href={c.data.blogUrl} target="_blank" rel="noopener" class="ca-link">
-                        Cohort writeup <span aria-hidden="true">↗</span>
-                      </a>
+                    {c.data.status === 'upcoming' && (
+                      <span class="ca-badge ca-badge-soon">Upcoming</span>
                     )}
-                    {c.data.photoUrl && (
-                      <a href={c.data.photoUrl} target="_blank" rel="noopener" class="ca-link">
-                        Photos <span aria-hidden="true">↗</span>
-                      </a>
+                    {c.data.partner && (
+                      <span class="ca-partner mono">w/ {c.data.partner}</span>
                     )}
                   </div>
-                )}
+                  <h2 class="ca-row-title">{c.data.title || `Cohort ${c.data.number}`}</h2>
+                  <p class="ca-row-summary">{c.data.summary}</p>
+                  <span class="ca-row-cta mono">Read full cohort page <span aria-hidden="true">→</span></span>
+                </a>
               </li>
             ))}
           </ul>
@@ -188,10 +175,43 @@ const yearsRange = cohorts.length > 0
   }
   .ca-row {
     border-bottom: 1px solid var(--line);
+  }
+  .ca-row-link {
+    display: block;
     padding-block: 28px;
+    text-decoration: none;
+    color: inherit;
     transition: padding-left 0.25s var(--ease-quick);
   }
-  .ca-row:hover { padding-left: 8px; }
+  .ca-row-link:hover { padding-left: 12px; }
+  .ca-row-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    transition: color 0.2s, gap 0.2s var(--ease-quick);
+  }
+  .ca-row-link:hover .ca-row-cta {
+    color: var(--teaching);
+    gap: 14px;
+  }
+  .ca-partner {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    background: var(--gold-light);
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  [data-theme='dark'] .ca-partner {
+    background: rgba(212, 160, 23, 0.14);
+    color: var(--gold);
+  }
 
   .ca-row-meta {
     display: flex;

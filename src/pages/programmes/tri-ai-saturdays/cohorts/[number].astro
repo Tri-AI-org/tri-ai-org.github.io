@@ -1,0 +1,520 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import Newsletter from '../../../../components/Newsletter.astro';
+import { getCollection, getEntry, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const cohorts = await getCollection('cohorts');
+  return cohorts.map(c => ({
+    params: { number: String(c.data.number) },
+    props: { cohort: c },
+  }));
+}
+
+const { cohort } = Astro.props;
+const d = cohort.data;
+const { Content, headings } = await render(cohort);
+
+// Determine adjacent cohorts (prev/next by number) for in-page nav
+const allCohorts = (await getCollection('cohorts'))
+  .filter(c => c.data.programme === d.programme)
+  .sort((a, b) => a.data.number - b.data.number);
+
+const idx = allCohorts.findIndex(c => c.data.number === d.number);
+const prev = idx > 0 ? allCohorts[idx - 1] : null;
+const next = idx >= 0 && idx < allCohorts.length - 1 ? allCohorts[idx + 1] : null;
+
+const programme = await getEntry('programmes', d.programme);
+
+// Status label
+const statusLabels: Record<string, string> = {
+  upcoming: 'Upcoming',
+  running: 'Currently running',
+  completed: 'Completed',
+};
+---
+
+<Base
+  title={`Cohort ${d.number} — ${programme?.data.title ?? 'TRI AI Saturdays Lagos'}`}
+  description={d.summary}
+>
+  <article class="ch">
+    <!-- Header -->
+    <header class="ch-hd">
+      <div class="container">
+        <nav class="ch-bread mono" aria-label="Breadcrumb">
+          <a href="/programmes">Programmes</a>
+          <span aria-hidden="true">›</span>
+          <a href={`/programmes/${d.programme}`}>{programme?.data.title ?? 'TRI AI Saturdays Lagos'}</a>
+          <span aria-hidden="true">›</span>
+          <a href={`/programmes/${d.programme}/cohorts`}>Cohorts</a>
+        </nav>
+
+        <div class="ch-num-row">
+          <span class="ch-num mono">C{String(d.number).padStart(2, '0')}</span>
+          <span class={`ch-status mono ch-status-${d.status}`}>
+            <span class="ch-status-dot" aria-hidden="true"></span>
+            {statusLabels[d.status] ?? d.status}
+          </span>
+          <span class="ch-year mono">{d.year}</span>
+        </div>
+
+        <h1 class="ch-title">
+          {d.title ?? `Cohort ${d.number}`}
+        </h1>
+        <p class="ch-summary">{d.summary}</p>
+
+        <!-- Fact strip -->
+        <dl class="ch-facts">
+          {d.duration && (
+            <div class="ch-fact">
+              <dt class="mono">Duration</dt>
+              <dd>{d.duration}</dd>
+            </div>
+          )}
+          {d.format && (
+            <div class="ch-fact">
+              <dt class="mono">Format</dt>
+              <dd>{d.format}</dd>
+            </div>
+          )}
+          {(d.startDate || d.endDate) && (
+            <div class="ch-fact">
+              <dt class="mono">Dates</dt>
+              <dd>{d.startDate}{d.startDate && d.endDate ? ' → ' : ''}{d.endDate}</dd>
+            </div>
+          )}
+          {d.partner && (
+            <div class="ch-fact">
+              <dt class="mono">Partner</dt>
+              <dd>{d.partner}</dd>
+            </div>
+          )}
+          {d.learners && (
+            <div class="ch-fact">
+              <dt class="mono">Learners</dt>
+              <dd>{d.learners}</dd>
+            </div>
+          )}
+          {d.teamsCount && (
+            <div class="ch-fact">
+              <dt class="mono">Teams</dt>
+              <dd>{d.teamsCount}</dd>
+            </div>
+          )}
+        </dl>
+
+        <!-- Action row -->
+        {(d.githubUrl || d.youtubePlaylist || d.projectsUrl || d.blogUrl) && (
+          <div class="ch-actions">
+            {d.githubUrl && (
+              <a href={d.githubUrl} target="_blank" rel="noopener" class="btn btn-ghost btn-arrow">GitHub repo</a>
+            )}
+            {d.youtubePlaylist && (
+              <a href={d.youtubePlaylist} target="_blank" rel="noopener" class="btn btn-ghost btn-arrow">YouTube playlist</a>
+            )}
+            {d.projectsUrl && (
+              <a href={d.projectsUrl} target="_blank" rel="noopener" class="btn btn-ghost btn-arrow">Projects</a>
+            )}
+            {d.blogUrl && (
+              <a href={d.blogUrl} target="_blank" rel="noopener" class="btn btn-ghost btn-arrow">Read more</a>
+            )}
+          </div>
+        )}
+      </div>
+    </header>
+
+    {d.cover && (
+      <div class="container ch-cover-wrap">
+        <img src={d.cover} alt="" class="ch-cover-img" loading="lazy" />
+      </div>
+    )}
+
+    <!-- Body grid: side TOC + prose -->
+    <section class="section ch-body-sec">
+      <div class="container ch-body-grid">
+        <aside class="ch-side">
+          {headings.length > 0 && (
+            <nav class="ch-toc" aria-label="Contents">
+              <p class="mono ch-toc-label">On this page</p>
+              <ul>
+                {headings
+                  .filter(h => h.depth === 2 || h.depth === 3)
+                  .map(h => (
+                    <li class={`ch-toc-d-${h.depth}`}>
+                      <a href={`#${h.slug}`}>{h.text}</a>
+                    </li>
+                  ))}
+              </ul>
+            </nav>
+          )}
+        </aside>
+
+        <div class="ch-prose">
+          <Content />
+
+          <!-- Acknowledgements / instructor lists, when populated via frontmatter -->
+          {(d.instructors?.length || d.practicalInstructors?.length || d.mentors?.length) && (
+            <section class="ch-credit">
+              <h2 id="credits">Credits</h2>
+              {d.instructors && d.instructors.length > 0 && (
+                <div class="ch-credit-block">
+                  <p class="mono ch-credit-label">Instructors</p>
+                  <p class="ch-credit-list">{d.instructors.join(' · ')}</p>
+                </div>
+              )}
+              {d.practicalInstructors && d.practicalInstructors.length > 0 && (
+                <div class="ch-credit-block">
+                  <p class="mono ch-credit-label">Practical instructors</p>
+                  <p class="ch-credit-list">{d.practicalInstructors.join(' · ')}</p>
+                </div>
+              )}
+              {d.mentors && d.mentors.length > 0 && (
+                <div class="ch-credit-block">
+                  <p class="mono ch-credit-label">Mentors</p>
+                  <p class="ch-credit-list">{d.mentors.join(' · ')}</p>
+                </div>
+              )}
+              {(d.organizingLead || d.organizingCoLead || d.organizingSupports?.length) && (
+                <div class="ch-credit-block">
+                  <p class="mono ch-credit-label">Organising team</p>
+                  <p class="ch-credit-list">
+                    {d.organizingLead && <><strong>{d.organizingLead}</strong> (lead)</>}
+                    {d.organizingCoLead && <>{' · '}<strong>{d.organizingCoLead}</strong> (co-lead)</>}
+                    {d.organizingSupports && d.organizingSupports.length > 0 && <>{' · '}{d.organizingSupports.join(' · ')}</>}
+                  </p>
+                </div>
+              )}
+            </section>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <!-- Prev / Next navigation -->
+    <nav class="ch-nav" aria-label="Cohort navigation">
+      <div class="container ch-nav-grid">
+        {prev ? (
+          <a href={`/programmes/${d.programme}/cohorts/${prev.data.number}`} class="ch-nav-link ch-nav-prev">
+            <span class="mono ch-nav-eyebrow">← Previous</span>
+            <span class="ch-nav-title">C{String(prev.data.number).padStart(2, '0')} — {prev.data.year}</span>
+          </a>
+        ) : <span></span>}
+        {next ? (
+          <a href={`/programmes/${d.programme}/cohorts/${next.data.number}`} class="ch-nav-link ch-nav-next">
+            <span class="mono ch-nav-eyebrow">Next →</span>
+            <span class="ch-nav-title">C{String(next.data.number).padStart(2, '0')} — {next.data.year}</span>
+          </a>
+        ) : <span></span>}
+      </div>
+    </nav>
+  </article>
+
+  <Newsletter />
+</Base>
+
+<style is:global>
+  .ch-prose { font-size: 16px; line-height: 1.7; color: var(--ink-mid); }
+  .ch-prose h2 {
+    font-size: clamp(22px, 2.6vw, 28px);
+    margin-top: 56px;
+    margin-bottom: 16px;
+    color: var(--ink);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    scroll-margin-top: 80px;
+  }
+  .ch-prose h3 {
+    font-size: 19px;
+    margin-top: 36px;
+    margin-bottom: 12px;
+    color: var(--ink);
+    font-weight: 700;
+    scroll-margin-top: 80px;
+  }
+  .ch-prose p { margin-bottom: 16px; }
+  .ch-prose ul, .ch-prose ol {
+    margin-bottom: 18px;
+    padding-left: 22px;
+  }
+  .ch-prose li { margin-bottom: 6px; }
+  .ch-prose a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--line-strong);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s;
+  }
+  .ch-prose a:hover { text-decoration-color: var(--gold); color: var(--gold-deep); }
+  [data-theme='dark'] .ch-prose a:hover { color: var(--gold); }
+  .ch-prose strong { color: var(--ink); font-weight: 600; }
+  .ch-prose code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: var(--bg-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+  }
+  .ch-prose blockquote {
+    border-left: 3px solid var(--gold);
+    padding-left: 16px;
+    margin: 18px 0;
+    color: var(--ink-mid);
+    font-style: italic;
+  }
+  .ch-prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 14px;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    display: block;
+    overflow-x: auto;
+  }
+  .ch-prose th, .ch-prose td {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .ch-prose th {
+    background: var(--bg-soft);
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .ch-prose tr:last-child td { border-bottom: none; }
+
+  .ch-credit {
+    margin-top: 80px;
+    padding-top: 40px;
+    border-top: 1px solid var(--line);
+  }
+  .ch-credit h2 { margin-top: 0 !important; }
+  .ch-credit-block { margin-bottom: 24px; }
+  .ch-credit-label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+  .ch-credit-list {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+</style>
+
+<style>
+  .ch-hd {
+    padding-block: clamp(48px, 6vw, 72px) 32px;
+  }
+  .ch-bread {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .ch-bread a { color: var(--ink-mid); text-decoration: none; }
+  .ch-bread a:hover { color: var(--ink); }
+
+  .ch-num-row {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .ch-num {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--teaching);
+    background: var(--teaching-light);
+    padding: 4px 12px;
+    border-radius: 4px;
+  }
+  [data-theme='dark'] .ch-num { background: rgba(254, 102, 18, 0.12); }
+
+  .ch-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+  }
+  .ch-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ink-faint);
+  }
+  .ch-status-running .ch-status-dot {
+    background: var(--teaching);
+    animation: ch-pulse 1.6s ease-in-out infinite;
+  }
+  .ch-status-upcoming .ch-status-dot { background: var(--gold); }
+  .ch-status-completed .ch-status-dot { background: var(--ink-faint); opacity: 0.5; }
+  @keyframes ch-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.55; transform: scale(1.4); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ch-status-running .ch-status-dot { animation: none; }
+  }
+
+  .ch-year {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .ch-title {
+    font-size: var(--t-display-l);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    max-width: 22ch;
+    margin-bottom: 18px;
+  }
+  .ch-summary {
+    font-size: clamp(15.5px, 1.3vw, 18px);
+    line-height: 1.6;
+    color: var(--ink-mid);
+    max-width: 64ch;
+    margin-bottom: 36px;
+  }
+
+  /* Fact strip */
+  .ch-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 28px 36px;
+    padding-block: 24px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 28px;
+  }
+  .ch-fact dt {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 6px;
+  }
+  .ch-fact dd {
+    font-size: 14px;
+    color: var(--ink);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .ch-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .ch-cover-wrap {
+    margin-block: 32px 0;
+  }
+  .ch-cover-img {
+    width: 100%;
+    aspect-ratio: 21/9;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    display: block;
+  }
+
+  /* Body grid */
+  .ch-body-sec { padding-block: clamp(48px, 6vw, 80px); }
+  .ch-body-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
+    gap: 60px;
+    align-items: flex-start;
+  }
+  .ch-side { position: sticky; top: 80px; }
+  .ch-toc-label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 16px;
+  }
+  .ch-toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-left: 1px solid var(--line);
+  }
+  .ch-toc li {
+    padding-left: 14px;
+    margin-bottom: 8px;
+    position: relative;
+  }
+  .ch-toc-d-3 { padding-left: 28px !important; }
+  .ch-toc a {
+    font-size: 13px;
+    color: var(--ink-mid);
+    text-decoration: none;
+    line-height: 1.4;
+    transition: color 0.2s;
+  }
+  .ch-toc a:hover { color: var(--teaching); }
+
+  /* Prev/next nav */
+  .ch-nav {
+    border-top: 1px solid var(--line);
+    padding-block: 36px;
+  }
+  .ch-nav-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .ch-nav-link {
+    display: block;
+    padding: 18px 22px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    background: var(--bg-elev);
+    transition: border-color 0.2s, transform 0.2s var(--ease-quick);
+  }
+  .ch-nav-link:hover {
+    border-color: var(--teaching);
+    transform: translateY(-2px);
+  }
+  .ch-nav-next { text-align: right; }
+  .ch-nav-eyebrow {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 4px;
+  }
+  .ch-nav-title { font-size: 14px; font-weight: 600; color: var(--ink); }
+
+  @media (max-width: 880px) {
+    .ch-body-grid { grid-template-columns: 1fr; gap: 32px; }
+    .ch-side { position: static; }
+  }
+</style>

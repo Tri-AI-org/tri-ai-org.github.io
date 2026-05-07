@@ -62,9 +62,24 @@ const cohorts = defineCollection({
     year: z.number(),
     title: z.string().optional(),  // optional theme/name
     learners: z.number().optional(),
+    teamsCount: z.number().optional(),
+    duration: z.string().optional(),  // e.g. "16 weeks"
+    format: z.string().optional(),    // e.g. "Flipped classroom" / "In-person + online"
+    startDate: z.string().optional(), // e.g. "Jul 26, 2025" — kept as string; not always precise
+    endDate: z.string().optional(),
+    partner: z.string().optional(),   // e.g. "Google DeepMind"
     projectsUrl: z.string().url().optional(),
     blogUrl: z.string().url().optional(),
+    githubUrl: z.string().url().optional(),     // dedicated cohort repo
+    youtubePlaylist: z.string().url().optional(),
     photoUrl: z.string().optional(),       // internal /uploads/... or external Google Photos link
+    cover: z.string().optional(),          // hero image for the cohort page
+    instructors: z.array(z.string()).optional(),
+    practicalInstructors: z.array(z.string()).optional(),
+    mentors: z.array(z.string()).optional(),
+    organizingLead: z.string().optional(),
+    organizingCoLead: z.string().optional(),
+    organizingSupports: z.array(z.string()).optional(),
     summary: z.string(),
     status: z.enum(['completed', 'running', 'upcoming']).default('completed'),
   }),

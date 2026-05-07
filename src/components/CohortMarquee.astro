@@ -31,7 +31,7 @@ const totalCount = cohorts.length;
         <ul class="marquee-track">
           {cohorts.map(c => (
             <li class={`marquee-item ${c.data.status === 'upcoming' ? 'is-current' : ''} ${c.data.status === 'running' ? 'is-running' : ''}`}>
-              <a href="/programmes/tri-ai-saturdays/cohorts" class="marquee-link">
+              <a href={`/programmes/tri-ai-saturdays/cohorts/${c.data.number}`} class="marquee-link">
                 <span class="marquee-c mono">C{String(c.data.number).padStart(2, '0')}</span>
                 <span class="marquee-y mono">{c.data.year}</span>
                 {c.data.status === 'upcoming' && <span class="marquee-dot" aria-hidden="true"></span>}

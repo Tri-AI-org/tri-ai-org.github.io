@@ -126,16 +126,38 @@ collections:
       - { label: Number, name: number, widget: number, value_type: int, hint: 'Cohort number, e.g. 9' }
       - { label: Year, name: year, widget: number, value_type: int }
       - { label: Title, name: title, widget: string, required: false, hint: 'Optional theme/name' }
-      - { label: Learners, name: learners, widget: number, value_type: int, required: false }
-      - { label: Projects URL, name: projectsUrl, widget: string, required: false, hint: 'GitHub repo for cohort projects' }
-      - { label: Blog URL, name: blogUrl, widget: string, required: false, hint: 'Medium writeup or similar' }
-      - { label: Photo URL, name: photoUrl, widget: string, required: false }
-      - { label: Summary, name: summary, widget: text }
       - label: Status
         name: status
         widget: select
         options: [completed, running, upcoming]
         default: completed
+      - { label: Summary (1-3 sentences shown on archive page), name: summary, widget: text }
+      - { label: Cover image (cohort detail page hero), name: cover, widget: string, required: false, hint: 'Path or URL to a 21:9 hero image' }
+      - { label: Body, name: body, widget: markdown, required: false, hint: 'Full cohort writeup — curriculum, teams, capstones, etc.' }
+
+      # ─── Cohort details ───
+      - { label: Duration, name: duration, widget: string, required: false, hint: 'e.g. "16 weeks", "Community-led"' }
+      - { label: Format, name: format, widget: string, required: false, hint: 'e.g. "Flipped classroom", "In-person + online"' }
+      - { label: Start date, name: startDate, widget: string, required: false, hint: 'e.g. "Jul 26, 2025"' }
+      - { label: End date, name: endDate, widget: string, required: false }
+      - { label: Partner, name: partner, widget: string, required: false, hint: 'e.g. "Google DeepMind"' }
+      - { label: Learners (count), name: learners, widget: number, value_type: int, required: false }
+      - { label: Teams count, name: teamsCount, widget: number, value_type: int, required: false }
+
+      # ─── External links ───
+      - { label: GitHub repo, name: githubUrl, widget: string, required: false, hint: 'Dedicated cohort repo on github.com/AISaturdaysLagos' }
+      - { label: YouTube playlist, name: youtubePlaylist, widget: string, required: false }
+      - { label: Projects URL, name: projectsUrl, widget: string, required: false, hint: 'Where the team projects live' }
+      - { label: Blog URL, name: blogUrl, widget: string, required: false, hint: 'Medium writeup or similar' }
+      - { label: Photo URL, name: photoUrl, widget: string, required: false, hint: 'Cohort flyer or photo gallery link' }
+
+      # ─── Credits ───
+      - { label: Instructors, name: instructors, widget: list, required: false, hint: 'Class instructors — one name per item' }
+      - { label: Practical instructors, name: practicalInstructors, widget: list, required: false }
+      - { label: Mentors, name: mentors, widget: list, required: false }
+      - { label: Organising lead, name: organizingLead, widget: string, required: false }
+      - { label: Organising co-lead, name: organizingCoLead, widget: string, required: false }
+      - { label: Organising supports, name: organizingSupports, widget: list, required: false }
 
   # ─────────── Courses ───────────
   - name: courses
