@@ -1,10 +1,10 @@
 ---
-name: Kenechi Dukor
-role: Co-founder
-affiliation: TRI AI
+name: "Kenechi Dukor"
+role: "Board Member"
 photo: https://picsum.photos/seed/triai-team-kenechi-dukor/800/800
-division: research
-group: leadership
+affiliation: "TRI AI"
+division: "research"
+group: "board"
 order: 3
 ---
 

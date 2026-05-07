@@ -77,26 +77,69 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <!-- Netlify Identity (for Decap CMS auth) -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" defer></script>
 
-    <!-- Scroll-reveal: adds .in-view to [data-reveal] / [data-reveal-stagger] when they enter the viewport -->
+    <!-- Scroll-reveal: hides [data-reveal] and slides them into view as they enter the viewport.
+         Visible-by-default fallback: if this script never runs, content stays visible. -->
     <script is:inline>
       (function () {
-        if (typeof window === 'undefined') return;
+        if (typeof window === 'undefined' || typeof document === 'undefined') return;
+        var root = document.documentElement;
         var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        var targets = document.querySelectorAll('[data-reveal], [data-reveal-stagger]');
-        if (!targets.length) return;
-        if (prefersReduced || !('IntersectionObserver' in window)) {
-          targets.forEach(function (el) { el.classList.add('in-view'); });
-          return;
+
+        // Reduced motion: skip the animation entirely. Content is already visible by default.
+        if (prefersReduced) return;
+
+        // No IntersectionObserver: skip animations, content stays visible by default.
+        if (!('IntersectionObserver' in window)) return;
+
+        // OK — we can animate. Activate the gating class so [data-reveal] becomes invisible.
+        root.classList.add('js-reveal-active');
+
+        function attachReveal() {
+          var targets = document.querySelectorAll('[data-reveal], [data-reveal-stagger]');
+          if (!targets.length) return;
+
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                io.unobserve(entry.target);
+              }
+            });
+          }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+
+          targets.forEach(function (el) { io.observe(el); });
+
+          // Safety net: after 1.5s, force any still-hidden element visible.
+          // Catches edge cases — observer not firing on bfcache restore, slow mobile paint, etc.
+          setTimeout(function () {
+            targets.forEach(function (el) {
+              if (!el.classList.contains('in-view')) {
+                el.classList.add('in-view');
+              }
+            });
+          }, 1500);
         }
-        var io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('in-view');
-              io.unobserve(entry.target);
-            }
-          });
-        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
-        targets.forEach(function (el) { io.observe(el); });
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', attachReveal, { once: true });
+        } else {
+          attachReveal();
+        }
+
+        // bfcache restore (mobile back/forward): re-evaluate on pageshow.
+        // If anything is still missing .in-view at this point, force it visible.
+        // Also force-finish any .reveal CSS animations that might have been paused mid-flight.
+        window.addEventListener('pageshow', function (e) {
+          if (e.persisted) {
+            document.querySelectorAll('[data-reveal], [data-reveal-stagger]').forEach(function (el) {
+              el.classList.add('in-view');
+            });
+            document.querySelectorAll('.reveal').forEach(function (el) {
+              el.style.opacity = '1';
+              el.style.transform = 'none';
+            });
+          }
+        });
       })();
     </script>
   </body>

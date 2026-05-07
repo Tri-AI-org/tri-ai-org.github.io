@@ -1,10 +1,10 @@
 ---
-name: Tejumade Afonja
-role: Co-founder
-affiliation: TRI AI
+name: "Tejumade Afonja"
+role: "Founder & Director"
 photo: https://picsum.photos/seed/triai-team-tejumade-afonja/800/800
-division: parent
-group: leadership
+affiliation: "TRI AI"
+division: "parent"
+group: "leadership"
 order: 1
 ---
 
