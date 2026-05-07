@@ -1,6 +1,7 @@
 ---
 name: "George Igwegbe"
 role: "Programmes Lead"
+photo: /uploads/placeholders/team-portrait.jpg
 affiliation: "TRI AI"
 division: "teaching"
 group: "leadership"

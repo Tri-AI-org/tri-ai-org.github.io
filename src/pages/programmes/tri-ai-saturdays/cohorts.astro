@@ -1,6 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import Newsletter from '../../../components/Newsletter.astro';
+import CohortMarquee from '../../../components/CohortMarquee.astro';
 import { getCollection, getEntry } from 'astro:content';
 
 const cohorts = (await getCollection('cohorts'))

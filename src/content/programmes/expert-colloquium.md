@@ -7,6 +7,7 @@ description: The TRI AI Expert Colloquium is a recurring talk series where leadi
 status: active
 location: Lagos and online
 cadence: Quarterly
+cover: /uploads/placeholders/colloquium.jpg
 order: 5
 ---
 

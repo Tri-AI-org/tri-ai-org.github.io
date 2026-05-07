@@ -3,13 +3,16 @@ title: TRI AI Saturdays Lagos
 division: teaching
 kind: cohort
 tagline: A community-led AI study group running cohorts of learners through structured curricula, peer learning, and mentorship.
-description: TRI AI Saturdays Lagos is a community-led learning programme that has run nine cohorts of African learners through hands-on AI curricula since its founding.
+description: TRI AI Saturdays Lagos is a community-led learning programme that has run ten cohorts of African learners through hands-on AI curricula since its founding.
 status: active
 location: Lagos, Nigeria
-cohortInfo: Cohort 9 — applications open seasonally
-cadence: 12-week cohorts, multiple per year
+cohortInfo: Cohort 10 — applications close May 17, 2026
+cadence: 16-week cohorts, multiple per year
+partner: Google DeepMind (Cohort 10)
+applyUrl: https://tinyurl.com/triaicohort10
 githubUrl: https://github.com/AISaturdaysLagos
 websiteUrl: https://www.aisaturdayslagos.com/
+cover: /uploads/placeholders/saturdays.jpg
 order: 1
 ---
 

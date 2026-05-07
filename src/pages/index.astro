@@ -6,6 +6,7 @@ import Newsletter from '../components/Newsletter.astro';
 import NowPanel from '../components/NowPanel.astro';
 import HeroThreads from '../components/HeroThreads.astro';
 import DivisionPanel from '../components/DivisionPanel.astro';
+import CohortMarquee from '../components/CohortMarquee.astro';
 import { getCollection } from 'astro:content';
 
 const programmes = (await getCollection('programmes'))
@@ -72,7 +73,13 @@ const stats = [
     statement="Cohort programmes, partner-delivered courses, watch parties, and an expert colloquium series — all free, all community-led."
     ctaLabel="Explore Teaching"
     ctaHref="/programmes"
+    featuredImage="/uploads/cohorts/cohort-10-flyer.jpg"
+    featuredImageAlt="Call for application — TRI AI Saturdays Cohort 10 with Google DeepMind"
+    featuredCaption="Now open · Cohort 10 with Google DeepMind"
+    featuredHref="https://tinyurl.com/triaicohort10"
   />
+
+  <CohortMarquee />
 
   <DivisionPanel
     number="02"

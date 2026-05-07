@@ -10,6 +10,7 @@ cohortInfo: Ongoing research initiative
 cadence: Continuous
 githubUrl: https://github.com/AISaturdaysLagos
 websiteUrl: https://www.sautiproject.com/
+cover: /uploads/placeholders/sauti.jpg
 order: 2
 applyUrl: mailto:research@tri-ai.org
 ---

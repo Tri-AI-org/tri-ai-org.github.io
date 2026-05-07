@@ -52,13 +52,14 @@ const stamp = new Date().toLocaleDateString('en-US', { month: 'short', year: 'nu
     <p class="now-empty">Updates will appear here as work is published.</p>
   ) : (
     <ul class="now-list" data-reveal-stagger>
-      {items.map(it => (
-        <li class="now-item">
+      {items.map((it, idx) => (
+        <li class={`now-item ${idx === 0 ? 'is-lead' : ''}`}>
           <a href={it.href} class="now-link">
             <div class="now-meta">
               <span class={`now-dot d-${it.division}`} aria-hidden="true"></span>
               <span class="now-stamp-row mono">
                 {fmtMo(it.date)} <span class="now-sep">·</span> {it.division}
+                {idx === 0 && <span class="now-fresh mono">Fresh</span>}
               </span>
             </div>
             <p class="now-title">{it.title}</p>
@@ -151,6 +152,27 @@ const stamp = new Date().toLocaleDateString('en-US', { month: 'short', year: 'nu
   }
   .now-link:hover .now-title { color: var(--gold-deep); }
   [data-theme='dark'] .now-link:hover .now-title { color: var(--gold); }
+
+  /* Lead item — most recent, gets a "Fresh" badge */
+  .is-lead .now-title {
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .now-fresh {
+    margin-left: 10px;
+    padding: 2px 8px;
+    background: var(--gold);
+    color: var(--ink);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+  [data-theme='dark'] .now-fresh {
+    background: var(--gold);
+    color: #141414;
+  }
 
   .now-all {
     display: inline-block;

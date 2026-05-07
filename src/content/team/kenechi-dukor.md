@@ -1,6 +1,7 @@
 ---
 name: "Kenechi Dukor"
 role: "Board Member"
+photo: /uploads/placeholders/team-portrait.jpg
 affiliation: "TRI AI"
 division: "research"
 group: "board"

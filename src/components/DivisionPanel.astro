@@ -25,9 +25,13 @@ interface Props {
   // Optional override — if not passed, the panel auto-pulls items from collections
   items?: Item[];
   emptyState?: string;        // shown when no items resolved (e.g. Innovation "in development")
+  featuredImage?: string;     // optional hero image at top of right column
+  featuredImageAlt?: string;
+  featuredCaption?: string;   // small caption below the image
+  featuredHref?: string;      // optional link wrapping the featured image
 }
 
-const { number, division, title, statement, ctaLabel, ctaHref, items: itemsProp, emptyState } = Astro.props;
+const { number, division, title, statement, ctaLabel, ctaHref, items: itemsProp, emptyState, featuredImage, featuredImageAlt, featuredCaption, featuredHref } = Astro.props;
 
 let items: Item[] = itemsProp ?? [];
 
@@ -91,6 +95,20 @@ if (!itemsProp) {
       </header>
 
       <div class="dp-body">
+        {featuredImage && (
+          featuredHref ? (
+            <a href={featuredHref} class="dp-feat" data-reveal>
+              <img src={featuredImage} alt={featuredImageAlt || ''} class="dp-feat-img" loading="lazy" />
+              {featuredCaption && <p class="dp-feat-cap mono">{featuredCaption}</p>}
+            </a>
+          ) : (
+            <div class="dp-feat" data-reveal>
+              <img src={featuredImage} alt={featuredImageAlt || ''} class="dp-feat-img" loading="lazy" />
+              {featuredCaption && <p class="dp-feat-cap mono">{featuredCaption}</p>}
+            </div>
+          )
+        )}
+
         {items.length > 0 ? (
           <ul class="dp-list" data-reveal-stagger>
             {items.map(it => (
@@ -106,8 +124,14 @@ if (!itemsProp) {
               </li>
             ))}
           </ul>
-        ) : (
+        ) : !featuredImage ? (
           <div class="dp-empty" data-reveal>
+            <p class="dp-empty-text">{emptyState}</p>
+          </div>
+        ) : null}
+
+        {!items.length && featuredImage && emptyState && (
+          <div class="dp-empty dp-empty-after" data-reveal>
             <p class="dp-empty-text">{emptyState}</p>
           </div>
         )}
@@ -197,6 +221,46 @@ if (!itemsProp) {
     margin: 0;
     border-top: 1px solid var(--line);
   }
+
+  .dp-feat {
+    display: block;
+    margin-bottom: 28px;
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    border-radius: 12px;
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    position: relative;
+    transition: transform 0.3s var(--ease-quick), border-color 0.3s var(--ease-quick), box-shadow 0.3s var(--ease-quick);
+  }
+  a.dp-feat:hover {
+    transform: translateY(-3px);
+    border-color: var(--line-strong);
+    box-shadow: 0 12px 36px -16px rgba(20, 20, 20, 0.12);
+  }
+  [data-theme='dark'] a.dp-feat:hover {
+    box-shadow: 0 12px 36px -16px rgba(0, 0, 0, 0.7);
+  }
+  .dp-feat-img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    transition: transform 0.5s var(--ease);
+  }
+  a.dp-feat:hover .dp-feat-img {
+    transform: scale(1.02);
+  }
+  .dp-feat-cap {
+    padding: 14px 18px 16px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    border-top: 1px solid var(--line);
+  }
+  .dp-empty-after { margin-top: 8px; }
   .dp-item { border-bottom: 1px solid var(--line); }
   .dp-link {
     display: grid;

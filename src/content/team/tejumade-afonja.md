@@ -1,6 +1,7 @@
 ---
 name: "Tejumade Afonja"
 role: "Founder & Director"
+photo: /uploads/placeholders/team-portrait.jpg
 affiliation: "TRI AI"
 division: "parent"
 group: "leadership"

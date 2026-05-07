@@ -159,6 +159,17 @@ Light mode is the default. The toggle in the header switches to dark mode and pe
 - Analytics. Add Plausible, Fathom, or GA in `src/layouts/Base.astro` when you've decided.
 - A search feature. The site is small enough that nav + grouping is doing the work; revisit when content grows past ~50 pages.
 
+## Replacing placeholder images
+
+The site ships with brand-correct placeholder images at `public/uploads/placeholders/`. They're flat coloured fields with division-correct accent bars and a typed label — readable at a glance, but obviously placeholders. To replace them with real photography:
+
+- **Programme covers** (`saturdays.jpg`, `watch-parties.jpg`, `colloquium.jpg`, `sauti.jpg`, `chownet.jpg`) — drop a real 1200×800 JPG with the same filename and the programme cards will pick it up automatically. Or edit the programme through the CMS and point its `cover` field at a different file.
+- **Team headshots** — every team member currently points at `team-portrait.jpg`. Upload individual headshots (square, 800×800 ideally) and update each team member's `photo` field through the CMS. They'll show up in the About page team grid.
+- **News covers** (`news-default.jpg`) — same pattern. Each news item has a `cover` field; either replace the default file or point individual items at their own cover.
+- **Cohort 10 flyer** (`/uploads/cohorts/cohort-10-flyer.jpg`) — this is a real asset, not a placeholder. Subsequent cohort flyers should follow the same naming convention: `/uploads/cohorts/cohort-N-flyer.jpg`.
+
+The placeholders are intentionally flat — no stock photography, no fake faces. When real images aren't ready, brand-correct flatness reads better than generic stock.
+
 ---
 
 ## Tech notes for whoever maintains this next
