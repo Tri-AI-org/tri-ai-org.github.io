@@ -1,0 +1,268 @@
+---
+/**
+ * DivisionPanel — a full-width section that gives one division
+ * its own architectural space on the homepage. Used three times
+ * (Teaching, Research, Innovation), each tinted with its colour.
+ *
+ * Pulls live items from the relevant collection(s) so editors can
+ * shape what shows up by editing programmes/publications in the CMS.
+ */
+import { getCollection } from 'astro:content';
+
+interface Item {
+  href: string;
+  title: string;
+  meta: string;       // e.g. "Cohort programme · Lagos" or "Feb 2026 · Paper"
+}
+
+interface Props {
+  number: string;             // "01" / "02" / "03"
+  division: 'teaching' | 'research' | 'innovation';
+  title: string;
+  statement: string;          // one-sentence positioning statement
+  ctaLabel: string;
+  ctaHref: string;
+  // Optional override — if not passed, the panel auto-pulls items from collections
+  items?: Item[];
+  emptyState?: string;        // shown when no items resolved (e.g. Innovation "in development")
+}
+
+const { number, division, title, statement, ctaLabel, ctaHref, items: itemsProp, emptyState } = Astro.props;
+
+let items: Item[] = itemsProp ?? [];
+
+// Auto-resolve items if none provided
+if (!itemsProp) {
+  if (division === 'teaching') {
+    const progs = (await getCollection('programmes'))
+      .filter(p => p.data.division === 'teaching' && p.data.status === 'active')
+      .sort((a, b) => a.data.order - b.data.order)
+      .slice(0, 4);
+    items = progs.map(p => {
+      const kindLabel: Record<string, string> = {
+        cohort: 'Cohort programme',
+        course: 'Course',
+        'watch-party': 'Watch parties',
+        colloquium: 'Colloquium',
+      };
+      const k = kindLabel[p.data.kind] || 'Programme';
+      return {
+        href: `/programmes/${p.id}`,
+        title: p.data.title,
+        meta: p.data.location ? `${k} · ${p.data.location}` : k,
+      };
+    });
+  } else if (division === 'research') {
+    const inits = (await getCollection('programmes'))
+      .filter(p => p.data.division === 'research' && p.data.status === 'active')
+      .sort((a, b) => a.data.order - b.data.order)
+      .slice(0, 2);
+    const pubs = (await getCollection('publications', ({ data }) => !data.draft))
+      .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+      .slice(0, 2);
+    items = [
+      ...inits.map(p => ({
+        href: `/programmes/${p.id}`,
+        title: p.data.title,
+        meta: 'Research initiative',
+      })),
+      ...pubs.map(p => ({
+        href: `/research/publications/${p.id}`,
+        title: p.data.title,
+        meta: `${p.data.date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} · ${p.data.venue || 'Publication'}`,
+      })),
+    ];
+  }
+  // innovation: no auto-fetch — uses emptyState
+}
+---
+
+<section class={`dp dp-${division}`}>
+  <div class="container">
+    <div class="dp-grid">
+      <header class="dp-head" data-reveal>
+        <span class={`dp-num mono dp-num-${division}`}>{number}</span>
+        <p class={`mono dp-eyebrow dp-eyebrow-${division}`}>TRI AI {division.charAt(0).toUpperCase() + division.slice(1)}</p>
+        <h2 class="dp-title">{title}</h2>
+        <p class="dp-statement">{statement}</p>
+        <a href={ctaHref} class="dp-cta">
+          {ctaLabel} <span aria-hidden="true">→</span>
+        </a>
+      </header>
+
+      <div class="dp-body">
+        {items.length > 0 ? (
+          <ul class="dp-list" data-reveal-stagger>
+            {items.map(it => (
+              <li class="dp-item">
+                <a href={it.href} class="dp-link">
+                  <span class={`dp-marker dp-marker-${division}`} aria-hidden="true"></span>
+                  <div class="dp-content">
+                    <p class="dp-meta mono">{it.meta}</p>
+                    <p class="dp-item-title">{it.title}</p>
+                  </div>
+                  <span class="dp-arrow" aria-hidden="true">→</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div class="dp-empty" data-reveal>
+            <p class="dp-empty-text">{emptyState}</p>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .dp {
+    padding-block: clamp(72px, 9vw, 120px);
+    border-bottom: 1px solid var(--line);
+  }
+  .dp-teaching { background: var(--bg); }
+  .dp-research { background: var(--bg-soft); }
+  .dp-innovation { background: var(--bg); }
+
+  .dp-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+  }
+
+  .dp-head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .dp-num {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    margin-bottom: 28px;
+  }
+  .dp-num-teaching { color: var(--teaching); }
+  .dp-num-research { color: var(--research-text); }
+  .dp-num-innovation { color: var(--innovation); }
+
+  .dp-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .dp-eyebrow-teaching { color: var(--teaching); }
+  .dp-eyebrow-research { color: var(--research-text); }
+  .dp-eyebrow-innovation { color: var(--innovation); }
+
+  .dp-title {
+    font-size: clamp(28px, 3.8vw, 44px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 18px;
+    max-width: 14ch;
+  }
+  .dp-statement {
+    font-size: clamp(15.5px, 1.3vw, 17px);
+    line-height: 1.6;
+    color: var(--ink-mid);
+    margin-bottom: 28px;
+    max-width: 38ch;
+  }
+  .dp-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--ink);
+    transition: gap 0.2s var(--ease-quick), border-color 0.2s;
+  }
+  .dp-cta:hover { gap: 12px; }
+  .dp-teaching .dp-cta:hover { border-color: var(--teaching); }
+  .dp-research .dp-cta:hover { border-color: var(--research-text); }
+  .dp-innovation .dp-cta:hover { border-color: var(--innovation); }
+
+  .dp-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--line);
+  }
+  .dp-item { border-bottom: 1px solid var(--line); }
+  .dp-link {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 20px;
+    align-items: center;
+    padding: 22px 0 22px 4px;
+    text-decoration: none;
+    color: inherit;
+    transition: padding-left 0.25s var(--ease-quick);
+  }
+  .dp-link:hover { padding-left: 16px; }
+
+  .dp-marker {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dp-marker-teaching { background: var(--teaching); }
+  .dp-marker-research { background: var(--research-text); }
+  .dp-marker-innovation { background: var(--innovation); }
+
+  .dp-content { min-width: 0; }
+  .dp-meta {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 4px;
+  }
+  .dp-item-title {
+    font-size: clamp(16px, 1.4vw, 19px);
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.35;
+    transition: color 0.2s;
+  }
+  .dp-link:hover .dp-item-title { color: var(--gold-deep); }
+  [data-theme='dark'] .dp-link:hover .dp-item-title { color: var(--gold); }
+
+  .dp-arrow {
+    color: var(--ink-faint);
+    font-size: 20px;
+    transition: transform 0.2s var(--ease-quick), color 0.2s;
+  }
+  .dp-link:hover .dp-arrow {
+    transform: translateX(4px);
+    color: var(--gold-deep);
+  }
+
+  .dp-empty {
+    border: 1px dashed var(--line-strong);
+    border-radius: 10px;
+    padding: 32px 28px;
+  }
+  .dp-empty-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-mid);
+    max-width: 50ch;
+  }
+
+  @media (max-width: 880px) {
+    .dp-grid { grid-template-columns: 1fr; gap: 40px; }
+    .dp-title { max-width: none; }
+    .dp-statement { max-width: 60ch; }
+  }
+</style>

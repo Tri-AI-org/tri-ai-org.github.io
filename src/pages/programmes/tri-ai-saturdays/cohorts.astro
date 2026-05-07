@@ -1,0 +1,280 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Newsletter from '../../../components/Newsletter.astro';
+import { getCollection, getEntry } from 'astro:content';
+
+const cohorts = (await getCollection('cohorts'))
+  .filter(c => c.data.programme === 'tri-ai-saturdays')
+  .sort((a, b) => b.data.number - a.data.number);
+
+const programme = await getEntry('programmes', 'tri-ai-saturdays');
+
+const totalLearners = cohorts.reduce((sum, c) => sum + (c.data.learners || 0), 0);
+const yearsRange = cohorts.length > 0
+  ? `${Math.min(...cohorts.map(c => c.data.year))}–${Math.max(...cohorts.map(c => c.data.year))}`
+  : '';
+---
+
+<Base
+  title="Cohort archive — TRI AI Saturdays Lagos"
+  description="A public archive of every cohort run by TRI AI Saturdays Lagos — projects, dates, and outcomes."
+>
+  <article class="ca">
+    <!-- Breadcrumb -->
+    <nav class="ca-bread container" aria-label="Breadcrumb">
+      <a href="/programmes">Teaching</a>
+      <span aria-hidden="true">·</span>
+      {programme && <a href={`/programmes/${programme.id}`}>{programme.data.title}</a>}
+      <span aria-hidden="true">·</span>
+      <span class="tag tag-teaching">Cohort archive</span>
+    </nav>
+
+    <!-- Header -->
+    <header class="ca-head container">
+      <div class="accent-bar accent-teaching"></div>
+      <p class="mono" style="color: var(--teaching)">Cohort archive</p>
+      <h1 class="ca-title">
+        Nine cohorts.<br/>
+        <span class="ca-em">All in the open.</span>
+      </h1>
+      <p class="ca-lede">
+        Every cohort of TRI AI Saturdays Lagos, in reverse chronological order. Projects from each cohort live on GitHub; cohort writeups are published on Medium where available.
+      </p>
+
+      <div class="ca-stats">
+        <div class="ca-stat">
+          <span class="ca-stat-num">{cohorts.length}</span>
+          <span class="ca-stat-label mono">Cohorts</span>
+        </div>
+        {yearsRange && (
+          <div class="ca-stat">
+            <span class="ca-stat-num">{yearsRange}</span>
+            <span class="ca-stat-label mono">Years active</span>
+          </div>
+        )}
+        <div class="ca-stat">
+          <span class="ca-stat-num">Open</span>
+          <span class="ca-stat-label mono">All projects on GitHub</span>
+        </div>
+      </div>
+    </header>
+
+    <hr class="divider-rule" />
+
+    <!-- Cohort list -->
+    <section class="section">
+      <div class="container">
+        {cohorts.length === 0 ? (
+          <p class="empty">Cohort entries will appear here. Add them via /admin.</p>
+        ) : (
+          <ul class="ca-list" data-reveal-stagger>
+            {cohorts.map(c => (
+              <li class="ca-row">
+                <div class="ca-row-meta">
+                  <span class="ca-num mono">C{String(c.data.number).padStart(2, '0')}</span>
+                  <span class="ca-year mono">{c.data.year}</span>
+                  {c.data.status === 'running' && (
+                    <span class="ca-badge ca-badge-active">Currently running</span>
+                  )}
+                  {c.data.status === 'upcoming' && (
+                    <span class="ca-badge ca-badge-soon">Upcoming</span>
+                  )}
+                </div>
+                <h2 class="ca-row-title">{c.data.title || `Cohort ${c.data.number}`}</h2>
+                <p class="ca-row-summary">{c.data.summary}</p>
+                {(c.data.projectsUrl || c.data.blogUrl || c.data.photoUrl) && (
+                  <div class="ca-row-links">
+                    {c.data.projectsUrl && (
+                      <a href={c.data.projectsUrl} target="_blank" rel="noopener" class="ca-link">
+                        Projects on GitHub <span aria-hidden="true">↗</span>
+                      </a>
+                    )}
+                    {c.data.blogUrl && (
+                      <a href={c.data.blogUrl} target="_blank" rel="noopener" class="ca-link">
+                        Cohort writeup <span aria-hidden="true">↗</span>
+                      </a>
+                    )}
+                    {c.data.photoUrl && (
+                      <a href={c.data.photoUrl} target="_blank" rel="noopener" class="ca-link">
+                        Photos <span aria-hidden="true">↗</span>
+                      </a>
+                    )}
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </section>
+  </article>
+
+  <Newsletter />
+</Base>
+
+<style>
+  .ca-bread {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 32px;
+    padding-bottom: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .ca-bread a { color: var(--ink-mid); text-decoration: none; }
+  .ca-bread a:hover { color: var(--ink); }
+
+  .ca-head {
+    padding-block: 32px clamp(48px, 6vw, 72px);
+  }
+  .ca-head .accent-bar { margin-bottom: 16px; }
+  .ca-head .mono { margin-bottom: 16px; }
+  .ca-title {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--ink);
+    margin-bottom: 22px;
+  }
+  .ca-em {
+    color: var(--teaching);
+    font-style: italic;
+  }
+  .ca-lede {
+    font-size: clamp(15.5px, 1.4vw, 18px);
+    line-height: 1.6;
+    color: var(--ink-mid);
+    margin-bottom: 40px;
+    max-width: 60ch;
+  }
+
+  .ca-stats {
+    display: flex;
+    gap: clamp(32px, 5vw, 64px);
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    flex-wrap: wrap;
+  }
+  .ca-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .ca-stat-num {
+    font-size: clamp(24px, 2.6vw, 32px);
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .ca-stat-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .ca-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--line);
+  }
+  .ca-row {
+    border-bottom: 1px solid var(--line);
+    padding-block: 28px;
+    transition: padding-left 0.25s var(--ease-quick);
+  }
+  .ca-row:hover { padding-left: 8px; }
+
+  .ca-row-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .ca-num {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--teaching);
+    font-weight: 700;
+  }
+  .ca-year {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+  }
+  .ca-badge {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .ca-badge-active {
+    background: var(--teaching-light);
+    color: var(--teaching);
+  }
+  [data-theme='dark'] .ca-badge-active {
+    background: rgba(254, 102, 18, 0.14);
+    color: var(--teaching-text);
+  }
+  .ca-badge-soon {
+    background: var(--gold-light);
+    color: var(--gold-deep);
+  }
+  [data-theme='dark'] .ca-badge-soon {
+    background: rgba(212, 160, 23, 0.14);
+    color: var(--gold);
+  }
+
+  .ca-row-title {
+    font-size: clamp(20px, 2vw, 24px);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .ca-row-summary {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-mid);
+    margin-bottom: 14px;
+    max-width: 70ch;
+  }
+  .ca-row-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .ca-link {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--line-strong);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .ca-link:hover {
+    border-color: var(--teaching);
+    color: var(--teaching);
+  }
+
+  .empty {
+    padding: 40px;
+    text-align: center;
+    color: var(--ink-faint);
+    border: 1px dashed var(--line);
+    border-radius: 10px;
+  }
+</style>

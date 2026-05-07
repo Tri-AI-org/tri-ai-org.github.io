@@ -9,6 +9,8 @@ venue: Proceedings of the African NLP Workshop
 division: research
 project: Sauti Project
 abstract: We introduce a new benchmark for speech recognition across five under-resourced African languages, alongside baseline results from contemporary self-supervised speech models. Our work highlights the gap between high-resource and low-resource performance and proposes evaluation protocols suited to the linguistic diversity of the continent.
+externalUrl: https://arxiv.org/abs/2112.06199
+datasetUrl: https://zenodo.org/records/4561842
 featured: true
 draft: false
 ---

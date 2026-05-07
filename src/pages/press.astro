@@ -1,0 +1,174 @@
+---
+import Base from '../layouts/Base.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { getCollection } from 'astro:content';
+
+const press = (await getCollection('press'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+
+const kindLabels: Record<string, string> = {
+  article: 'Article',
+  talk: 'Talk',
+  podcast: 'Podcast',
+  'paper-citation': 'Citation',
+  mention: 'Mention',
+};
+---
+
+<Base
+  title="Press — TRI AI"
+  description="Articles, talks, citations, and mentions of TRI AI's work across the AI research and development community."
+>
+  <section class="press-hero">
+    <div class="container">
+      <p class="mono">Press</p>
+      <h1 class="press-title">
+        Where TRI AI's<br/>
+        <span class="press-em">work appears.</span>
+      </h1>
+      <p class="press-lede">
+        A running record of articles, talks, citations, and mentions across the AI research and development community.
+      </p>
+    </div>
+  </section>
+
+  <hr class="divider-rule" />
+
+  <section class="section">
+    <div class="container">
+      {press.length === 0 ? (
+        <p class="empty">Press mentions will appear here. Add them via /admin.</p>
+      ) : (
+        <ul class="press-list" data-reveal-stagger>
+          {press.map(p => (
+            <li class="press-row">
+              <a href={p.data.url} target="_blank" rel="noopener" class="press-link">
+                <div class="press-meta">
+                  <span class="press-date mono">{fmt(p.data.date)}</span>
+                  <span class={`tag tag-${p.data.division === 'parent' ? 'gold' : p.data.division}`}>
+                    {kindLabels[p.data.kind] || 'Article'}
+                  </span>
+                  <span class="press-outlet mono">{p.data.outlet}</span>
+                </div>
+                <h2 class="press-row-title">{p.data.title}</h2>
+                {p.data.excerpt && <p class="press-row-excerpt">{p.data.excerpt}</p>}
+                <span class="press-row-arrow" aria-hidden="true">↗</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </section>
+
+  <Newsletter />
+</Base>
+
+<style>
+  .press-hero {
+    padding-block: clamp(64px, 8vw, 112px);
+  }
+  .press-hero .mono {
+    margin-bottom: 16px;
+    color: var(--ink-faint);
+  }
+  .press-title {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 22px;
+  }
+  .press-em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .press-lede {
+    font-size: clamp(15.5px, 1.4vw, 18px);
+    line-height: 1.6;
+    color: var(--ink-mid);
+    max-width: 56ch;
+  }
+
+  .press-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--line);
+  }
+  .press-row { border-bottom: 1px solid var(--line); }
+  .press-link {
+    display: block;
+    position: relative;
+    padding: 28px 40px 28px 0;
+    text-decoration: none;
+    color: inherit;
+    transition: padding-left 0.25s var(--ease-quick);
+  }
+  .press-link:hover { padding-left: 12px; }
+
+  .press-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .press-date {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .press-outlet {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+  }
+
+  .press-row-title {
+    font-size: clamp(18px, 1.8vw, 22px);
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 8px;
+    transition: color 0.2s;
+    max-width: 70ch;
+  }
+  .press-link:hover .press-row-title { color: var(--gold-deep); }
+  [data-theme='dark'] .press-link:hover .press-row-title { color: var(--gold); }
+
+  .press-row-excerpt {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-mid);
+    max-width: 70ch;
+  }
+
+  .press-row-arrow {
+    position: absolute;
+    right: 0;
+    top: 32px;
+    color: var(--ink-faint);
+    font-size: 18px;
+    transition: transform 0.2s, color 0.2s;
+  }
+  .press-link:hover .press-row-arrow {
+    transform: translate(2px, -2px);
+    color: var(--gold);
+  }
+
+  .empty {
+    padding: 40px;
+    text-align: center;
+    color: var(--ink-faint);
+    border: 1px dashed var(--line);
+    border-radius: 10px;
+  }
+</style>

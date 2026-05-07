@@ -1,11 +1,14 @@
 ---
 title: ChowNet
 division: research
+kind: research-init
 tagline: Computer-vision datasets and models for African food.
 description: ChowNet is a research effort building image datasets and recognition models for African cuisine, aimed at improving how vision systems understand food in African contexts.
 status: active
 location: Pan-African
 cohortInfo: Open contributions
+cadence: Continuous
+githubUrl: https://github.com/AISaturdaysLagos/chownet
 order: 3
 ---
 

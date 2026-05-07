@@ -9,6 +9,8 @@ venue: arXiv preprint
 division: research
 project: ChowNet
 abstract: We present ChowNet, an image dataset and benchmark for recognising African cuisine. Existing food-recognition datasets contain little African food imagery, leaving downstream applications poorly suited to billions of meals. ChowNet establishes a baseline and a path forward.
+datasetUrl: https://zenodo.org/records/13633554
+codeUrl: https://github.com/AISaturdaysLagos/chownet
 featured: false
 draft: false
 ---

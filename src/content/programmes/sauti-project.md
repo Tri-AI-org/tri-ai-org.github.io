@@ -1,11 +1,15 @@
 ---
 title: Sauti Project
 division: research
+kind: research-init
 tagline: Building speech and language resources for under-resourced African languages.
 description: Sauti is TRI AI's research initiative focused on speech technology for African languages, building datasets, models, and benchmarks for languages historically excluded from speech AI.
 status: active
 location: Pan-African
 cohortInfo: Ongoing research initiative
+cadence: Continuous
+githubUrl: https://github.com/AISaturdaysLagos
+websiteUrl: https://www.sautiproject.com/
 order: 2
 applyUrl: mailto:research@tri-ai.org
 ---

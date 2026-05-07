@@ -52,6 +52,8 @@ collections:
       - { label: Abstract, name: abstract, widget: text }
       - { label: 'PDF URL', name: pdfUrl, widget: string, required: false }
       - { label: 'External URL', name: externalUrl, widget: string, required: false }
+      - { label: 'Dataset URL', name: datasetUrl, widget: string, required: false, hint: 'e.g. Zenodo DOI for the dataset' }
+      - { label: 'Code URL', name: codeUrl, widget: string, required: false, hint: 'e.g. GitHub repo' }
       - { label: Featured, name: featured, widget: boolean, default: false }
       - { label: Draft, name: draft, widget: boolean, default: false }
       - { label: Body, name: body, widget: markdown, required: false, hint: 'Optional extended content beyond the abstract.' }
@@ -64,12 +66,33 @@ collections:
     create: true
     delete: true
     slug: '{{slug}}'
+    summary: '{{title}} — {{division}} / {{kind}}'
+    sortable_fields: [order, title]
+    view_filters:
+      - { label: Teaching, field: division, pattern: teaching }
+      - { label: Research, field: division, pattern: research }
+      - { label: Innovation, field: division, pattern: innovation }
+      - { label: Cohorts, field: kind, pattern: cohort }
+      - { label: Watch parties, field: kind, pattern: watch-party }
+      - { label: Colloquium, field: kind, pattern: colloquium }
     fields:
       - { label: Title, name: title, widget: string }
       - label: Division
         name: division
         widget: select
         options: [teaching, research, innovation]
+      - label: Kind
+        name: kind
+        widget: select
+        options:
+          - { label: 'Cohort programme (multi-week)', value: cohort }
+          - { label: 'Course (partner-delivered)', value: course }
+          - { label: 'Watch party (group viewings)', value: watch-party }
+          - { label: 'Expert colloquium (talk series)', value: colloquium }
+          - { label: 'Research initiative', value: research-init }
+          - { label: 'Innovation lab', value: lab }
+        default: cohort
+        hint: 'What kind of programme this is. Determines where it shows up on the Teaching/Research landing pages.'
       - { label: Tagline, name: tagline, widget: string, hint: 'One-line summary' }
       - { label: Description, name: description, widget: text, hint: 'Sidebar paragraph for the detail page.' }
       - label: Status
@@ -80,9 +103,39 @@ collections:
       - { label: Cover image, name: cover, widget: image, required: false }
       - { label: Location, name: location, widget: string, required: false, hint: 'e.g. Lagos, Nigeria' }
       - { label: Cohort info, name: cohortInfo, widget: string, required: false, hint: 'e.g. Cohort 9 — Sept 2026' }
+      - { label: Cadence, name: cadence, widget: string, required: false, hint: 'e.g. Quarterly, Monthly, Weekly' }
+      - { label: Partner, name: partner, widget: string, required: false, hint: 'e.g. Google DeepMind (for courses)' }
       - { label: Apply URL, name: applyUrl, widget: string, required: false }
+      - { label: GitHub URL, name: githubUrl, widget: string, required: false }
+      - { label: Website URL, name: websiteUrl, widget: string, required: false }
       - { label: Order, name: order, widget: number, default: 0, value_type: int }
       - { label: Body, name: body, widget: markdown, hint: 'Full programme detail content' }
+
+  # ─────────── Cohorts (archive) ───────────
+  - name: cohorts
+    label: Cohorts (archive)
+    label_singular: Cohort
+    folder: src/content/cohorts
+    create: true
+    delete: true
+    slug: 'cohort-{{number}}'
+    summary: 'Cohort {{number}} ({{year}})'
+    sortable_fields: [number, year]
+    fields:
+      - { label: Programme slug, name: programme, widget: string, default: 'tri-ai-saturdays', hint: 'Matches the programme file id, e.g. tri-ai-saturdays' }
+      - { label: Number, name: number, widget: number, value_type: int, hint: 'Cohort number, e.g. 9' }
+      - { label: Year, name: year, widget: number, value_type: int }
+      - { label: Title, name: title, widget: string, required: false, hint: 'Optional theme/name' }
+      - { label: Learners, name: learners, widget: number, value_type: int, required: false }
+      - { label: Projects URL, name: projectsUrl, widget: string, required: false, hint: 'GitHub repo for cohort projects' }
+      - { label: Blog URL, name: blogUrl, widget: string, required: false, hint: 'Medium writeup or similar' }
+      - { label: Photo URL, name: photoUrl, widget: string, required: false }
+      - { label: Summary, name: summary, widget: text }
+      - label: Status
+        name: status
+        widget: select
+        options: [completed, running, upcoming]
+        default: completed
 
   # ─────────── Courses ───────────
   - name: courses
@@ -177,3 +230,36 @@ collections:
       - { label: Cover image, name: cover, widget: image, required: false }
       - { label: Draft, name: draft, widget: boolean, default: false }
       - { label: Body, name: body, widget: markdown }
+
+  # ─────────── Press ───────────
+  - name: press
+    label: Press & Mentions
+    label_singular: Press item
+    folder: src/content/press
+    create: true
+    delete: true
+    slug: '{{slug}}'
+    summary: '{{outlet}} — {{title}}'
+    sortable_fields: [date, outlet, title]
+    view_filters:
+      - { label: Articles, field: kind, pattern: article }
+      - { label: Talks, field: kind, pattern: talk }
+      - { label: 'Paper citations', field: kind, pattern: paper-citation }
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
+      - { label: Outlet, name: outlet, widget: string, hint: 'e.g. Fast Company, NeurIPS, arXiv' }
+      - label: Kind
+        name: kind
+        widget: select
+        options: [article, talk, podcast, paper-citation, mention]
+        default: article
+      - { label: URL, name: url, widget: string, hint: 'Link to the article / talk / paper' }
+      - { label: Excerpt, name: excerpt, widget: text, required: false, hint: 'A short paragraph summarising the mention.' }
+      - label: Division
+        name: division
+        widget: select
+        options: [parent, teaching, research, innovation]
+        default: parent
+      - { label: Project, name: project, widget: string, required: false, hint: 'e.g. Sauti Project, ChowNet' }
+      - { label: Order, name: order, widget: number, default: 0, value_type: int }

@@ -1,11 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
-import Pillars from '../components/Pillars.astro';
 import FeaturedFeed from '../components/FeaturedFeed.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import Newsletter from '../components/Newsletter.astro';
 import NowPanel from '../components/NowPanel.astro';
 import HeroThreads from '../components/HeroThreads.astro';
+import DivisionPanel from '../components/DivisionPanel.astro';
 import { getCollection } from 'astro:content';
 
 const programmes = (await getCollection('programmes'))
@@ -15,9 +15,9 @@ const programmes = (await getCollection('programmes'))
 
 const stats = [
   { num: '1,500+', label: 'Learners and community members' },
-  { num: '8', label: 'Cohorts completed' },
+  { num: '9', label: 'AI Saturdays cohorts run' },
   { num: '2', label: 'Active research initiatives' },
-  { num: '5+', label: 'Years building AI communities' },
+  { num: '8+', label: 'Years building AI communities' },
 ];
 ---
 
@@ -64,64 +64,41 @@ const stats = [
     </div>
   </section>
 
-  <!-- Three pillars -->
-  <section class="section section-lg">
-    <div class="container">
-      <div data-reveal>
-        <SectionHeader
-          num="01"
-          eyebrow="What we do"
-          title="Three divisions, one mission."
-          description="TRI AI is a branded house. Every initiative we run lives under one of three divisions that map directly to the name."
-        />
-      </div>
-      <div data-reveal-stagger>
-        <Pillars />
-      </div>
-    </div>
-  </section>
+  <!-- Three divisions — full panels each -->
+  <DivisionPanel
+    number="01"
+    division="teaching"
+    title="Building the next generation of African AI practitioners."
+    statement="Cohort programmes, partner-delivered courses, watch parties, and an expert colloquium series — all free, all community-led."
+    ctaLabel="Explore Teaching"
+    ctaHref="/programmes"
+  />
 
-  <hr class="divider-rule" />
+  <DivisionPanel
+    number="02"
+    division="research"
+    title="African questions, global answers."
+    statement="Long-running research initiatives building open datasets, models, and benchmarks for problems mainstream AI has overlooked."
+    ctaLabel="Explore Research"
+    ctaHref="/research"
+  />
 
-  <!-- Featured programmes -->
-  {programmes.length > 0 && (
-    <section class="section section-lg">
-      <div class="container">
-        <div data-reveal>
-          <SectionHeader
-            num="02"
-            eyebrow="Programmes"
-            title="Where the work happens."
-            description="Active initiatives shaping AI knowledge across the continent."
-          />
-        </div>
-        <div class="prog-grid" data-reveal-stagger>
-          {programmes.map(p => (
-            <a href={`/programmes/${p.id}`} class={`prog-card prog-${p.data.division}`}>
-              {p.data.cover && <div class="prog-cover" style={`background-image:url(${p.data.cover})`}></div>}
-              <div class="prog-body">
-                <span class={`tag tag-${p.data.division}`}>
-                  triAI {p.data.division.charAt(0).toUpperCase() + p.data.division.slice(1)} programme
-                </span>
-                <h3 class="prog-title">{p.data.title}</h3>
-                <p class="prog-tag">{p.data.tagline}</p>
-                <span class="prog-link">Explore <span aria-hidden="true">→</span></span>
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
-
-  <hr class="divider-rule" />
+  <DivisionPanel
+    number="03"
+    division="innovation"
+    title="Turning research into things that ship."
+    statement="TRI AI Innovation will translate teaching and research into products and tools that serve African contexts directly. The first ones are in development."
+    ctaLabel="Get notified"
+    ctaHref="/innovation"
+    emptyState="In development. We're prototyping the first TRI AI Innovation products — applied tools and spinouts emerging from our research and teaching work. Sign up below to hear when the first launches."
+  />
 
   <!-- Recent / featured feed -->
   <section class="section section-lg">
     <div class="container">
       <div data-reveal>
         <SectionHeader
-          num="03"
+          num="04"
           eyebrow="Recent"
           title="Publications & updates."
         />
@@ -142,7 +119,7 @@ const stats = [
     <div class="container">
       <div data-reveal>
         <SectionHeader
-          num="04"
+          num="05"
           eyebrow="Our impact"
           title="By the numbers."
           align="center"

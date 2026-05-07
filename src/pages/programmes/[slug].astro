@@ -42,15 +42,35 @@ const d = programme.data;
               <p>{d.cohortInfo}</p>
             </div>
           )}
+          {d.cadence && (
+            <div class="prog-meta-item">
+              <p class="mono-faint">Cadence</p>
+              <p>{d.cadence}</p>
+            </div>
+          )}
+          {d.partner && (
+            <div class="prog-meta-item">
+              <p class="mono-faint">In partnership with</p>
+              <p>{d.partner}</p>
+            </div>
+          )}
           <div class="prog-meta-item">
             <p class="mono-faint">Status</p>
             <p style="text-transform:capitalize">{d.status}</p>
           </div>
         </div>
 
-        {d.applyUrl && (
-          <a href={d.applyUrl} class="btn btn-primary btn-arrow prog-hd-cta">Apply</a>
-        )}
+        <div class="prog-hd-actions">
+          {d.applyUrl && (
+            <a href={d.applyUrl} class="btn btn-primary btn-arrow">Apply</a>
+          )}
+          {d.websiteUrl && (
+            <a href={d.websiteUrl} target="_blank" rel="noopener" class="btn btn-ghost btn-arrow">Visit site</a>
+          )}
+          {d.githubUrl && (
+            <a href={d.githubUrl} target="_blank" rel="noopener" class="btn btn-ghost btn-arrow">GitHub</a>
+          )}
+        </div>
       </div>
     </header>
 
@@ -182,6 +202,12 @@ const d = programme.data;
     font-size: 14px;
     color: var(--ink);
     font-weight: 500;
+  }
+
+  .prog-hd-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
   }
 
   .prog-cover-wrap {

@@ -1,19 +1,38 @@
 ---
 import Base from '../layouts/Base.astro';
+import SectionHeader from '../components/SectionHeader.astro';
 import Newsletter from '../components/Newsletter.astro';
+
+const focusAreas = [
+  {
+    title: 'Speech and language tooling',
+    body: 'Translating Sauti Project research into production-ready tools — speech recognition for African languages packaged for use in apps, accessibility tooling, and field research.',
+  },
+  {
+    title: 'Vision systems for African contexts',
+    body: 'Building on ChowNet, applied vision systems for domains where mainstream models fail — food, agriculture, marketplace inventory, healthcare imaging.',
+  },
+  {
+    title: 'Education infrastructure',
+    body: 'Internal tooling that scales TRI AI Saturdays, watch parties, and the colloquium series — and which we plan to release publicly so other African AI communities can run their own programmes.',
+  },
+];
 ---
 
-<Base title="Innovation — TRI AI">
+<Base
+  title="Innovation — TRI AI"
+  description="TRI AI Innovation translates teaching and research output into products and tools that serve African contexts directly."
+>
   <section class="hero-i">
     <div class="container">
       <div class="accent-bar accent-innovation"></div>
-      <p class="mono" style="color: var(--innovation)">Innovation</p>
+      <p class="mono" style="color: var(--innovation)">TRI AI Innovation</p>
       <h1 class="display hero-i-h">
-        From research<br/>
-        <span class="hero-i-em">to real-world.</span>
+        Turning research<br/>
+        <span class="hero-i-em">into things that ship.</span>
       </h1>
       <p class="lede">
-        TRI AI Innovation supports the development of tools, datasets, and systems that translate research into deployable AI applications across the continent.
+        TRI AI Innovation is the youngest of our three divisions. Its job is to take the work emerging from Teaching and Research and translate it into products, tools, and spinouts that serve African contexts directly.
       </p>
     </div>
   </section>
@@ -22,16 +41,44 @@ import Newsletter from '../components/Newsletter.astro';
 
   <section class="section">
     <div class="container">
-      <div class="i-soon">
-        <p class="mono">Status</p>
-        <h2 class="i-soon-h">Launching with our first initiative.</h2>
-        <p class="i-soon-body">
-          The Innovation division is a structural placeholder while we ready our first launch. Until then, we're focused on the work happening in Teaching and Research. Subscribe to TRI AI Dispatch to be the first to hear when Innovation goes live.
+      <div data-reveal>
+        <SectionHeader num="01" eyebrow="Status" title="In development." />
+      </div>
+      <div class="i-status" data-reveal>
+        <p class="i-status-body">
+          We're prototyping our first launches across three areas — speech and language tooling, computer vision applied to African contexts, and education infrastructure. The first product release is targeted for late 2026; until then, this page is the public side of work that's happening internally.
         </p>
-        <div style="margin-top: 28px; display: flex; gap: 10px">
-          <a href="#newsletter" class="btn btn-primary btn-arrow">Subscribe</a>
-          <a href="/research" class="btn btn-ghost btn-arrow">Explore research</a>
+        <p class="i-status-body">
+          If you're a researcher, engineer, or organisation interested in collaborating on an Innovation initiative — or you'd like to hear when the first products launch — get in touch.
+        </p>
+        <div class="i-status-actions">
+          <a href="mailto:innovation@tri-ai.org" class="btn btn-primary btn-arrow">Contact Innovation</a>
+          <a href="#newsletter" class="btn btn-ghost btn-arrow">Get launch updates</a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider-rule" />
+
+  <section class="section">
+    <div class="container">
+      <div data-reveal>
+        <SectionHeader
+          num="02"
+          eyebrow="Focus areas"
+          title="What we're building."
+          description="Three areas where TRI AI's research and teaching naturally extend into shippable work."
+        />
+      </div>
+      <div class="i-grid" data-reveal-stagger>
+        {focusAreas.map((f, i) => (
+          <article class="i-card">
+            <span class="i-num mono">0{i + 1}</span>
+            <h3 class="i-card-h">{f.title}</h3>
+            <p class="i-card-body">{f.body}</p>
+          </article>
+        ))}
       </div>
     </div>
   </section>
@@ -55,24 +102,68 @@ import Newsletter from '../components/Newsletter.astro';
     font-style: italic;
   }
 
-  .i-soon {
+  .i-status {
     border: 1px solid var(--line);
     border-left: 3px solid var(--innovation);
     border-radius: 10px;
-    padding: 40px 40px 44px;
+    padding: 36px 40px 40px;
     background: var(--bg-elev);
     max-width: 720px;
   }
-  .i-soon .mono { color: var(--innovation); margin-bottom: 14px; }
-  .i-soon-h {
-    font-size: clamp(24px, 3vw, 32px);
-    font-weight: 700;
-    margin-bottom: 14px;
-    color: var(--ink);
-  }
-  .i-soon-body {
+  .i-status-body {
     font-size: 16px;
-    line-height: 1.65;
+    line-height: 1.7;
     color: var(--ink-mid);
+    margin-bottom: 16px;
+  }
+  .i-status-body:last-of-type { margin-bottom: 0; }
+  .i-status-actions {
+    margin-top: 28px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .i-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 8px;
+  }
+  .i-card {
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--innovation);
+    border-radius: 0 0 10px 10px;
+    padding: 28px 26px 30px;
+    background: var(--bg-elev);
+    transition: transform 0.25s var(--ease-quick), border-color 0.25s var(--ease-quick);
+  }
+  .i-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--line-strong);
+    border-top-color: var(--innovation);
+  }
+  .i-num {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--innovation);
+    margin-bottom: 18px;
+    display: block;
+  }
+  .i-card-h {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .i-card-body {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-mid);
+  }
+
+  @media (max-width: 880px) {
+    .i-grid { grid-template-columns: 1fr; }
   }
 </style>

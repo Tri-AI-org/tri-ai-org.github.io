@@ -52,6 +52,16 @@ const related = all
             View publication
           </a>
         )}
+        {d.datasetUrl && (
+          <a href={d.datasetUrl} class="btn btn-ghost btn-arrow" target="_blank" rel="noopener">
+            Dataset
+          </a>
+        )}
+        {d.codeUrl && (
+          <a href={d.codeUrl} class="btn btn-ghost btn-arrow" target="_blank" rel="noopener">
+            Code
+          </a>
+        )}
         <button type="button" class="btn btn-ghost" data-share data-title={d.title}>
           Share
         </button>
