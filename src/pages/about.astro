@@ -37,7 +37,7 @@ const values = [
 
   <!-- Story / Mission / Vision in editorial layout -->
   <section class="section">
-    <div class="container about-grid">
+    <div class="container about-grid" data-reveal-stagger>
       <div class="about-cell">
         <div class="accent-bar accent-gold"></div>
         <h2>Our story</h2>
@@ -69,8 +69,10 @@ const values = [
   <!-- Values -->
   <section class="section">
     <div class="container">
-      <SectionHeader num="02" eyebrow="What we stand for" title="Our values." />
-      <div class="values">
+      <div data-reveal>
+        <SectionHeader num="02" eyebrow="What we stand for" title="Our values." />
+      </div>
+      <div class="values" data-reveal-stagger>
         {values.map((v, i) => (
           <div class="value-cell">
             <p class="value-num mono">0{i + 1}</p>
@@ -87,17 +89,19 @@ const values = [
   <!-- Team -->
   <section class="section" id="team">
     <div class="container">
-      <SectionHeader
-        num="03"
-        eyebrow="Leadership"
-        title="A growing network."
-        description="Educators, researchers, and volunteers committed to advancing AI across Africa."
-      />
+      <div data-reveal>
+        <SectionHeader
+          num="03"
+          eyebrow="Leadership"
+          title="A growing network."
+          description="Educators, researchers, and volunteers committed to advancing AI across Africa."
+        />
+      </div>
 
       {board.length > 0 && (
         <>
           <p class="mono team-group-label">Board of trustees</p>
-          <div class="team-grid">
+          <div class="team-grid" data-reveal-stagger>
             {board.map(t => (
               <div class="team-card">
                 {t.data.photo && <img src={t.data.photo} alt={t.data.name} class="team-photo" loading="lazy" />}
@@ -113,7 +117,7 @@ const values = [
       {leadership.length > 0 && (
         <>
           <p class="mono team-group-label" style="margin-top: 64px">Leadership team</p>
-          <div class="team-grid">
+          <div class="team-grid" data-reveal-stagger>
             {leadership.map(t => (
               <div class="team-card">
                 {t.data.photo && <img src={t.data.photo} alt={t.data.name} class="team-photo" loading="lazy" />}
@@ -137,8 +141,10 @@ const values = [
       <hr class="divider-rule" />
       <section class="section partners-sec" id="partners">
         <div class="container">
-          <SectionHeader num="04" eyebrow="Partners & supporters" title="We don't do this alone." align="center" />
-          <div class="partner-row">
+          <div data-reveal>
+            <SectionHeader num="04" eyebrow="Partners & supporters" title="We don't do this alone." align="center" />
+          </div>
+          <div class="partner-row" data-reveal-stagger>
             {partners.map(p => (
               <a href={p.data.url || '#'} class="partner-logo">
                 <img src={p.data.logo} alt={p.data.name} loading="lazy" />

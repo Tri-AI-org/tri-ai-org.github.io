@@ -16,7 +16,7 @@ const fmt = (date: Date) =>
 >
   <section class="section">
     <div class="container">
-      <header class="news-head">
+      <header class="news-head" data-reveal>
         <p class="eyebrow mono">News</p>
         <h1 class="news-title">Updates from TRI&nbsp;AI.</h1>
         <p class="news-lede">
@@ -27,7 +27,7 @@ const fmt = (date: Date) =>
       {items.length === 0 ? (
         <p class="news-empty">News will appear here as it is published.</p>
       ) : (
-        <ul class="news-list">
+        <ul class="news-list" data-reveal-stagger>
           {items.map(n => (
             <li class="news-row">
               <a href={`/news/${n.id}`} class="news-link">
@@ -63,7 +63,7 @@ const fmt = (date: Date) =>
     margin-bottom: 14px;
   }
   .news-title {
-    font-size: var(--t-display);
+    font-size: clamp(40px, 6vw, 64px);
     font-weight: 700;
     line-height: 1.05;
     letter-spacing: -0.025em;
@@ -71,7 +71,7 @@ const fmt = (date: Date) =>
     margin-bottom: 18px;
   }
   .news-lede {
-    font-size: var(--t-display);
+    font-size: clamp(17px, 1.6vw, 20px);
     line-height: 1.55;
     color: var(--ink-mid);
     max-width: 56ch;

@@ -11,6 +11,12 @@
   to = "/admin/index.html"
   status = 200
 
+# Publications moved under Research
+[[redirects]]
+  from = "/publications/*"
+  to = "/research/publications/:splat"
+  status = 301
+
 # Netlify Identity → git-gateway for Decap auth
 [[headers]]
   for = "/admin/*"
@@ -27,8 +33,3 @@
   for = "/fonts/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-
-[[redirects]]
-  from = "/publications/*"
-  to = "/research/publications/:splat"
-  status = 301

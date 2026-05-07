@@ -36,8 +36,10 @@ const fmt = (d: Date) =>
   {researchProgs.length > 0 && (
     <section class="section">
       <div class="container">
-        <SectionHeader num="01" eyebrow="Initiatives" title="What we're working on." />
-        <div class="r-list">
+        <div data-reveal>
+          <SectionHeader num="01" eyebrow="Initiatives" title="What we're working on." />
+        </div>
+        <div class="r-list" data-reveal-stagger>
           {researchProgs.map(p => (
             <a href={`/programmes/${p.id}`} class="r-card">
               <h2 class="r-card-title">{p.data.title}</h2>
@@ -55,8 +57,10 @@ const fmt = (d: Date) =>
       <hr class="divider-rule" />
       <section class="section">
         <div class="container">
-          <SectionHeader num="02" eyebrow="Publications" title="Recent papers." />
-          <ul class="rp-list">
+          <div data-reveal>
+            <SectionHeader num="02" eyebrow="Publications" title="Recent papers." />
+          </div>
+          <ul class="rp-list" data-reveal-stagger>
             {recentPubs.map(p => (
               <li>
                 <a href={`/research/publications/${p.id}`} class="rp-link">

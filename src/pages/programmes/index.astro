@@ -31,8 +31,10 @@ const upcoming = programmes.filter(p => p.data.status === 'upcoming');
     <div class="container">
       {active.length > 0 && (
         <>
-          <SectionHeader num="01" eyebrow="Active" title="Currently running." />
-          <div class="prog-list">
+          <div data-reveal>
+            <SectionHeader num="01" eyebrow="Active" title="Currently running." />
+          </div>
+          <div class="prog-list" data-reveal-stagger>
             {active.map(p => (
               <a href={`/programmes/${p.id}`} class={`prog-row prog-${p.data.division}`}>
                 <div class={`accent-bar accent-${p.data.division}`}></div>
@@ -51,8 +53,10 @@ const upcoming = programmes.filter(p => p.data.status === 'upcoming');
 
       {upcoming.length > 0 && (
         <div style="margin-top: 80px">
-          <SectionHeader num="02" eyebrow="Upcoming" title="What's next." />
-          <div class="prog-list">
+          <div data-reveal>
+            <SectionHeader num="02" eyebrow="Upcoming" title="What's next." />
+          </div>
+          <div class="prog-list" data-reveal-stagger>
             {upcoming.map(p => (
               <div class={`prog-row prog-row-soon prog-${p.data.division}`}>
                 <div class={`accent-bar accent-${p.data.division}`}></div>

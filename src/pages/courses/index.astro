@@ -26,7 +26,7 @@ const courses = (await getCollection('courses')).sort((a, b) => a.data.order - b
   <section class="section">
     <div class="container">
       {courses.length > 0 ? (
-        <div class="cs-grid">
+        <div class="cs-grid" data-reveal-stagger>
           {courses.map(c => (
             <a href={`/courses/${c.id}`} class="cs-card">
               {c.data.cover && <div class="cs-cover" style={`background-image:url(${c.data.cover})`}></div>}

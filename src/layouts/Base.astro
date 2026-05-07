@@ -74,5 +74,28 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 
     <!-- Netlify Identity (for Decap CMS auth) -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" defer></script>
+
+    <!-- Scroll-reveal: adds .in-view to [data-reveal] / [data-reveal-stagger] when they enter the viewport -->
+    <script is:inline>
+      (function () {
+        if (typeof window === 'undefined') return;
+        var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var targets = document.querySelectorAll('[data-reveal], [data-reveal-stagger]');
+        if (!targets.length) return;
+        if (prefersReduced || !('IntersectionObserver' in window)) {
+          targets.forEach(function (el) { el.classList.add('in-view'); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in-view');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+        targets.forEach(function (el) { io.observe(el); });
+      })();
+    </script>
   </body>
 </html>

@@ -30,10 +30,10 @@ const fmt = (d: Date) =>
   <section class="section">
     <div class="container">
       {pubs.length > 0 ? (
-        <ul class="pub-list">
+        <ul class="pub-list" data-reveal-stagger>
           {pubs.map(p => (
             <li class="pub-item">
-              <a href={`/publications/${p.id}`} class="pub-link">
+              <a href={`/research/publications/${p.id}`} class="pub-link">
                 <div class="pub-meta">
                   <span class="pub-date mono">{fmt(p.data.date)}</span>
                   <span class={`tag tag-${p.data.division}`}>{p.data.division}</span>

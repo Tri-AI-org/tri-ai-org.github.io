@@ -1,0 +1,184 @@
+---
+/**
+ * NowPanel — the "what's happening right now" sidebar in the homepage hero.
+ * Pulls the three most recent items across news + publications, division-tagged.
+ * Replaces the generic "we exist" hero with proof-of-work.
+ */
+import { getCollection } from 'astro:content';
+
+const news = await getCollection('news', ({ data }) => !data.draft);
+const pubs = await getCollection('publications', ({ data }) => !data.draft);
+
+type Item = {
+  href: string;
+  title: string;
+  date: Date;
+  division: string;
+  kind: 'News' | 'Publication';
+};
+
+const items: Item[] = [
+  ...news.map(n => ({
+    href: `/news/${n.id}`,
+    title: n.data.title,
+    date: n.data.date,
+    division: n.data.division,
+    kind: 'News' as const,
+  })),
+  ...pubs.map(p => ({
+    href: `/research/publications/${p.id}`,
+    title: p.data.title,
+    date: p.data.date,
+    division: p.data.division,
+    kind: 'Publication' as const,
+  })),
+]
+  .sort((a, b) => b.date.valueOf() - a.date.valueOf())
+  .slice(0, 3);
+
+const fmtMo = (d: Date) =>
+  d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+
+const stamp = new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+---
+
+<aside class="now" aria-label="Recent updates">
+  <div class="now-head">
+    <span class="now-label mono">Now</span>
+    <span class="now-stamp mono">{stamp}</span>
+  </div>
+
+  {items.length === 0 ? (
+    <p class="now-empty">Updates will appear here as work is published.</p>
+  ) : (
+    <ul class="now-list" data-reveal-stagger>
+      {items.map(it => (
+        <li class="now-item">
+          <a href={it.href} class="now-link">
+            <div class="now-meta">
+              <span class={`now-dot d-${it.division}`} aria-hidden="true"></span>
+              <span class="now-stamp-row mono">
+                {fmtMo(it.date)} <span class="now-sep">·</span> {it.division}
+              </span>
+            </div>
+            <p class="now-title">{it.title}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
+
+  <a href="/news" class="now-all mono">All updates →</a>
+</aside>
+
+<style>
+  .now {
+    border-left: 1px solid var(--line);
+    padding-left: clamp(20px, 2vw, 36px);
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+  }
+  .now-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+  }
+  .now-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .now-stamp {
+    font-size: 10px;
+    color: var(--ink-faint);
+    opacity: 0.7;
+  }
+
+  .now-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+  }
+  .now-item {
+    border-bottom: 1px solid var(--line);
+  }
+  .now-item:last-child { border-bottom: none; }
+  .now-link {
+    display: block;
+    padding-block: 18px;
+    color: inherit;
+    text-decoration: none;
+    transition: padding-left 0.25s var(--ease-quick);
+  }
+  .now-link:hover { padding-left: 6px; }
+  .now-item:first-child .now-link { padding-top: 0; }
+
+  .now-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .now-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .now-dot.d-teaching { background: var(--teaching); }
+  .now-dot.d-research { background: var(--research-text); }
+  .now-dot.d-innovation { background: var(--innovation); }
+  .now-dot.d-parent { background: var(--gold); }
+
+  .now-stamp-row {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .now-sep { opacity: 0.6; }
+
+  .now-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.35;
+    transition: color 0.2s;
+  }
+  .now-link:hover .now-title { color: var(--gold-deep); }
+  [data-theme='dark'] .now-link:hover .now-title { color: var(--gold); }
+
+  .now-all {
+    display: inline-block;
+    margin-top: 24px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: var(--line-strong);
+    transition: text-decoration-color 0.2s;
+  }
+  .now-all:hover { text-decoration-color: var(--gold); }
+
+  .now-empty {
+    color: var(--ink-faint);
+    font-size: 14px;
+    flex: 1;
+  }
+
+  @media (max-width: 880px) {
+    .now {
+      border-left: none;
+      border-top: 1px solid var(--line);
+      padding-left: 0;
+      padding-top: 32px;
+      margin-top: 16px;
+    }
+  }
+</style>

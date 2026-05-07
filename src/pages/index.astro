@@ -1,10 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
-import Wordmark from '../components/Wordmark.astro';
 import Pillars from '../components/Pillars.astro';
 import FeaturedFeed from '../components/FeaturedFeed.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import Newsletter from '../components/Newsletter.astro';
+import NowPanel from '../components/NowPanel.astro';
+import HeroThreads from '../components/HeroThreads.astro';
 import { getCollection } from 'astro:content';
 
 const programmes = (await getCollection('programmes'))
@@ -21,51 +22,62 @@ const stats = [
 ---
 
 <Base
-  title="TRI AI — Advancing AI for Africa through Teaching, Research, Innovation"
-  description="TRI AI builds African communities that enable learning, research, and the development of AI solutions for local and global impact."
+  title="TRI AI — Teaching, Research, Innovation in AI for Africa"
+  description="TRI AI is a non-governmental institution building African communities for learning, research, and the development of AI solutions — published in the open."
 >
-  <!-- Hero -->
+  <!-- Hero — split-grid: headline + live Now panel -->
   <section class="hero">
-    <div class="hero-bg" aria-hidden="true"></div>
-    <div class="container hero-inner">
-      <div class="hero-mark reveal reveal-1">
-        <Wordmark size={64} showDots={true} />
+    <HeroThreads />
+    <div class="container hero-grid">
+      <div class="hero-main">
+        <p class="hero-eyebrow mono reveal reveal-1">
+          Teaching <span class="he-sep">·</span>
+          Research <span class="he-sep">·</span>
+          Innovation
+        </p>
+
+        <h1 class="hero-h reveal reveal-2">
+          AI for Africa,<br/>
+          <span class="hero-h-accent">built in the open.</span>
+        </h1>
+
+        <p class="hero-lede reveal reveal-3">
+          TRI AI is a non-governmental institution democratising artificial intelligence — building African communities for learning, research, and the development of AI solutions for local and global impact.
+        </p>
+
+        <div class="hero-actions reveal reveal-4">
+          <a href="/programmes" class="btn btn-primary btn-arrow">Explore programmes</a>
+          <a href="/research" class="btn btn-ghost btn-arrow">Our research</a>
+        </div>
       </div>
 
-      <h1 class="hero-h reveal reveal-2">
-        Advancing AI<br/>
-        <span class="hero-h-accent">for Africa.</span>
-      </h1>
-
-      <p class="hero-lede reveal reveal-3">
-        TRI AI is a non-governmental institution democratising artificial intelligence by building African communities that enable learning, research, and the development of AI solutions for local and global impact.
-      </p>
-
-      <div class="hero-actions reveal reveal-4">
-        <a href="/programmes" class="btn btn-primary btn-arrow">Explore programmes</a>
-        <a href="/research" class="btn btn-ghost btn-arrow">Our research</a>
+      <div class="hero-now reveal reveal-5">
+        <NowPanel />
       </div>
+    </div>
 
-      <p class="hero-foot mono reveal reveal-5">
-        Teaching <span class="hero-foot-dot d-t" aria-hidden="true"></span>
-        Research <span class="hero-foot-dot d-r" aria-hidden="true"></span>
-        Innovation
-      </p>
+    <!-- Division stripe — architectural footer to the hero -->
+    <div class="hero-stripe" aria-hidden="true">
+      <span class="hs hs-t"></span>
+      <span class="hs hs-r"></span>
+      <span class="hs hs-i"></span>
     </div>
   </section>
 
-  <hr class="divider-rule" />
-
   <!-- Three pillars -->
-  <section class="section">
+  <section class="section section-lg">
     <div class="container">
-      <SectionHeader
-        num="01"
-        eyebrow="What we do"
-        title="Three divisions, one mission."
-        description="TRI AI is a branded house. Every initiative we run lives under one of three divisions that map directly to the name."
-      />
-      <Pillars />
+      <div data-reveal>
+        <SectionHeader
+          num="01"
+          eyebrow="What we do"
+          title="Three divisions, one mission."
+          description="TRI AI is a branded house. Every initiative we run lives under one of three divisions that map directly to the name."
+        />
+      </div>
+      <div data-reveal-stagger>
+        <Pillars />
+      </div>
     </div>
   </section>
 
@@ -73,15 +85,17 @@ const stats = [
 
   <!-- Featured programmes -->
   {programmes.length > 0 && (
-    <section class="section">
+    <section class="section section-lg">
       <div class="container">
-        <SectionHeader
-          num="02"
-          eyebrow="Programmes"
-          title="Where the work happens."
-          description="Active initiatives shaping AI knowledge across the continent."
-        />
-        <div class="prog-grid">
+        <div data-reveal>
+          <SectionHeader
+            num="02"
+            eyebrow="Programmes"
+            title="Where the work happens."
+            description="Active initiatives shaping AI knowledge across the continent."
+          />
+        </div>
+        <div class="prog-grid" data-reveal-stagger>
           {programmes.map(p => (
             <a href={`/programmes/${p.id}`} class={`prog-card prog-${p.data.division}`}>
               {p.data.cover && <div class="prog-cover" style={`background-image:url(${p.data.cover})`}></div>}
@@ -103,16 +117,20 @@ const stats = [
   <hr class="divider-rule" />
 
   <!-- Recent / featured feed -->
-  <section class="section">
+  <section class="section section-lg">
     <div class="container">
-      <SectionHeader
-        num="03"
-        eyebrow="Recent"
-        title="Publications & updates."
-      />
-      <FeaturedFeed />
+      <div data-reveal>
+        <SectionHeader
+          num="03"
+          eyebrow="Recent"
+          title="Publications & updates."
+        />
+      </div>
+      <div data-reveal>
+        <FeaturedFeed />
+      </div>
       <div class="see-all">
-        <a href="/publications" class="btn btn-ghost btn-arrow">All publications</a>
+        <a href="/research/publications" class="btn btn-ghost btn-arrow">All publications</a>
       </div>
     </div>
   </section>
@@ -120,15 +138,17 @@ const stats = [
   <hr class="divider-rule" />
 
   <!-- Impact -->
-  <section class="section impact">
+  <section class="section section-lg impact">
     <div class="container">
-      <SectionHeader
-        num="04"
-        eyebrow="Our impact"
-        title="By the numbers."
-        align="center"
-      />
-      <div class="stats">
+      <div data-reveal>
+        <SectionHeader
+          num="04"
+          eyebrow="Our impact"
+          title="By the numbers."
+          align="center"
+        />
+      </div>
+      <div class="stats" data-reveal-stagger>
         {stats.map(s => (
           <div class="stat">
             <p class="stat-num">{s.num}</p>
@@ -143,45 +163,45 @@ const stats = [
 </Base>
 
 <style>
-  /* Hero */
+  /* ---------- Hero — split grid ---------- */
   .hero {
     position: relative;
-    padding-block: clamp(80px, 12vw, 160px);
+    padding-block: clamp(64px, 9vw, 120px) 0;
     overflow: hidden;
   }
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(ellipse 70% 50% at 50% 30%,
-        color-mix(in oklab, var(--gold) 7%, transparent) 0%,
-        transparent 60%);
-  }
-  [data-theme='dark'] .hero-bg {
-    background:
-      radial-gradient(ellipse 70% 50% at 50% 30%,
-        color-mix(in oklab, var(--gold) 12%, transparent) 0%,
-        transparent 60%);
+
+  .hero-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: clamp(40px, 5vw, 80px);
+    align-items: stretch;
+    padding-bottom: clamp(56px, 7vw, 96px);
   }
 
-  .hero-inner {
-    position: relative;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .hero-main { display: flex; flex-direction: column; }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 22px;
   }
-  .hero-mark { margin-bottom: 40px; }
+  .hero-eyebrow .he-sep {
+    margin: 0 4px;
+    color: var(--gold);
+    opacity: 0.7;
+  }
 
   .hero-h {
-    font-size: var(--t-display);
+    font-size: clamp(40px, 5.6vw, 64px);
     font-weight: 800;
     line-height: 1.02;
     letter-spacing: -0.03em;
     color: var(--ink);
-    max-width: 14ch;
-    margin-bottom: 28px;
+    max-width: 13ch;
+    margin-bottom: 22px;
   }
   .hero-h-accent {
     color: var(--gold);
@@ -190,39 +210,48 @@ const stats = [
   }
 
   .hero-lede {
-    font-size: clamp(16px, 1.4vw, 19px);
-    line-height: 1.55;
+    font-size: clamp(15.5px, 1.3vw, 18px);
+    line-height: 1.6;
     color: var(--ink-mid);
-    max-width: 56ch;
-    margin-bottom: 36px;
+    max-width: 46ch;
+    margin-bottom: 32px;
   }
 
   .hero-actions {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 56px;
   }
 
-  .hero-foot {
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    color: var(--ink-faint);
-    font-size: 11px;
-    letter-spacing: 0.32em;
-  }
-  .hero-foot-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-  .hero-foot-dot.d-t { background: var(--teaching); }
-  .hero-foot-dot.d-r { background: var(--research-text); }
+  .hero-now { min-width: 0; }
 
-  /* Programmes */
+  /* Division stripe — architectural footer */
+  .hero-stripe {
+    display: flex;
+    height: 6px;
+    width: 100%;
+  }
+  .hs { flex: 1; }
+  .hs-t { background: var(--teaching); }
+  .hs-r { background: var(--research); }
+  .hs-i { background: var(--innovation); }
+  [data-theme='dark'] .hs-r { background: var(--research-text); }
+
+  @media (max-width: 880px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .hero-h { font-size: clamp(36px, 9vw, 52px); }
+    .hero-lede { max-width: 60ch; }
+  }
+
+  /* ---------- Section size variant ---------- */
+  .section-lg {
+    padding-block: clamp(72px, 9vw, 128px);
+  }
+
+  /* ---------- Programmes ---------- */
   .prog-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -235,11 +264,15 @@ const stats = [
     background: var(--bg-elev);
     display: flex;
     flex-direction: column;
-    transition: border-color 0.25s var(--ease-quick), transform 0.25s var(--ease-quick);
+    transition: border-color 0.25s var(--ease-quick), transform 0.25s var(--ease-quick), box-shadow 0.25s var(--ease-quick);
   }
   .prog-card:hover {
     border-color: var(--line-strong);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px -12px rgba(20, 20, 20, 0.08);
+  }
+  [data-theme='dark'] .prog-card:hover {
+    box-shadow: 0 8px 30px -12px rgba(0, 0, 0, 0.6);
   }
   .prog-cover {
     aspect-ratio: 16/9;
@@ -247,9 +280,7 @@ const stats = [
     background-position: center;
     background-color: var(--bg-soft);
   }
-  .prog-body {
-    padding: 24px 26px 28px;
-  }
+  .prog-body { padding: 24px 26px 28px; }
   .prog-body .tag { margin-bottom: 14px; }
   .prog-title {
     font-size: 22px;
@@ -269,7 +300,10 @@ const stats = [
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--ink);
+    transition: color 0.2s;
   }
+  .prog-card:hover .prog-link { color: var(--gold-deep); }
+  [data-theme='dark'] .prog-card:hover .prog-link { color: var(--gold); }
 
   .see-all {
     margin-top: 36px;
@@ -277,7 +311,7 @@ const stats = [
     justify-content: center;
   }
 
-  /* Impact */
+  /* ---------- Impact ---------- */
   .impact { background: var(--bg-soft); }
   .stats {
     display: grid;
@@ -287,7 +321,7 @@ const stats = [
   }
   .stat { text-align: center; }
   .stat-num {
-    font-size: clamp(28px, 3.5vw, 42px);
+    font-size: clamp(32px, 4vw, 48px);
     font-weight: 800;
     color: var(--ink);
     letter-spacing: -0.02em;
