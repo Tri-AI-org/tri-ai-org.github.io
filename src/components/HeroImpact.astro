@@ -1,0 +1,153 @@
+---
+/**
+ * HeroImpact — the impact stats, designed for the hero right column.
+ *
+ * Replaces the Now panel as the visual anchor in the hero. The reasoning:
+ * for an NGO, the strongest first-impression signal is "this is real, this
+ * has shipped" — and that lives in the numbers. The Now panel still
+ * exists; it just lives mid-page now.
+ *
+ * Visual treatment: 2x2 grid, big gold numerals, mono labels, thin rules.
+ * Editorial register — not dashboard tiles, not pastel squircles.
+ */
+import { getCollection } from 'astro:content';
+
+const allCohorts = await getCollection('cohorts');
+const allPublications = await getCollection('publications', ({ data }) => !data.draft);
+const allProgrammes = await getCollection('programmes');
+
+const cohortsCount = allCohorts.filter(c => c.data.programme === 'tri-ai-saturdays').length;
+const researchCount = allProgrammes.filter(p => p.data.division === 'research' && p.data.status === 'active').length;
+const startYear = 2017;
+const yearsActive = new Date().getFullYear() - startYear;
+
+const stats = [
+  {
+    num: '1,500+',
+    label: 'Learners and community members',
+  },
+  {
+    num: String(cohortsCount),
+    label: 'AI Saturdays cohorts run',
+  },
+  {
+    num: String(allPublications.length || researchCount),
+    label: allPublications.length ? 'Publications and datasets' : 'Active research initiatives',
+  },
+  {
+    num: `${yearsActive}+`,
+    label: 'Years building AI communities',
+  },
+];
+---
+
+<aside class="hi" aria-label="Impact at a glance">
+  <header class="hi-head">
+    <p class="mono hi-eyebrow">Our impact</p>
+    <p class="mono hi-since">Since {startYear}</p>
+  </header>
+
+  <div class="hi-grid">
+    {stats.map(s => (
+      <div class="hi-cell">
+        <p class="hi-num">{s.num}</p>
+        <p class="hi-label mono">{s.label}</p>
+      </div>
+    ))}
+  </div>
+
+  <footer class="hi-foot">
+    <a href="/about" class="mono hi-cta">Read the full story <span aria-hidden="true">→</span></a>
+  </footer>
+</aside>
+
+<style>
+  .hi {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--bg-elev);
+    overflow: hidden;
+    height: 100%;
+  }
+  .hi-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 18px 22px 16px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-soft);
+  }
+  .hi-eyebrow {
+    color: var(--gold-deep);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  [data-theme='dark'] .hi-eyebrow { color: var(--gold); }
+  .hi-since {
+    color: var(--ink-faint);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .hi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex: 1;
+  }
+  .hi-cell {
+    padding: clamp(20px, 2.4vw, 28px) clamp(18px, 2vw, 24px);
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 120px;
+  }
+  .hi-cell:nth-child(2n) { border-right: none; }
+  .hi-cell:nth-child(n+3) { border-bottom: none; }
+
+  .hi-num {
+    font-size: clamp(34px, 4vw, 48px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    color: var(--gold-deep);
+  }
+  [data-theme='dark'] .hi-num { color: var(--gold); }
+
+  .hi-label {
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    line-height: 1.4;
+  }
+
+  .hi-foot {
+    padding: 14px 22px 16px;
+    border-top: 1px solid var(--line);
+    background: var(--bg-soft);
+  }
+  .hi-cta {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: gap 0.2s var(--ease-quick), color 0.2s;
+  }
+  .hi-cta:hover {
+    color: var(--gold-deep);
+    gap: 12px;
+  }
+  [data-theme='dark'] .hi-cta:hover { color: var(--gold); }
+</style>

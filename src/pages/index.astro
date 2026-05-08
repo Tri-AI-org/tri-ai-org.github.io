@@ -4,6 +4,7 @@ import FeaturedFeed from '../components/FeaturedFeed.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import Newsletter from '../components/Newsletter.astro';
 import NowPanel from '../components/NowPanel.astro';
+import HeroImpact from '../components/HeroImpact.astro';
 import HeroThreads from '../components/HeroThreads.astro';
 import DivisionPanel from '../components/DivisionPanel.astro';
 import DivisionsIntro from '../components/DivisionsIntro.astro';
@@ -14,29 +15,13 @@ const programmes = (await getCollection('programmes'))
   .filter(p => p.data.status === 'active')
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 2);
-
-// Pull live counts so stats stay correct as content grows
-const allCohorts = await getCollection('cohorts');
-const allPublications = await getCollection('publications', ({ data }) => !data.draft);
-const allProgrammes = await getCollection('programmes');
-const researchCount = allProgrammes.filter(p => p.data.division === 'research' && p.data.status === 'active').length;
-const cohortsCount = allCohorts.filter(c => c.data.programme === 'tri-ai-saturdays').length;
-const startYear = 2017;
-const yearsActive = new Date().getFullYear() - startYear;
-
-const stats = [
-  { num: '1,500+', label: 'Learners and community members' },
-  { num: String(cohortsCount), label: 'AI Saturdays cohorts run' },
-  { num: String(allPublications.length || researchCount), label: allPublications.length ? 'Publications & datasets released' : 'Active research initiatives' },
-  { num: `${yearsActive}+`, label: 'Years building AI communities' },
-];
 ---
 
 <Base
   title="TRI AI — Teaching, Research, Innovation in AI for Africa"
   description="TRI AI is a non-governmental institution building African communities for learning, research, and the development of AI solutions — published in the open."
 >
-  <!-- Hero — split-grid: headline + live Now panel -->
+  <!-- Hero — split-grid: headline + impact stats -->
   <section class="hero">
     <HeroThreads />
     <div class="container hero-grid">
@@ -63,7 +48,7 @@ const stats = [
       </div>
 
       <div class="hero-now reveal reveal-5">
-        <NowPanel />
+        <HeroImpact />
       </div>
     </div>
 
@@ -77,27 +62,6 @@ const stats = [
 
   <!-- How the work fits together — explains divisions before deep panels -->
   <DivisionsIntro />
-
-  <!-- Impact stats — promoted high so the institution's proof comes early -->
-  <section class="section section-lg impact">
-    <div class="container">
-      <div data-reveal>
-        <SectionHeader
-          eyebrow="Our impact"
-          title="By the numbers."
-          align="center"
-        />
-      </div>
-      <div class="stats" data-reveal-stagger>
-        {stats.map(s => (
-          <div class="stat">
-            <p class="stat-num">{s.num}</p>
-            <p class="stat-label">{s.label}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
 
   <!-- Three divisions — full panels each -->
   <DivisionPanel
@@ -140,6 +104,23 @@ const stats = [
     ctaHref="/innovation"
     emptyState="In development. We're prototyping the first TRI AI Innovation products — applied tools and spinouts emerging from our research and teaching work. Sign up below to hear when the first launches."
   />
+
+  <!-- What's happening now — moved from hero, given its own section -->
+  <section class="section section-lg now-section">
+    <div class="container">
+      <div data-reveal>
+        <SectionHeader
+          eyebrow="Latest"
+          title="What's happening now."
+        />
+      </div>
+      <div data-reveal class="now-section-body">
+        <NowPanel />
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider-rule" />
 
   <!-- Recent / featured feed -->
   <section class="section section-lg">

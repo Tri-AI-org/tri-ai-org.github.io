@@ -80,6 +80,15 @@ const stamp = new Date().toLocaleDateString('en-US', { month: 'short', year: 'nu
     display: flex;
     flex-direction: column;
   }
+  /* Section context: when wrapped by .now-section-body the panel should
+     drop its sidebar border and let the SectionHeader above do the heading. */
+  .now-section-body .now {
+    border-left: none;
+    padding-left: 0;
+  }
+  .now-section-body .now-head { display: none; }
+  .now-section-body .now-list { margin-top: 4px; }
+  .now-section-body .now-item { padding-block: 4px; }
   .now-head {
     display: flex;
     align-items: center;

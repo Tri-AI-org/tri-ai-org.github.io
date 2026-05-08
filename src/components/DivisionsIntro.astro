@@ -1,89 +1,67 @@
 ---
 /**
- * DivisionsIntro — sits between the hero and the deep division panels.
- * Introduces the three divisions in one sentence each, with a small
- * dynamic proof point pulled from the content collections.
- *
- * Editorial register: dot + name + sentence + proof line. No tiles,
- * no big numbers, no backgrounds. Three columns on desktop, stacked
- * on mobile.
+ * DivisionsIntro — a quiet, non-interactive paragraph-style introduction
+ * to the three divisions. Sits between the hero and the first deep
+ * DivisionPanel below. Its job is purely orientation: tell the visitor
+ * what Teaching/Research/Innovation mean before they meet them in
+ * depth. No clicks, no CTAs — that work is happening in the panels
+ * below.
  */
-import { getCollection } from 'astro:content';
-
-// Pull live counts to ground each division's intro in real content.
-const programmes = await getCollection('programmes');
-const cohorts = await getCollection('cohorts');
-const publications = await getCollection('publications', ({ data }) => !data.draft);
-
-const teachingCount = programmes.filter(p => p.data.division === 'teaching' && p.data.status === 'active').length;
-const cohortCount = cohorts.filter(c => c.data.programme === 'tri-ai-saturdays').length;
-const researchCount = programmes.filter(p => p.data.division === 'research' && p.data.status === 'active').length;
-const publicationCount = publications.length;
-
-const divisions = [
-  {
-    number: '01',
-    name: 'Teaching',
-    division: 'teaching',
-    sentence: 'Building the next generation of African AI practitioners through cohort programmes, partner-delivered courses, watch parties, and an expert colloquium series.',
-    proof: cohortCount > 0
-      ? `${cohortCount} cohorts since 2017 · ${teachingCount} active programmes`
-      : `${teachingCount} active programmes`,
-    href: '/programmes',
-  },
-  {
-    number: '02',
-    name: 'Research',
-    division: 'research',
-    sentence: 'Long-running research initiatives building open datasets, models, and benchmarks for problems that mainstream AI has overlooked.',
-    proof: publicationCount > 0
-      ? `${researchCount} active initiatives · ${publicationCount} publications`
-      : `${researchCount} active initiatives`,
-    href: '/research',
-  },
-  {
-    number: '03',
-    name: 'Innovation',
-    division: 'innovation',
-    sentence: 'Translating teaching and research into products, tools, and spinouts that serve African contexts directly.',
-    proof: 'In development · First launches: late 2026',
-    href: '/innovation',
-  },
-];
 ---
 
 <section class="dvi" aria-labelledby="dvi-heading">
   <div class="container">
-    <header class="dvi-head" data-reveal>
-      <p class="mono dvi-eyebrow">How the work fits together</p>
-      <h2 class="dvi-title" id="dvi-heading">
-        TRI AI is organised into <span class="dvi-em">three divisions.</span>
-      </h2>
-    </header>
+    <div class="dvi-grid" data-reveal>
+      <div class="dvi-head">
+        <p class="mono dvi-eyebrow">How the work fits together</p>
+        <h2 class="dvi-title" id="dvi-heading">
+          The institution is organised into <span class="dvi-em">three divisions.</span>
+        </h2>
+      </div>
 
-    <div class="dvi-grid" data-reveal-stagger>
-      {divisions.map(d => (
-        <a href={d.href} class={`dvi-card dvi-card-${d.division}`}>
-          <p class="dvi-num mono">{d.number}</p>
-          <div class="dvi-name-row">
-            <span class={`dvi-dot dvi-dot-${d.division}`} aria-hidden="true"></span>
-            <span class={`dvi-name dvi-name-${d.division}`}>{d.name}</span>
-          </div>
-          <p class="dvi-sentence">{d.sentence}</p>
-          <p class="dvi-proof mono">{d.proof}</p>
-          <span class="dvi-arrow mono" aria-hidden="true">→</span>
-        </a>
-      ))}
+      <div class="dvi-body">
+        <ul class="dvi-list">
+          <li class="dvi-row">
+            <span class="dvi-marker dvi-marker-teaching" aria-hidden="true"></span>
+            <p class="dvi-text">
+              <strong class="dvi-name dvi-name-teaching">Teaching</strong>
+              <span class="dvi-sep" aria-hidden="true">—</span>
+              cohort programmes, partner-delivered courses, watch parties, and an expert colloquium series, all free and community-led.
+            </p>
+          </li>
+          <li class="dvi-row">
+            <span class="dvi-marker dvi-marker-research" aria-hidden="true"></span>
+            <p class="dvi-text">
+              <strong class="dvi-name dvi-name-research">Research</strong>
+              <span class="dvi-sep" aria-hidden="true">—</span>
+              long-running initiatives that build open datasets, models, and benchmarks for problems mainstream AI has overlooked.
+            </p>
+          </li>
+          <li class="dvi-row">
+            <span class="dvi-marker dvi-marker-innovation" aria-hidden="true"></span>
+            <p class="dvi-text">
+              <strong class="dvi-name dvi-name-innovation">Innovation</strong>
+              <span class="dvi-sep" aria-hidden="true">—</span>
+              the youngest division: translating teaching and research into products and tools that serve African contexts directly.
+            </p>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
   .dvi {
-    padding-block: clamp(56px, 7vw, 96px);
+    padding-block: clamp(56px, 7vw, 88px);
     border-bottom: 1px solid var(--line);
   }
-  .dvi-head { margin-bottom: clamp(32px, 4vw, 56px); }
+  .dvi-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: clamp(40px, 6vw, 88px);
+    align-items: flex-start;
+  }
   .dvi-eyebrow {
     color: var(--gold-deep);
     margin-bottom: 14px;
@@ -95,7 +73,7 @@ const divisions = [
     line-height: 1.15;
     letter-spacing: -0.02em;
     color: var(--ink);
-    max-width: 22ch;
+    max-width: 16ch;
   }
   .dvi-em {
     display: inline-block;
@@ -107,107 +85,55 @@ const divisions = [
   }
   [data-theme='dark'] .dvi-em { color: var(--gold); }
 
-  .dvi-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    overflow: hidden;
+  .dvi-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
-
-  .dvi-card {
-    position: relative;
+  .dvi-row {
     display: flex;
-    flex-direction: column;
-    padding: clamp(24px, 3vw, 36px) clamp(20px, 2.4vw, 32px) clamp(28px, 3.5vw, 40px);
-    background: var(--bg-elev);
-    text-decoration: none;
-    color: inherit;
-    transition: background 0.25s var(--ease-quick), transform 0.25s var(--ease-quick);
-    overflow: hidden;
+    align-items: flex-start;
+    gap: 18px;
+    padding-block: 22px;
+    border-bottom: 1px solid var(--line);
   }
-  .dvi-card:hover { background: var(--bg); }
+  .dvi-row:first-child { padding-top: 0; }
+  .dvi-row:last-child { border-bottom: none; padding-bottom: 0; }
 
-  /* Top-left coloured stripe per division — quiet, not loud */
-  .dvi-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 32px;
-    height: 2px;
-    transition: width 0.3s var(--ease);
-  }
-  .dvi-card-teaching::before { background: var(--teaching); }
-  .dvi-card-research::before { background: var(--research-text); }
-  .dvi-card-innovation::before { background: var(--innovation); }
-  .dvi-card:hover::before { width: 80px; }
-
-  .dvi-num {
-    font-size: 11px;
-    letter-spacing: 0.22em;
-    color: var(--ink-faint);
-    margin-bottom: 22px;
-  }
-
-  .dvi-name-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-  .dvi-dot {
+  .dvi-marker {
     width: 10px;
     height: 10px;
     border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 9px;
   }
-  .dvi-dot-teaching { background: var(--teaching); }
-  .dvi-dot-research { background: var(--research-text); }
-  .dvi-dot-innovation { background: var(--innovation); }
+  .dvi-marker-teaching { background: var(--teaching); }
+  .dvi-marker-research { background: var(--research-text); }
+  .dvi-marker-innovation { background: var(--innovation); }
 
+  .dvi-text {
+    font-size: 16.5px;
+    line-height: 1.6;
+    color: var(--ink-mid);
+    margin: 0;
+  }
   .dvi-name {
-    font-size: clamp(20px, 2vw, 26px);
     font-weight: 700;
-    letter-spacing: -0.015em;
   }
   .dvi-name-teaching { color: var(--teaching); }
   .dvi-name-research { color: var(--ink); }
   [data-theme='dark'] .dvi-name-research { color: var(--research-text); }
   .dvi-name-innovation { color: var(--innovation); }
-
-  .dvi-sentence {
-    font-size: 15.5px;
-    line-height: 1.6;
-    color: var(--ink-mid);
-    margin-bottom: 22px;
-    flex: 1;
-  }
-
-  .dvi-proof {
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+  .dvi-sep {
     color: var(--ink-faint);
-    padding-top: 18px;
-    border-top: 1px solid var(--line);
-    margin-bottom: 16px;
+    margin-inline: 8px;
   }
-
-  .dvi-arrow {
-    font-size: 14px;
-    color: var(--ink-faint);
-    align-self: flex-end;
-    transition: transform 0.25s var(--ease-quick), color 0.25s;
-  }
-  .dvi-card-teaching:hover .dvi-arrow { color: var(--teaching); transform: translateX(4px); }
-  .dvi-card-research:hover .dvi-arrow { color: var(--research-text); transform: translateX(4px); }
-  .dvi-card-innovation:hover .dvi-arrow { color: var(--innovation); transform: translateX(4px); }
 
   @media (max-width: 880px) {
     .dvi-grid {
       grid-template-columns: 1fr;
+      gap: 32px;
     }
+    .dvi-title { max-width: none; }
   }
 </style>
