@@ -6,6 +6,7 @@ import Newsletter from '../components/Newsletter.astro';
 import NowPanel from '../components/NowPanel.astro';
 import HeroThreads from '../components/HeroThreads.astro';
 import DivisionPanel from '../components/DivisionPanel.astro';
+import DivisionsIntro from '../components/DivisionsIntro.astro';
 import CohortMarquee from '../components/CohortMarquee.astro';
 import { getCollection } from 'astro:content';
 
@@ -14,11 +15,20 @@ const programmes = (await getCollection('programmes'))
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 2);
 
+// Pull live counts so stats stay correct as content grows
+const allCohorts = await getCollection('cohorts');
+const allPublications = await getCollection('publications', ({ data }) => !data.draft);
+const allProgrammes = await getCollection('programmes');
+const researchCount = allProgrammes.filter(p => p.data.division === 'research' && p.data.status === 'active').length;
+const cohortsCount = allCohorts.filter(c => c.data.programme === 'tri-ai-saturdays').length;
+const startYear = 2017;
+const yearsActive = new Date().getFullYear() - startYear;
+
 const stats = [
   { num: '1,500+', label: 'Learners and community members' },
-  { num: '9', label: 'AI Saturdays cohorts run' },
-  { num: '2', label: 'Active research initiatives' },
-  { num: '8+', label: 'Years building AI communities' },
+  { num: String(cohortsCount), label: 'AI Saturdays cohorts run' },
+  { num: String(allPublications.length || researchCount), label: allPublications.length ? 'Publications & datasets released' : 'Active research initiatives' },
+  { num: `${yearsActive}+`, label: 'Years building AI communities' },
 ];
 ---
 
@@ -62,6 +72,30 @@ const stats = [
       <span class="hs hs-t"></span>
       <span class="hs hs-r"></span>
       <span class="hs hs-i"></span>
+    </div>
+  </section>
+
+  <!-- How the work fits together — explains divisions before deep panels -->
+  <DivisionsIntro />
+
+  <!-- Impact stats — promoted high so the institution's proof comes early -->
+  <section class="section section-lg impact">
+    <div class="container">
+      <div data-reveal>
+        <SectionHeader
+          eyebrow="Our impact"
+          title="By the numbers."
+          align="center"
+        />
+      </div>
+      <div class="stats" data-reveal-stagger>
+        {stats.map(s => (
+          <div class="stat">
+            <p class="stat-num">{s.num}</p>
+            <p class="stat-label">{s.label}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -112,7 +146,6 @@ const stats = [
     <div class="container">
       <div data-reveal>
         <SectionHeader
-          num="04"
           eyebrow="Recent"
           title="Publications & updates."
         />
@@ -122,30 +155,6 @@ const stats = [
       </div>
       <div class="see-all">
         <a href="/research/publications" class="btn btn-ghost btn-arrow">All publications</a>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider-rule" />
-
-  <!-- Impact -->
-  <section class="section section-lg impact">
-    <div class="container">
-      <div data-reveal>
-        <SectionHeader
-          num="05"
-          eyebrow="Our impact"
-          title="By the numbers."
-          align="center"
-        />
-      </div>
-      <div class="stats" data-reveal-stagger>
-        {stats.map(s => (
-          <div class="stat">
-            <p class="stat-num">{s.num}</p>
-            <p class="stat-label">{s.label}</p>
-          </div>
-        ))}
       </div>
     </div>
   </section>
