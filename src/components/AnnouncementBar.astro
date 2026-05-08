@@ -131,8 +131,8 @@ const division = target?.data.division ?? 'teaching';
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: 10px;
-    letter-spacing: 0.22em;
+    font-size: var(--t-mono);
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--ink);
     flex-shrink: 0;
@@ -172,7 +172,7 @@ const division = target?.data.division ?? 'teaching';
   .anb-cta {
     flex-shrink: 0;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: var(--t-mono);
     letter-spacing: 0.16em;
     text-transform: uppercase;
     font-weight: 700;
@@ -220,7 +220,7 @@ const division = target?.data.division ?? 'teaching';
       font-size: 13px;
     }
     .anb-eyebrow { order: 1; }
-    .anb-cta { order: 2; margin-left: auto; font-size: 10px; padding: 5px 10px; }
+    .anb-cta { order: 2; margin-left: auto; font-size: var(--t-mono-sm); padding: 5px 10px; }
     .anb-close { order: 4; }
   }
 </style>

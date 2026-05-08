@@ -95,7 +95,7 @@ const courses = (await getCollection('courses')).sort((a, b) => a.data.order - b
     flex-wrap: wrap;
   }
   .cs-partner {
-    font-size: 11px;
+    font-size: var(--t-mono);
     color: var(--ink-faint);
     font-family: var(--font-mono);
     letter-spacing: 0.1em;
@@ -115,7 +115,7 @@ const courses = (await getCollection('courses')).sort((a, b) => a.data.order - b
     margin-bottom: 16px;
   }
   .cs-link {
-    font-size: 11px;
+    font-size: var(--t-mono);
     font-family: var(--font-mono);
     letter-spacing: 0.18em;
     text-transform: uppercase;

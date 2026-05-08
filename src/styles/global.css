@@ -43,7 +43,12 @@
   --t-h3: 18px;
   --t-body: 16px;
   --t-small: 13px;
-  --t-mono: 11px;
+  /* Mono labels: --t-mono for primary (eyebrows, CTAs, stat labels);
+     --t-mono-sm for captions and tightly-packed dense UI.
+     Keep tracking moderate — letterforms below 12px get hard to read at wide tracking. */
+  --t-mono: 12px;
+  --t-mono-sm: 11px;
+  --t-mono-xs: 10px;
 
   /* Spacing */
   --space-1: 4px;
