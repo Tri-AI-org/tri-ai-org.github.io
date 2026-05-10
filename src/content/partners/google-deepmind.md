@@ -1,8 +1,8 @@
 ---
-name: "Google DeepMind"
-logo: "/uploads/partners/google-deepmind.svg"
-url: "https://deepmind.google"
-tier: "lead"
+name: Google DeepMind
+logo: /uploads/googledeepmindlogo.png
+url: https://deepmind.google
+tier: lead
 order: 1
 ---
 
