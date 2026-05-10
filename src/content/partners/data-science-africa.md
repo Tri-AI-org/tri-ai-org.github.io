@@ -1,8 +1,8 @@
 ---
-name: "Data Science Africa"
-logo: "/uploads/partners/dsa.svg"
-url: "https://www.datascienceafrica.org"
-tier: "partner"
+name: Data Science Africa
+logo: /uploads/logo2x.png
+url: https://www.datascienceafrica.org
+tier: partner
 order: 2
 ---
 
