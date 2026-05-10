@@ -1,5 +1,5 @@
 ---
-title: "ChowNet — image dataset for African cuisine"
+title: "ChowNet - image dataset for African cuisine"
 date: 2024-09-01
 outlet: Zenodo
 kind: paper-citation

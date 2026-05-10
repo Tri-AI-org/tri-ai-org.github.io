@@ -13,7 +13,7 @@ order: 5
 
 ## What it is
 
-An invited talk series. Each colloquium features a single speaker — usually a working researcher or senior engineer — presenting current work, followed by an extended Q&A. Past speakers and topics are announced through the newsletter; recordings are posted publicly when permitted.
+An invited talk series. Each colloquium features a single speaker - usually a working researcher or senior engineer - presenting current work, followed by an extended Q&A. Past speakers and topics are announced through the newsletter; recordings are posted publicly when permitted.
 
 ## Why it matters
 

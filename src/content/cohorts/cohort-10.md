@@ -2,7 +2,7 @@
 programme: tri-ai-saturdays
 number: 10
 year: 2026
-title: "Cohort 10 — AI Research Foundations w/ Google DeepMind"
+title: "Cohort 10 - AI Research Foundations w/ Google DeepMind"
 status: upcoming
 duration: "16 weeks"
 format: "Hybrid"
@@ -38,6 +38,6 @@ The cohort follows Google DeepMind's AI Research Foundations Course 1–4, cover
 
 ## Why this cohort matters
 
-Cohort 10 marks nearly a decade of community-led AI learning in Nigeria. It's also the most ambitious curriculum we've run to date — a structured Google DeepMind partnership that brings world-class course material directly to African learners, taught and supported by the same community that has run the previous nine cohorts.
+Cohort 10 marks nearly a decade of community-led AI learning in Nigeria. It's also the most ambitious curriculum we've run to date - a structured Google DeepMind partnership that brings world-class course material directly to African learners, taught and supported by the same community that has run the previous nine cohorts.
 
 As with previous cohorts, the programme is **free** for accepted learners.

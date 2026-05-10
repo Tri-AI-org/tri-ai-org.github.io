@@ -1,4 +1,4 @@
-# TRI AI — Website
+# TRI AI - Website
 
 Teaching, Research, Innovation in AI for Africa.
 
@@ -11,7 +11,7 @@ A static site built with **Astro**, content managed through **Decap CMS**, deplo
 ```
 triai-site/
 ├── public/
-│   ├── admin/               # Decap CMS entry — accessed at /admin
+│   ├── admin/               # Decap CMS entry - accessed at /admin
 │   │   ├── index.html
 │   │   └── config.yml       # CMS schema (collections, fields)
 │   ├── favicon.svg          # Gold "tA" mark
@@ -28,7 +28,7 @@ triai-site/
 │   ├── components/          # Wordmark, Header, Footer, etc.
 │   ├── layouts/             # Base.astro
 │   ├── pages/               # Routes
-│   └── styles/global.css    # Brand tokens — colours, type, spacing
+│   └── styles/global.css    # Brand tokens - colours, type, spacing
 ├── astro.config.mjs
 ├── netlify.toml             # Build + /admin redirect + caching
 └── package.json
@@ -63,14 +63,14 @@ The build output lands in `dist/`.
 - **Wordmark:** "tri" lowercase, weight 500. "AI" uppercase, weight 800, always gold (`#D4A017`).
 - **Division dots:** orange (Teaching `#FE6612`), blue (Research `#1A2B4A`), teal (Innovation `#0F9B8D`). The `<Wordmark>` component drops them automatically below 36px (nav/footer contexts).
 - **No icons.** The brand uses type, dots, and accent bars instead. If you find yourself reaching for an icon, reach for a coloured dot or a 3px accent bar.
-- **Two typefaces only:** Plus Jakarta Sans for body and headlines; Space Mono for eyebrows, dates, tags, section numbers (01 — 02 — 03).
+- **Two typefaces only:** Plus Jakarta Sans for body and headlines; Space Mono for eyebrows, dates, tags, section numbers (01 - 02 - 03).
 - All colours, type sizes, and spacing live as CSS custom properties in `src/styles/global.css`. Edit there, not inline.
 
 ---
 
 ## Deploying to Netlify
 
-1. **Push the repo to GitHub** (or GitLab / Bitbucket — Netlify supports all three).
+1. **Push the repo to GitHub** (or GitLab / Bitbucket - Netlify supports all three).
 
 2. **Create a new site on Netlify** → "Import an existing project" → pick the repo.
    - Build command: `npm run build`  *(already in `netlify.toml`)*
@@ -125,8 +125,8 @@ The `/admin` page won't work until Identity and Git Gateway are turned on. Do th
 | News            | `src/content/news/`          | Announcements, releases, updates             |
 
 Each collection's fields live in two places that **must stay in sync**:
-- `src/content.config.ts` — what Astro validates at build time
-- `public/admin/config.yml` — what editors see in the CMS UI
+- `src/content.config.ts` - what Astro validates at build time
+- `public/admin/config.yml` - what editors see in the CMS UI
 
 If you add a field, add it to both.
 
@@ -134,7 +134,7 @@ If you add a field, add it to both.
 
 ## Forms (contact + newsletter)
 
-Both forms are wired to **Netlify Forms** — no third-party signup needed. Submissions appear in Netlify's "Forms" tab.
+Both forms are wired to **Netlify Forms** - no third-party signup needed. Submissions appear in Netlify's "Forms" tab.
 
 To turn on email notifications:
 - Site settings → Forms → Form notifications → Add notification → email address.
@@ -143,7 +143,7 @@ To turn on email notifications:
 
 ## Donate page
 
-The donate page UI is built but the payment integration is intentionally left as a placeholder (`alert()` on submit). Wire up Stripe, Paystack, or Flutterwave when ready — the relevant code lives in `src/pages/donate.astro`.
+The donate page UI is built but the payment integration is intentionally left as a placeholder (`alert()` on submit). Wire up Stripe, Paystack, or Flutterwave when ready - the relevant code lives in `src/pages/donate.astro`.
 
 ---
 
@@ -163,13 +163,13 @@ Light mode is the default. The toggle in the header switches to dark mode and pe
 
 The site currently uses two layers of placeholder imagery:
 
-- **Brand-correct flat tiles** at `public/uploads/placeholders/` — used on cards and as fallbacks. Editorial, identifiable as TRI AI, but obviously placeholders.
+- **Brand-correct flat tiles** at `public/uploads/placeholders/` - used on cards and as fallbacks. Editorial, identifiable as TRI AI, but obviously placeholders.
 - **Picsum-served live photos** for editorial sections, programme covers, team headshots, and news covers. These pull real photos from `picsum.photos` using deterministic seed names (e.g. `https://picsum.photos/seed/triai-saturdays/1600/1200`). The same seed always returns the same photo, so the design is stable.
 
 To replace either with real photography:
 
 - **Programme covers:** edit the programme entry through the CMS at `/admin`. Change the `cover` field from the Picsum URL to either a relative path (e.g. `/uploads/programmes/saturdays-cohort-photo.jpg`, after uploading the file) or a different external URL.
-- **Team headshots:** same pattern — each team member's `photo` field. Replace the Picsum URL with the path to the uploaded headshot.
+- **Team headshots:** same pattern - each team member's `photo` field. Replace the Picsum URL with the path to the uploaded headshot.
 - **News covers:** the `cover` field on each news article.
 - **About page editorial photos:** these live in `src/pages/about.astro` directly (not in the CMS). Edit the `imageSrc` props on the three `<EditorialSplit>` components.
 - **Homepage division panels:** edit the `featuredImage` props on the `<DivisionPanel>` calls in `src/pages/index.astro`.
@@ -181,6 +181,6 @@ The flat brand placeholders at `public/uploads/placeholders/` are kept for any f
 ## Tech notes for whoever maintains this next
 
 - Astro 5, content collections via `glob` loader.
-- No JS framework — every component is `.astro`. The header drawer and theme toggle are vanilla JS, kept inline in their components.
+- No JS framework - every component is `.astro`. The header drawer and theme toggle are vanilla JS, kept inline in their components.
 - CSS is plain CSS with custom properties. No Tailwind, no preprocessor.
 - The site is fully static. No serverless functions, no runtime, no database. The only dynamic surfaces are Netlify Forms (managed by Netlify) and the CMS (which writes to git).

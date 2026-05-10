@@ -16,7 +16,7 @@ const ways = [
     division: 'research',
     label: 'Collaborate',
     title: 'Research partnerships',
-    body: 'Universities, labs, and independent researchers — get in touch about joint work, datasets, and grant collaboration.',
+    body: 'Universities, labs, and independent researchers - get in touch about joint work, datasets, and grant collaboration.',
     cta: 'Email research',
     href: 'mailto:research@tri-ai.org',
   },
@@ -31,7 +31,7 @@ const ways = [
 ];
 ---
 
-<Base title="Get Involved — TRI AI">
+<Base title="Get Involved - TRI AI">
   <section class="hero-gi">
     <div class="container">
       <p class="mono">Get involved</p>
@@ -53,7 +53,7 @@ const ways = [
         {ways.map((w, i) => (
           <a href={w.href} class={`gi-card gi-${w.division}`}>
             <div class={`accent-bar accent-${w.division}`}></div>
-            <p class="mono gi-tag">0{i + 1} — {w.label}</p>
+            <p class="mono gi-tag">0{i + 1} - {w.label}</p>
             <h2 class="gi-title">{w.title}</h2>
             <p class="gi-body">{w.body}</p>
             <span class="gi-cta">{w.cta} <span aria-hidden="true">→</span></span>

@@ -35,7 +35,7 @@ const statusLabels: Record<string, string> = {
 ---
 
 <Base
-  title={`Cohort ${d.number} — ${programme?.data.title ?? 'TRI AI Saturdays Lagos'}`}
+  title={`Cohort ${d.number} - ${programme?.data.title ?? 'TRI AI Saturdays Lagos'}`}
   description={d.summary}
 >
   <article class="ch">
@@ -197,13 +197,13 @@ const statusLabels: Record<string, string> = {
         {prev ? (
           <a href={`/programmes/${d.programme}/cohorts/${prev.data.number}`} class="ch-nav-link ch-nav-prev">
             <span class="mono ch-nav-eyebrow">← Previous</span>
-            <span class="ch-nav-title">C{String(prev.data.number).padStart(2, '0')} — {prev.data.year}</span>
+            <span class="ch-nav-title">C{String(prev.data.number).padStart(2, '0')} - {prev.data.year}</span>
           </a>
         ) : <span></span>}
         {next ? (
           <a href={`/programmes/${d.programme}/cohorts/${next.data.number}`} class="ch-nav-link ch-nav-next">
             <span class="mono ch-nav-eyebrow">Next →</span>
-            <span class="ch-nav-title">C{String(next.data.number).padStart(2, '0')} — {next.data.year}</span>
+            <span class="ch-nav-title">C{String(next.data.number).padStart(2, '0')} - {next.data.year}</span>
           </a>
         ) : <span></span>}
       </div>

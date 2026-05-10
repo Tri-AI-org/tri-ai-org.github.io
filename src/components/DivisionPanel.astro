@@ -1,6 +1,6 @@
 ---
 /**
- * DivisionPanel — a full-width section that gives one division
+ * DivisionPanel - a full-width section that gives one division
  * its own architectural space on the homepage. Used three times
  * (Teaching, Research, Innovation), each tinted with its colour.
  *
@@ -19,11 +19,11 @@ interface Props {
   number: string;             // "01" / "02" / "03"
   division: 'teaching' | 'research' | 'innovation';
   title: string;
-  titleAccent?: string;       // optional second line — italic, division-coloured, smaller
+  titleAccent?: string;       // optional second line - italic, division-coloured, smaller
   statement: string;          // one-sentence positioning statement
   ctaLabel: string;
   ctaHref: string;
-  // Optional override — if not passed, the panel auto-pulls items from collections
+  // Optional override - if not passed, the panel auto-pulls items from collections
   items?: Item[];
   emptyState?: string;        // shown when no items resolved (e.g. Innovation "in development")
   featuredImage?: string;     // optional hero image at top of right column
@@ -78,7 +78,7 @@ if (!itemsProp) {
       })),
     ];
   }
-  // innovation: no auto-fetch — uses emptyState
+  // innovation: no auto-fetch - uses emptyState
 }
 ---
 

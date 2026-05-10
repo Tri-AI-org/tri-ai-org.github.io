@@ -17,7 +17,7 @@ applyUrl: mailto:research@tri-ai.org
 
 ## The challenge
 
-Most modern speech systems perform well on a small number of high-resource languages. The thousands of African languages spoken by hundreds of millions of people remain largely under-served — both because data is scarce and because the linguistic features of many African languages are under-studied in mainstream NLP.
+Most modern speech systems perform well on a small number of high-resource languages. The thousands of African languages spoken by hundreds of millions of people remain largely under-served - both because data is scarce and because the linguistic features of many African languages are under-studied in mainstream NLP.
 
 ## Our approach
 
@@ -25,7 +25,7 @@ The Sauti Project takes a community-driven approach to building speech resources
 
 ### Data
 
-Curating, recording, and releasing high-quality speech datasets for languages we work with — often in partnership with local communities, universities, and language activists.
+Curating, recording, and releasing high-quality speech datasets for languages we work with - often in partnership with local communities, universities, and language activists.
 
 ### Models
 

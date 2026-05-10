@@ -1,7 +1,7 @@
 ---
 title: Machine Learning Fundamentals
 track: Machine Learning
-summary: A practical introduction to classical machine learning — regression, classification, clustering, and the evaluation methods that hold them up.
+summary: A practical introduction to classical machine learning - regression, classification, clustering, and the evaluation methods that hold them up.
 duration: 6 weeks
 level: beginner
 order: 2
@@ -17,7 +17,7 @@ A grounding in classical machine learning before you reach for deep networks. Th
 - Clustering and dimensionality reduction
 - Cross-validation, train/test discipline, and metric selection
 - Feature engineering and data preparation
-- A first look at when classical methods beat deep learning — and when they don't
+- A first look at when classical methods beat deep learning - and when they don't
 
 ## Format
 

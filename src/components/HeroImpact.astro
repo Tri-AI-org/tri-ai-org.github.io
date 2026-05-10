@@ -1,14 +1,14 @@
 ---
 /**
- * HeroImpact — the impact stats, designed for the hero right column.
+ * HeroImpact - the impact stats, designed for the hero right column.
  *
  * Replaces the Now panel as the visual anchor in the hero. The reasoning:
  * for an NGO, the strongest first-impression signal is "this is real, this
- * has shipped" — and that lives in the numbers. The Now panel still
+ * has shipped" - and that lives in the numbers. The Now panel still
  * exists; it just lives mid-page now.
  *
  * Visual treatment: 2x2 grid, big gold numerals, mono labels, thin rules.
- * Editorial register — not dashboard tiles, not pastel squircles.
+ * Editorial register - not dashboard tiles, not pastel squircles.
  */
 import { getCollection } from 'astro:content';
 
@@ -28,7 +28,7 @@ const stats = [
   },
   {
     num: String(cohortsCount),
-    label: 'AI Saturdays cohorts run',
+    label: 'TRI AI Saturdays cohorts run',
   },
   {
     num: String(allPublications.length || researchCount),

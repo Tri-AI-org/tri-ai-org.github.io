@@ -2,11 +2,11 @@
 programme: tri-ai-saturdays
 number: 1
 year: 2017
-title: "Cohort 1 — Inaugural"
+title: "Cohort 1 - Inaugural"
 status: completed
 duration: "Community-led"
 format: "In-person, Lagos"
-summary: "The inaugural cohort. AI Saturdays Lagos began as a community study group in Lagos, focused on bridging the gap between curious engineers and the structured AI knowledge most lacked access to. Five teams explored the major deep learning frameworks of the era — PyTorch, TensorFlow, Keras, Theano, and Nervana Neon — and published their findings as articles."
+summary: "The inaugural cohort. AI Saturdays Lagos began as a community study group in Lagos, focused on bridging the gap between curious engineers and the structured AI knowledge most lacked access to. Five teams explored the major deep learning frameworks of the era - PyTorch, TensorFlow, Keras, Theano, and Nervana Neon - and published their findings as articles."
 ---
 
 The inaugural cohort of AI Saturdays Lagos was a community study group focused on the deep learning frameworks of the era. Students were grouped into five teams, each tasked with exploring a major framework and writing an article on what they learned.
@@ -51,4 +51,4 @@ The inaugural cohort of AI Saturdays Lagos was a community study group focused o
 
 ## Why this cohort matters
 
-Cohort 1 set the template for everything that followed. The format — small teams, structured curriculum, public writeups — became the cohort model that AI Saturdays Lagos has run ten times since. Many participants from this inaugural intake have gone on to lead later cohorts as instructors, mentors, and organisers.
+Cohort 1 set the template for everything that followed. The format - small teams, structured curriculum, public writeups - became the cohort model that AI Saturdays Lagos has run ten times since. Many participants from this inaugural intake have gone on to lead later cohorts as instructors, mentors, and organisers.

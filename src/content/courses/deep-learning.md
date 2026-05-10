@@ -2,7 +2,7 @@
 title: Deep Learning
 track: Deep Learning
 partner: Google DeepMind
-summary: From neural network basics through transformers — building, training, and reasoning about deep models.
+summary: From neural network basics through transformers - building, training, and reasoning about deep models.
 duration: 10 weeks
 level: intermediate
 order: 3
@@ -10,7 +10,7 @@ order: 3
 
 ## What you'll learn
 
-This course takes you from the basics of neural networks through the transformer architectures that power today's language and vision models. Emphasis throughout is on building intuition through implementation — you'll write your own networks, train them, and debug what goes wrong.
+This course takes you from the basics of neural networks through the transformer architectures that power today's language and vision models. Emphasis throughout is on building intuition through implementation - you'll write your own networks, train them, and debug what goes wrong.
 
 ## Topics
 

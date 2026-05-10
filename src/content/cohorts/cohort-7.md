@@ -60,7 +60,7 @@ Project proposals and team structures are available in the [cohort 7 projects re
 
 ## Classes & practicals
 
-- **16 weeks of classes** — [YouTube playlist](https://youtube.com/playlist?list=PLD0HH4Qq3rcdvhgqY1FR17HTqOPn4c8YC) · [GitHub](https://github.com/AISaturdaysLagos/cohort7_classes)
-- **11 weeks of practicals** — [YouTube playlist](https://youtube.com/playlist?list=PLD0HH4Qq3rcd8FqxQZf7NYFIiW2mAJCXH) · [GitHub](https://github.com/AISaturdaysLagos/cohort7_practicals)
+- **16 weeks of classes** - [YouTube playlist](https://youtube.com/playlist?list=PLD0HH4Qq3rcdvhgqY1FR17HTqOPn4c8YC) · [GitHub](https://github.com/AISaturdaysLagos/cohort7_classes)
+- **11 weeks of practicals** - [YouTube playlist](https://youtube.com/playlist?list=PLD0HH4Qq3rcd8FqxQZf7NYFIiW2mAJCXH) · [GitHub](https://github.com/AISaturdaysLagos/cohort7_practicals)
 
 Practical sessions extended the theory taught in class, walking through hands-on Data Science and Machine Learning workflows on real datasets.

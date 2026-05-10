@@ -10,4 +10,4 @@ summary: "The sixth cohort of learners contributed to the cumulative project arc
 
 Cohort 6 continued the structured curriculum format refined across previous cohorts, with team projects published openly on the [AI Saturdays Lagos GitHub organisation](https://github.com/AISaturdaysLagos/Projects).
 
-> Detailed records — team rosters, project titles, and writeups — for this cohort are still being archived. If you participated and have materials we should preserve, please [get in touch](/contact).
+> Detailed records - team rosters, project titles, and writeups - for this cohort are still being archived. If you participated and have materials we should preserve, please [get in touch](/contact).

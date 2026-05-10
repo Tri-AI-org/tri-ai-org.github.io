@@ -1,10 +1,10 @@
 /* ============================================================
-   triAI — Brand Tokens
+   triAI - Brand Tokens
    Source of truth: the brand guide (PDF / clean2 HTML)
    ============================================================ */
 
 :root {
-  /* Parent + division — invariant across themes */
+  /* Parent + division - invariant across themes */
   --gold: #D4A017;
   --gold-deep: #9A7118;
   --gold-light: #FBF5E6;
@@ -36,7 +36,7 @@
   --t-display-xl: clamp(36px, 5vw, 56px);
   --t-display-l: clamp(30px, 4vw, 44px);
   --t-display-m: clamp(24px, 3vw, 34px);
-  /* Legacy alias — still resolves to xl for any existing references */
+  /* Legacy alias - still resolves to xl for any existing references */
   --t-display: var(--t-display-xl);
   --t-h1: clamp(24px, 3vw, 32px);
   --t-h2: clamp(19px, 2.2vw, 24px);
@@ -45,7 +45,7 @@
   --t-small: 13px;
   /* Mono labels: --t-mono for primary (eyebrows, CTAs, stat labels);
      --t-mono-sm for captions and tightly-packed dense UI.
-     Keep tracking moderate — letterforms below 12px get hard to read at wide tracking. */
+     Keep tracking moderate - letterforms below 12px get hard to read at wide tracking. */
   --t-mono: 12px;
   --t-mono-sm: 11px;
   --t-mono-xs: 10px;
@@ -316,7 +316,7 @@ p { color: var(--ink-mid); }
 [data-theme='dark'] .tag-innovation { background: rgba(46, 205, 184, 0.12); color: var(--innovation-text); }
 [data-theme='dark'] .tag-gold { background: rgba(212, 160, 23, 0.14); color: var(--gold); }
 
-/* ----- Division accent bars (per brand spec — "Division colour in the divider") ----- */
+/* ----- Division accent bars (per brand spec - "Division colour in the divider") ----- */
 .accent-bar {
   height: 3px;
   width: 32px;
@@ -344,7 +344,7 @@ p { color: var(--ink-mid); }
 }
 
 /* ----- Reveal animation (used sparingly) -----
-   Visible by default. Only animates when html.js-reveal-active is set —
+   Visible by default. Only animates when html.js-reveal-active is set -
    i.e. only when JS has confirmed it can run animations. */
 html.js-reveal-active .reveal {
   opacity: 0;
@@ -365,8 +365,8 @@ html.js-reveal-active .reveal-5 { animation-delay: 0.45s; }
    Visible by default. The script in Base.astro adds .js-reveal-active to
    <html> when JS has confirmed it can run the animation. ONLY THEN do
    [data-reveal] elements start hidden and animate in.
-   This guarantees that if anything stops the script — slow mobile network,
-   JS disabled, IntersectionObserver delay, or back-forward cache quirk —
+   This guarantees that if anything stops the script - slow mobile network,
+   JS disabled, IntersectionObserver delay, or back-forward cache quirk -
    the content remains visible. Animation is a progressive enhancement,
    not a precondition for visibility. */
 

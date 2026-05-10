@@ -25,7 +25,7 @@ ChowNet collects images across regional cuisines, with annotation guided by comm
 
 ## Baselines
 
-We benchmark a suite of contemporary vision models — both general-purpose and food-specialised. The performance gap between general food-recognition tasks and ChowNet's task indicates substantial headroom for targeted research.
+We benchmark a suite of contemporary vision models - both general-purpose and food-specialised. The performance gap between general food-recognition tasks and ChowNet's task indicates substantial headroom for targeted research.
 
 ## Open release
 

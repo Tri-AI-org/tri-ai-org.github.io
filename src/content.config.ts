@@ -22,12 +22,12 @@ const publications = defineCollection({
 
 /**
  * `programmes` is the master entity for any divisional activity:
- *  - kind: 'cohort'        — multi-week structured cohorts (e.g. AI Saturdays)
- *  - kind: 'course'        — partner-delivered curricula (e.g. AI Foundations w/ DeepMind)
- *  - kind: 'watch-party'   — group viewings of conference talks / discussions
- *  - kind: 'colloquium'    — invited speaker series, expert talks
- *  - kind: 'research-init' — long-running research projects (e.g. Sauti, ChowNet)
- *  - kind: 'lab'           — applied / innovation labs (future)
+ *  - kind: 'cohort'        - multi-week structured cohorts (e.g. AI Saturdays)
+ *  - kind: 'course'        - partner-delivered curricula (e.g. AI Foundations w/ DeepMind)
+ *  - kind: 'watch-party'   - group viewings of conference talks / discussions
+ *  - kind: 'colloquium'    - invited speaker series, expert talks
+ *  - kind: 'research-init' - long-running research projects (e.g. Sauti, ChowNet)
+ *  - kind: 'lab'           - applied / innovation labs (future)
  */
 const programmes = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/programmes' }),
@@ -40,7 +40,7 @@ const programmes = defineCollection({
     status: z.enum(['active', 'upcoming', 'archived']).default('active'),
     cover: z.string().optional(),
     location: z.string().optional(),
-    cohortInfo: z.string().optional(),  // e.g. "Cohort 9 — applications open"
+    cohortInfo: z.string().optional(),  // e.g. "Cohort 9 - applications open"
     cadence: z.string().optional(),     // e.g. "Quarterly", "Monthly", "Weekly"
     partner: z.string().optional(),     // e.g. "Google DeepMind" for courses
     applyUrl: z.string().optional(),       // url, mailto:, or internal /apply path
@@ -51,7 +51,7 @@ const programmes = defineCollection({
 });
 
 /**
- * `cohorts` — historical record of completed cohorts.
+ * `cohorts` - historical record of completed cohorts.
  * Used by AI Saturdays Lagos archive page.
  */
 const cohorts = defineCollection({
@@ -65,7 +65,7 @@ const cohorts = defineCollection({
     teamsCount: z.number().optional(),
     duration: z.string().optional(),  // e.g. "16 weeks"
     format: z.string().optional(),    // e.g. "Flipped classroom" / "In-person + online"
-    startDate: z.string().optional(), // e.g. "Jul 26, 2025" — kept as string; not always precise
+    startDate: z.string().optional(), // e.g. "Jul 26, 2025" - kept as string; not always precise
     endDate: z.string().optional(),
     partner: z.string().optional(),   // e.g. "Google DeepMind"
     projectsUrl: z.string().url().optional(),
@@ -139,7 +139,7 @@ const news = defineCollection({
 });
 
 /**
- * `press` — third-party mentions, articles, talks, podcasts.
+ * `press` - third-party mentions, articles, talks, podcasts.
  * Lives on a /press page; pure outbound links.
  */
 const press = defineCollection({

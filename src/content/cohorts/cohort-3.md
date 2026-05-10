@@ -6,7 +6,7 @@ title: "Cohort 3"
 status: completed
 projectsUrl: https://github.com/AISaturdaysLagos/Projects
 blogUrl: https://medium.com/ai-saturdays-lagos-articles
-summary: "Cohort 3 ran two parallel tracks — Machine Learning and Deep Learning. Project writeups were published on the AI Saturdays Lagos Medium publication."
+summary: "Cohort 3 ran two parallel tracks - Machine Learning and Deep Learning. Project writeups were published on the AI Saturdays Lagos Medium publication."
 ---
 
 Cohort 3 introduced a two-track structure that became standard for several cohorts that followed: a Machine Learning track focused on tabular and economic data, and a Deep Learning track focused on computer vision tasks.
@@ -23,7 +23,7 @@ Capstone projects covered prediction problems across domains:
 - Predicting outlet type using the Big Mart dataset
 - Flight ticket price prediction
 - Regression model for fertility detection based on economic factors
-- AI16 salary predictor — Forbes recruits
+- AI16 salary predictor - Forbes recruits
 
 ## Deep Learning track
 

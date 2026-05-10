@@ -6,7 +6,7 @@ title: "Cohort 5"
 status: completed
 teamsCount: 8
 projectsUrl: https://github.com/AISaturdaysLagos/Projects
-summary: "Cohort 5 ran two tracks — Data Science / Machine Learning and Deep Learning — with eight capstone teams shipping presentations and YouTube videos for each project."
+summary: "Cohort 5 ran two tracks - Data Science / Machine Learning and Deep Learning - with eight capstone teams shipping presentations and YouTube videos for each project."
 ---
 
 Cohort 5 ran a Data Science / Machine Learning track alongside a Deep Learning track. Eight capstone teams shipped slide decks and YouTube presentations of their final projects.

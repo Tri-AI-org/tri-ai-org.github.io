@@ -28,7 +28,7 @@ const pillars = [
   {pillars.map((p, i) => (
     <a href={p.href} class={`pillar pillar-${p.division}`} style={`--i:${i}`}>
       <div class={`accent-bar accent-${p.division}`}></div>
-      <p class={`mono pillar-tag`}>{String(i + 1).padStart(2, '0')} — {p.label}</p>
+      <p class={`mono pillar-tag`}>{String(i + 1).padStart(2, '0')} - {p.label}</p>
       <h3 class="pillar-title">{p.title}</h3>
       <p class="pillar-body">{p.body}</p>
       <span class="pillar-link">Learn more <span aria-hidden="true">→</span></span>

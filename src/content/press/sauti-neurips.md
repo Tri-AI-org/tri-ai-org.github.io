@@ -1,5 +1,5 @@
 ---
-title: "SautiDB-Naija — A Nigerian L2 English Speech Corpus"
+title: "SautiDB-Naija - A Nigerian L2 English Speech Corpus"
 date: 2021-12-08
 outlet: NeurIPS 2021
 kind: talk

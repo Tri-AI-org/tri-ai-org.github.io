@@ -2,10 +2,10 @@
 programme: tri-ai-saturdays
 number: 9
 year: 2025
-title: "Cohort 9 — Flipped"
+title: "Cohort 9 - Flipped"
 status: completed
 duration: "15 weeks"
-format: "Flipped classroom — async lectures + weekly Saturday community calls"
+format: "Flipped classroom - async lectures + weekly Saturday community calls"
 startDate: "Jul 26, 2025"
 endDate: "Nov 1, 2025"
 teamsCount: 10
@@ -33,7 +33,7 @@ Cohort 9 was the first to run in a fully flipped-classroom format. Participants 
 Each week, participants were:
 
 - Assigned selected videos from a curated playlist of lectures and labs
-- Given supporting materials — Jupyter notebooks, slides, assessments
+- Given supporting materials - Jupyter notebooks, slides, assessments
 - Joined a live Zoom session on Saturdays to engage with instructors and peers
 - Interacted daily on Discord for Q&A, collaboration, and accountability
 
@@ -65,14 +65,14 @@ Ten teams shipped capstone projects spanning prediction, classification, recomme
 
 | Team | Project |
 | --- | --- |
-| BenOkri | [Predicting customer churn in Nigeria's telecom industry — an ML approach with MTN data](https://github.com/AISaturdaysLagos/C9-team-benokri) |
+| BenOkri | [Predicting customer churn in Nigeria's telecom industry - an ML approach with MTN data](https://github.com/AISaturdaysLagos/C9-team-benokri) |
 | Armah | [Research paper clustering for topic discovery and literature organisation](https://github.com/AISaturdaysLagos/C9-team-armah) |
-| SeedGuard | [SeedGuard AI — mapping the GMO narrative landscape for agricultural sovereignty](https://github.com/AISaturdaysLagos/C9-team-seedguard) |
+| SeedGuard | [SeedGuard AI - mapping the GMO narrative landscape for agricultural sovereignty](https://github.com/AISaturdaysLagos/C9-team-seedguard) |
 | TrulyFit | [Building a rich fitness dataset and recommendation system](https://github.com/AISaturdaysLagos/C9-team-trulyfit) |
 | Nwapa | [Predicting solar energy efficiency of buildings in Lagos](https://github.com/AISaturdaysLagos/C9-team-nwapa) |
 | SDML | [Spam detection in emails using NLP](https://github.com/AISaturdaysLagos/C9-team-smdl) |
 | Adichie | [Flood area extent prediction in Ibadan metropolis using GIS and ML](https://github.com/AISaturdaysLagos/C9-team-adichie) |
-| TwinPillars | [Predicting cholera risk in Kenya and Nigeria — a data-driven approach to preventive public health](https://github.com/AISaturdaysLagos/C9-team-twin_pillars) |
+| TwinPillars | [Predicting cholera risk in Kenya and Nigeria - a data-driven approach to preventive public health](https://github.com/AISaturdaysLagos/C9-team-twin_pillars) |
 | Gordimer | [Nutritional value estimator for Nigerian foods](https://github.com/AISaturdaysLagos/C9-team-gordimer) |
 | Solo-Alie | [Customer segmentation with RFM and unsupervised learning](https://github.com/AISaturdaysLagos/C9-team-solo-alie) |
 
@@ -86,4 +86,4 @@ To receive a Certificate of Completion, participants needed:
 
 ## Acknowledgements
 
-Cohort 9 builds on the foundation of [Cohort 8](https://github.com/AISaturdaysLagos/cohort_structure/tree/main/cohort8) — its lectures, labs, and community contributions remain the structural spine of every cohort that follows. Deep gratitude to the volunteer instructors, lab facilitators, mentors, and organisers who continue to make this work possible.
+Cohort 9 builds on the foundation of [Cohort 8](https://github.com/AISaturdaysLagos/cohort_structure/tree/main/cohort8) - its lectures, labs, and community contributions remain the structural spine of every cohort that follows. Deep gratitude to the volunteer instructors, lab facilitators, mentors, and organisers who continue to make this work possible.

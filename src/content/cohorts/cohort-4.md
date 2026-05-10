@@ -5,7 +5,7 @@ year: 2021
 title: "Cohort 4"
 status: completed
 projectsUrl: https://github.com/AISaturdaysLagos/Projects
-summary: "Cohort 4 expanded into four tracks — Data Science, Machine Learning, Computer Vision, and Natural Language Processing — and formalised the cohort_structure curriculum on GitHub."
+summary: "Cohort 4 expanded into four tracks - Data Science, Machine Learning, Computer Vision, and Natural Language Processing - and formalised the cohort_structure curriculum on GitHub."
 ---
 
 Cohort 4 expanded the curriculum into four parallel tracks. The cohort_structure curriculum was also formalised on GitHub during this period, becoming the template for subsequent cohorts.
@@ -27,7 +27,7 @@ Major project:
 
 - [Sentiment Analysis on Human Faces](http://github.com/Free-tek/Sentiment_Analysis_For_Human_Face) by Adewole Babatunde
 
-Mini-projects — `llcolorizer` (a program that colorises grayscale images using low-level computer vision) and `cartoonize` (cartoon effect on images):
+Mini-projects - `llcolorizer` (a program that colorises grayscale images using low-level computer vision) and `cartoonize` (cartoon effect on images):
 
 - [llcolorizer & cartoonize](https://github.com/timi-ty/MiniCV) by [timi-ty](https://github.com/timi-ty)
 - [cartoonize](https://github.com/aloko001/Cartoonize) by [aloko001](https://github.com/aloko001)
@@ -38,4 +38,4 @@ Mini-projects — `llcolorizer` (a program that colorises grayscale images using
 ## Natural Language Processing track
 
 - [Text classification of clinical notes](http://github.com/itsclint/Dasha) by Mbataku Clinton
-- [Anjie — a library for generating corpus in various African languages](http://github.com/Free-tek/Anjie_local_language_corpus_generator) by Adewole Babatunde
+- [Anjie - a library for generating corpus in various African languages](http://github.com/Free-tek/Anjie_local_language_corpus_generator) by Adewole Babatunde

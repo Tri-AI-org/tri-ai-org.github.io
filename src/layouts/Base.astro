@@ -12,7 +12,7 @@ interface Props {
 }
 
 const {
-  title = 'TRI AI — Teaching, Research, Innovation in AI for Africa',
+  title = 'TRI AI - Teaching, Research, Innovation in AI for Africa',
   description = 'TRI AI is the institutional home for programmes, research initiatives, and collaborations advancing AI knowledge across the African continent and the global research community.',
   ogImage = '/og-default.png',
   noFooter = false,
@@ -91,7 +91,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
         // No IntersectionObserver: skip animations, content stays visible by default.
         if (!('IntersectionObserver' in window)) return;
 
-        // OK — we can animate. Activate the gating class so [data-reveal] becomes invisible.
+        // OK - we can animate. Activate the gating class so [data-reveal] becomes invisible.
         root.classList.add('js-reveal-active');
 
         function attachReveal() {
@@ -110,7 +110,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
           targets.forEach(function (el) { io.observe(el); });
 
           // Safety net: after 1.5s, force any still-hidden element visible.
-          // Catches edge cases — observer not firing on bfcache restore, slow mobile paint, etc.
+          // Catches edge cases - observer not firing on bfcache restore, slow mobile paint, etc.
           setTimeout(function () {
             targets.forEach(function (el) {
               if (!el.classList.contains('in-view')) {

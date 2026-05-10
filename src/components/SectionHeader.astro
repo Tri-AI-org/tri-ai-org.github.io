@@ -11,7 +11,7 @@ const { num, eyebrow, title, description, align = 'left' } = Astro.props;
 
 <header class={`sh sh-${align}`}>
   <p class="sh-mono mono">
-    {num && <span class="sh-num">{num} —</span>}
+    {num && <span class="sh-num">{num} -</span>}
     {eyebrow}
   </p>
   <h2 class="sh-title">{title}</h2>
