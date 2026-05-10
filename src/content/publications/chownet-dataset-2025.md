@@ -1,32 +1,34 @@
 ---
-title: 'ChowNet: A Diverse Image Dataset for African Cuisine Recognition'
-date: 2025-11-08
+title: "CHOWNET: An Image Dataset of Nigerian Food"
+date: 2024-09-03
 authors:
-  - Oluwafemi Azeez
-  - Kenechi Dukor
   - Tejumade Afonja
+  - Igwegbe George
 venue: arXiv preprint
 division: research
 project: ChowNet
-abstract: We present ChowNet, an image dataset and benchmark for recognising African cuisine. Existing food-recognition datasets contain little African food imagery, leaving downstream applications poorly suited to billions of meals. ChowNet establishes a baseline and a path forward.
+abstract: CHOWNET-V1 is a high-quality dataset consisting of 118 human-annotated
+  food images, specifically curated for multi-label classification, food object
+  detection, and food captioning tasks. The dataset includes 99 unique labels,
+  serving as a valuable resource for a range of computer vision challenges
+  within the food domain.
 datasetUrl: https://zenodo.org/records/13633554
 codeUrl: https://github.com/AISaturdaysLagos/chownet
 featured: false
 draft: false
 ---
-
 ## Motivation
 
-Food-recognition models trained on Western-centric datasets fail systematically on African cuisine. As these models propagate into nutrition tracking, agricultural research, and consumer products, the failure mode quietly excludes a continent's worth of meals from the systems built atop them.
+Food recognition models have largely been built on datasets that do not reflect the diversity of African cuisine. This gap has real consequences as these models get embedded into nutrition tracking tools, agricultural research, and consumer applications. ChowNet was created by the AI Saturdays Lagos community to bring African food into the computer vision landscape.
 
 ## Dataset
 
-ChowNet collects images across regional cuisines, with annotation guided by community contributors familiar with the dishes catalogued. Each image is labelled with the dish, region of origin, and key ingredients where identifiable.
+ChowNet V1 contains 118 human-annotated food images across 99 unique labels, curated for multi-label classification, food object detection, and food captioning tasks. Annotation was led by Tejumade Afonja and George Igwegbe, with contributions from the broader AI Saturdays Lagos community.
 
 ## Baselines
 
-We benchmark a suite of contemporary vision models - both general-purpose and food-specialised. The performance gap between general food-recognition tasks and ChowNet's task indicates substantial headroom for targeted research.
+The dataset supports benchmarking across a range of contemporary vision models on tasks including multi-label classification, object detection, and captioning. The 99-label taxonomy provides enough granularity to expose meaningful performance differences between general-purpose and food-specialised models.
 
 ## Open release
 
-The dataset is released for non-commercial research use. We invite contributions of additional regional cuisines and welcome feedback on annotation conventions.
+ChowNet V1 was released in 2018 and is publicly available on GitHub. The community welcomes contributions of additional regional cuisines and feedback on annotation conventions.
