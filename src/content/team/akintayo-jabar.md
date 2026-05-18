@@ -1,10 +1,10 @@
 ---
-name: "Akintayo Jabar"
-role: "Board Member"
-photo: https://picsum.photos/seed/triai-team-akintayo-jabar/800/800
-affiliation: "TRI AI"
-division: "parent"
-group: "board"
+name: Akintayo Jabar
+role: Head of MEL
+affiliation: TRI AI
+photo: /uploads/tola.png
+division: parent
+group: leadership
 order: 7
 ---
 
