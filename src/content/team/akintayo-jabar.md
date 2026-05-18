@@ -2,7 +2,7 @@
 name: Akintayo Jabar
 role: Head of MEL
 affiliation: TRI AI
-photo: /uploads/tola.png
+photo: /uploads/tayo.png
 division: parent
 group: leadership
 order: 7
