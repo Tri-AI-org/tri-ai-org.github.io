@@ -1,10 +1,10 @@
 ---
-name: "Adetola Adetunji"
-role: "Board Member"
-photo: https://picsum.photos/seed/triai-team-adetola-adetunji/800/800
-affiliation: "TRI AI"
-division: "parent"
-group: "board"
+name: Adetola Adetunji
+role: Head of Human Resource
+affiliation: TRI AI
+photo: /uploads/tola.png
+division: parent
+group: leadership
 order: 8
 ---
 
