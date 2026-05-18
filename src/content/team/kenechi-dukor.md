@@ -1,6 +1,6 @@
 ---
 name: Kenechi Dukor
-role: Board Member
+role: Co-founder
 affiliation: TRI AI
 photo: /uploads/kene.png
 division: research
