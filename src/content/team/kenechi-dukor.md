@@ -3,7 +3,7 @@ name: Kenechi Dukor
 role: Co-founder
 affiliation: TRI AI
 photo: /uploads/kene.png
-linkedin: linkedin.com/in/kenechidukor
+linkedin: https://linkedin.com/in/kenechidukor
 twitter: https://x.com/kennydukor
 division: innovation
 group: leadership
