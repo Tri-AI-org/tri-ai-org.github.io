@@ -21,6 +21,26 @@ const FORM_ID = "form_wv8XxtbD7WDIWY7AaxV-b";
       data-form-id={FORM_ID}
     >
       <label class="nl-field">
+        <span class="nl-label">First name</span>
+        <input
+          type="text"
+          name="firstName"
+          required
+          placeholder="Ada"
+          autocomplete="given-name"
+        />
+      </label>
+      <label class="nl-field">
+        <span class="nl-label">Last name</span>
+        <input
+          type="text"
+          name="lastName"
+          required
+          placeholder="Lovelace"
+          autocomplete="family-name"
+        />
+      </label>
+      <label class="nl-field nl-field-full">
         <span class="nl-label">Email</span>
         <input
           type="email"
@@ -66,12 +86,15 @@ const FORM_ID = "form_wv8XxtbD7WDIWY7AaxV-b";
   }
 
   .nl-form {
-    display: flex;
-    gap: 8px;
-    align-items: end;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
   }
-  .nl-field { flex: 1; min-width: 220px; }
+  .nl-field-full,
+  .nl-submit,
+  .nl-msg { grid-column: 1 / -1; }
+  .nl-submit { justify-self: start; padding: 14px 24px; }
+
   .nl-label {
     display: block;
     font-size: var(--t-mono);
@@ -81,7 +104,7 @@ const FORM_ID = "form_wv8XxtbD7WDIWY7AaxV-b";
     color: var(--ink-faint);
     margin-bottom: 8px;
   }
-  .nl-form input[type='email'] {
+  .nl-form input {
     width: 100%;
     padding: 14px 16px;
     border: 1px solid var(--line-strong);
@@ -91,15 +114,13 @@ const FORM_ID = "form_wv8XxtbD7WDIWY7AaxV-b";
     font-size: 14px;
     transition: border-color 0.2s var(--ease-quick);
   }
-  .nl-form input[type='email']:focus {
+  .nl-form input:focus {
     outline: none;
     border-color: var(--gold);
   }
-  .nl-submit { padding: 14px 24px; }
   .nl-submit[disabled] { opacity: 0.6; cursor: not-allowed; }
 
   .nl-msg {
-    flex-basis: 100%;
     margin: 4px 0 0;
     font-size: 13px;
     line-height: 1.5;
@@ -114,15 +135,20 @@ const FORM_ID = "form_wv8XxtbD7WDIWY7AaxV-b";
       grid-template-columns: 1fr;
       gap: 28px;
     }
+    .nl-form { grid-template-columns: 1fr; }
   }
 </style>
 
 <script>
   const form = document.getElementById('nl-form') as HTMLFormElement | null;
   if (form) {
-    const input  = form.querySelector('input[type="email"]') as HTMLInputElement;
     const submit = form.querySelector('.nl-submit') as HTMLButtonElement;
     const msg    = form.querySelector('.nl-msg') as HTMLElement;
+    const fields = {
+      firstName: form.querySelector('input[name="firstName"]') as HTMLInputElement,
+      lastName:  form.querySelector('input[name="lastName"]')  as HTMLInputElement,
+      email:     form.querySelector('input[name="email"]')     as HTMLInputElement,
+    };
 
     const setMsg = (text: string, state: '' | 'ok' | 'err' = '') => {
       msg.textContent = text;
@@ -133,10 +159,12 @@ const FORM_ID = "form_wv8XxtbD7WDIWY7AaxV-b";
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const email = input.value.trim();
-      if (!email || !input.checkValidity()) {
-        setMsg('Please enter a valid email address.', 'err');
-        input.focus();
+      const firstName = fields.firstName.value.trim();
+      const lastName  = fields.lastName.value.trim();
+      const email     = fields.email.value.trim();
+
+      if (!firstName || !lastName || !email || !fields.email.checkValidity()) {
+        setMsg('Please fill in your name and a valid email.', 'err');
         return;
       }
 
@@ -154,8 +182,8 @@ const FORM_ID = "form_wv8XxtbD7WDIWY7AaxV-b";
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             email,
-            firstName: '',
-            lastName: '',
+            firstName,
+            lastName,
             sources: [{ type: 'FORM', id: formId }],
           }),
         });
