@@ -2,12 +2,15 @@
 title: Watch Parties
 division: teaching
 kind: watch-party
-tagline: Group viewings of major AI talks, papers, and conference proceedings - followed by community discussion.
-description: TRI AI Watch Parties bring the community together to watch and discuss landmark AI talks, paper walkthroughs, and live streams from major conferences such as NeurIPS, ICML, and the Deep Learning Indaba.
-status: active
+tagline: Group viewings of major AI talks, papers, and conference proceedings -
+  followed by community discussion.
+description: TRI AI Watch Parties bring the community together to watch and
+  discuss landmark AI talks, paper walkthroughs, and live streams from major
+  conferences such as NeurIPS, ICML, and the Deep Learning Indaba.
+status: archived
+cover: https://picsum.photos/seed/triai-watchparties/1600/1200
 location: Lagos and online
 cadence: Monthly during conference seasons
-cover: https://picsum.photos/seed/triai-watchparties/1600/1200
 order: 4
 ---
 
