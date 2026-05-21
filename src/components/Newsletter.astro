@@ -1,5 +1,7 @@
 ---
-// Posts to a Netlify form (set up at deploy)
+// Posts directly to the bestregards.me subscribers API
+const API_URL = "https://ai6lagos.bestregards.me/api/v1/subscribers";
+const FORM_ID = "form_wv8XxtbD7WDIWY7AaxV-b";
 ---
 
 <section class="nl" id="newsletter" aria-labelledby="nl-h">
@@ -13,15 +15,11 @@
     </div>
     <form
       class="nl-form"
-      name="newsletter"
-      method="POST"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
+      id="nl-form"
+      novalidate
+      data-api={API_URL}
+      data-form-id={FORM_ID}
     >
-      <input type="hidden" name="form-name" value="newsletter" />
-      <p class="nl-honey" aria-hidden="true">
-        <label>Don't fill this out: <input name="bot-field" /></label>
-      </p>
       <label class="nl-field">
         <span class="nl-label">Email</span>
         <input
@@ -33,6 +31,7 @@
         />
       </label>
       <button type="submit" class="btn btn-primary nl-submit">Subscribe</button>
+      <p class="nl-msg" role="status" aria-live="polite"></p>
     </form>
   </div>
 </section>
@@ -97,7 +96,18 @@
     border-color: var(--gold);
   }
   .nl-submit { padding: 14px 24px; }
-  .nl-honey { display: none; }
+  .nl-submit[disabled] { opacity: 0.6; cursor: not-allowed; }
+
+  .nl-msg {
+    flex-basis: 100%;
+    margin: 4px 0 0;
+    font-size: 13px;
+    line-height: 1.5;
+    min-height: 1.5em;
+    color: var(--ink-mid);
+  }
+  .nl-msg[data-state='ok']  { color: var(--gold); }
+  .nl-msg[data-state='err'] { color: #c0392b; }
 
   @media (max-width: 820px) {
     .nl-inner {
@@ -106,3 +116,64 @@
     }
   }
 </style>
+
+<script>
+  const form = document.getElementById('nl-form') as HTMLFormElement | null;
+  if (form) {
+    const input  = form.querySelector('input[type="email"]') as HTMLInputElement;
+    const submit = form.querySelector('.nl-submit') as HTMLButtonElement;
+    const msg    = form.querySelector('.nl-msg') as HTMLElement;
+
+    const setMsg = (text: string, state: '' | 'ok' | 'err' = '') => {
+      msg.textContent = text;
+      if (state) msg.dataset.state = state;
+      else delete msg.dataset.state;
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = input.value.trim();
+      if (!email || !input.checkValidity()) {
+        setMsg('Please enter a valid email address.', 'err');
+        input.focus();
+        return;
+      }
+
+      const api    = form.dataset.api!;
+      const formId = form.dataset.formId!;
+
+      setMsg('', '');
+      submit.disabled = true;
+      const originalLabel = submit.textContent;
+      submit.textContent = 'Subscribing…';
+
+      try {
+        const res = await fetch(api, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email,
+            firstName: '',
+            lastName: '',
+            sources: [{ type: 'FORM', id: formId }],
+          }),
+        });
+
+        const data = await res.json().catch(() => ({} as any));
+
+        if (!res.ok || data.type !== 'success') {
+          throw new Error(data.message || 'Something went wrong. Please try again.');
+        }
+
+        setMsg('Almost there — check your inbox to confirm your subscription.', 'ok');
+        form.reset();
+        submit.textContent = 'Subscribed';
+      } catch (err) {
+        setMsg(err instanceof Error ? err.message : 'Something went wrong.', 'err');
+        submit.disabled = false;
+        submit.textContent = originalLabel;
+      }
+    });
+  }
+</script>
