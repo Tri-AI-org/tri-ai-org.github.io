@@ -3,7 +3,7 @@ title: Practical Data Science
 track: Data Science
 partner: Professor Zico Kolter
 summary: In partnership with Carnegie Mellon University. Used in cohorts 4, 5, and 6.
-duration: ""
+duration: ~16 weeks
 level: intermediate
 enrollUrl: https://www.datasciencecourse.org/
 order: 2
