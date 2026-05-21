@@ -18,7 +18,7 @@ const allProgrammes = await getCollection('programmes');
 
 const cohortsCount = allCohorts.filter(c => c.data.programme === 'tri-ai-saturdays').length;
 const researchCount = allProgrammes.filter(p => p.data.division === 'research' && p.data.status === 'active').length;
-const startYear = 2017;
+const startYear = 2018;
 const yearsActive = new Date().getFullYear() - startYear;
 
 const stats = [
