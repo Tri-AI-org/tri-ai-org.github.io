@@ -1,5 +1,5 @@
 ---
-title: TRI AI Saturdays Lagos
+title: TRI AI Saturdays
 division: teaching
 kind: cohort
 tagline: A community-led AI study group running cohorts of learners through structured curricula, peer learning, and mentorship.

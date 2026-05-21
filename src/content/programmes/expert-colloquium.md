@@ -1,5 +1,5 @@
 ---
-title: TRI AI Expert Colloquium
+title: Expert Colloquium
 division: teaching
 kind: colloquium
 tagline: An invited speaker series featuring practising AI researchers, engineers, and ethicists.

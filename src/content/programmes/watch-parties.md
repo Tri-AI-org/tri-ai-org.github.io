@@ -1,5 +1,5 @@
 ---
-title: TRI AI Watch Parties
+title: Watch Parties
 division: teaching
 kind: watch-party
 tagline: Group viewings of major AI talks, papers, and conference proceedings - followed by community discussion.
