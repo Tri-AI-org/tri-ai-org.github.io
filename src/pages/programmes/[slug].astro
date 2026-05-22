@@ -75,8 +75,13 @@ const d = programme.data;
     </header>
 
     {d.cover && (
-      <div class="container prog-cover-wrap">
-        <img src={d.cover} alt="" class="prog-cover-img" />
+      <div class={`prog-cover-bleed prog-cover-bleed-${d.division}`}>
+        <div class="container prog-cover-wrap">
+          <figure class="prog-cover-fig">
+            <img src={d.cover} alt="" class="prog-cover-img" />
+            <span class={`prog-cover-fade prog-cover-fade-${d.division}`} aria-hidden="true"></span>
+          </figure>
+        </div>
       </div>
     )}
 
@@ -148,8 +153,7 @@ const d = programme.data;
 
 <style>
   .prog-hd {
-    padding-block: clamp(64px, 8vw, 112px);
-    border-bottom: 1px solid var(--line);
+    padding-block: clamp(64px, 8vw, 112px) clamp(48px, 6vw, 80px);
   }
   .prog-hd-teaching { background: var(--teaching-light); }
   .prog-hd-research { background: var(--research-light); }
@@ -210,15 +214,72 @@ const d = programme.data;
     flex-wrap: wrap;
   }
 
+  /* ─── Cover image: blended hero ───
+     The cover sits inside a full-width wrapper that continues the division-
+     tint colour beyond the header. A gradient overlay at the top of the
+     image fades from that tint colour down into the photograph, so the eye
+     reads the tinted header and the image as one composed hero rather than
+     two stacked banners. */
+  .prog-cover-bleed {
+    padding-bottom: clamp(40px, 5vw, 64px);
+    position: relative;
+  }
+  .prog-cover-bleed-teaching { background: var(--teaching-light); }
+  .prog-cover-bleed-research { background: var(--research-light); }
+  .prog-cover-bleed-innovation { background: var(--innovation-light); }
+
+  [data-theme='dark'] .prog-cover-bleed-teaching { background: rgba(254, 102, 18, 0.08); }
+  [data-theme='dark'] .prog-cover-bleed-research { background: rgba(74, 124, 201, 0.08); }
+  [data-theme='dark'] .prog-cover-bleed-innovation { background: rgba(46, 205, 184, 0.08); }
+
   .prog-cover-wrap {
-    margin-top: -1px;
+    margin-top: 0;
+  }
+  .prog-cover-fig {
+    position: relative;
+    margin: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 12px 36px -18px rgba(20, 20, 20, 0.18);
+  }
+  [data-theme='dark'] .prog-cover-fig {
+    box-shadow: 0 12px 36px -18px rgba(0, 0, 0, 0.6);
   }
   .prog-cover-img {
     width: 100%;
     aspect-ratio: 16/8;
     object-fit: cover;
-    border-radius: 0;
-    margin-block: 0;
+    display: block;
+  }
+  /* The fade: sits over the top ~22% of the image, picking up the division
+     tint at full strength and falling to transparent. Eye reads: header
+     colour → header colour over photo → photo. */
+  .prog-cover-fade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 22%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .prog-cover-fade-teaching {
+    background: linear-gradient(to bottom, var(--teaching-light), transparent);
+  }
+  .prog-cover-fade-research {
+    background: linear-gradient(to bottom, var(--research-light), transparent);
+  }
+  .prog-cover-fade-innovation {
+    background: linear-gradient(to bottom, var(--innovation-light), transparent);
+  }
+  [data-theme='dark'] .prog-cover-fade-teaching {
+    background: linear-gradient(to bottom, rgba(254, 102, 18, 0.18), transparent);
+  }
+  [data-theme='dark'] .prog-cover-fade-research {
+    background: linear-gradient(to bottom, rgba(74, 124, 201, 0.18), transparent);
+  }
+  [data-theme='dark'] .prog-cover-fade-innovation {
+    background: linear-gradient(to bottom, rgba(46, 205, 184, 0.18), transparent);
   }
 
   .prog-body-grid {
