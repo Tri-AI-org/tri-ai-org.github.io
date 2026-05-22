@@ -14,7 +14,7 @@ cadence: 16-week cohorts, multiple per year
 partner: Google DeepMind (Cohort 10)
 applyUrl: ""
 githubUrl: https://github.com/AISaturdaysLagos
-websiteUrl: ""
+websiteUrl: https://www.aisaturdayslagos.com/
 order: 1
 ---
 
