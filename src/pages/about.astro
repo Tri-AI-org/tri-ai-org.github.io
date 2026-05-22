@@ -7,6 +7,7 @@ import { getCollection } from 'astro:content';
 
 const team = (await getCollection('team')).sort((a, b) => a.data.order - b.data.order);
 const board = team.filter(t => t.data.group === 'board');
+const other_team = team.filter(t => t.data.group === 'team');
 const leadership = team.filter(t => t.data.group === 'leadership');
 const partners = (await getCollection('partners')).sort((a, b) => a.data.order - b.data.order);
 
@@ -165,6 +166,22 @@ const values = [
           <p class="mono team-group-label" style="margin-top: 64px">Leadership team</p>
           <div class="team-grid" data-reveal-stagger>
             {leadership.map(t => (
+              <div class="team-card">
+                {t.data.photo && <img src={t.data.photo} alt={t.data.name} class="team-photo" loading="lazy" />}
+                <h3 class="team-name">{t.data.name}</h3>
+                <p class="team-role">{t.data.role}</p>
+                {t.data.linkedin && <a href={t.data.linkedin} class="team-link">LinkedIn →</a>}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {t.length > 0 && (
+        <>
+          <p class="mono team-group-label">Team</p>
+          <div class="team-grid" data-reveal-stagger>
+            {other_team.map(t => (
               <div class="team-card">
                 {t.data.photo && <img src={t.data.photo} alt={t.data.name} class="team-photo" loading="lazy" />}
                 <h3 class="team-name">{t.data.name}</h3>
