@@ -4,6 +4,6 @@ role: Research and Innovation (R&I) Expert Volunteer
 affiliation: TRI AI
 photo: /uploads/shadrack.png
 division: research
-group: board
+group: team
 order: 9
 ---
