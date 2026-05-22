@@ -14,7 +14,7 @@ description: >-
 
   The programme was founded in Lagos in 2018 to address one specific gap: the shortage of accessible, structured AI education for engineers and curious learners in Nigeria. Since then, the community has grown beyond Lagos to include learners across the African continent.
 status: active
-cover: https://res.cloudinary.com/kenechi-dukor/image/upload/v1779399947/TRI%20AI/ai6_xdhbdu.png
+cover: https://res.cloudinary.com/kenechi-dukor/image/upload/v1779493341/TRI%20AI/ai6_gtoxst.png
 cohortInfo: Application for Cohort 10 closed May 17, 2026
 cadence: 16-week cohorts, multiple per year
 partner: Google DeepMind (Cohort 10)
