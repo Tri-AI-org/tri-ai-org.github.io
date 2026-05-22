@@ -1,10 +1,10 @@
 ---
-name: "Lawrence Francis"
-role: "Research Lead, Sauti Project"
+name: Lawrence Francis
+role: Research Lead, Sauti Project
+affiliation: TRI AI
 photo: https://picsum.photos/seed/triai-team-lawrence-francis/800/800
-affiliation: "TRI AI"
-division: "research"
-group: "leadership"
+division: research
+group: team
 order: 4
 ---
 
