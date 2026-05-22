@@ -1,10 +1,10 @@
 ---
-name: "George Igwegbe"
-role: "Programmes Lead"
+name: George Igwegbe
+role: Programmes Lead
+affiliation: TRI AI
 photo: https://picsum.photos/seed/triai-team-george-igwegbe/800/800
-affiliation: "TRI AI"
-division: "teaching"
-group: "leadership"
+division: teaching
+group: team
 order: 5
 ---
 
