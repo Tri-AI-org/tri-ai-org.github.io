@@ -9,7 +9,7 @@ description: Sauti Project is a TRI AI research initiative focused on advancing
   access to information for people who speak the same language with different
   accents.
 status: active
-cover: https://res.cloudinary.com/kenechi-dukor/image/upload/v1779501207/TRI%20AI/Frame_32_aaz6qn.png
+cover: https://res.cloudinary.com/kenechi-dukor/image/upload/v1779536763/TRI%20AI/Frame_32_aaz6qn.png
 location: Pan-African
 cohortInfo: Ongoing research initiative
 cadence: Continuous
