@@ -9,7 +9,7 @@ description: CHOWNET is a TRI AI research initiative focused on building image
   support research in food classification, object detection, clustering, and
   captioning.
 status: active
-cover: https://res.cloudinary.com/kenechi-dukor/image/upload/v1779502385/TRI%20AI/Frame_33_tzvqb9.png
+cover: https://res.cloudinary.com/kenechi-dukor/image/upload/v1779502770/TRI%20AI/Frame_33_xjdwry.png
 location: Pan-African
 cohortInfo: Open contributions
 cadence: Continuous
