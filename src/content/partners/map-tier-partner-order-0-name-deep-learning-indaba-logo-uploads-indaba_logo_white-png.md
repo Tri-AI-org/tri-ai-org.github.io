@@ -1,6 +1,6 @@
 ---
 name: Deep Learning Indaba
-logo: /uploads/indaba_logo_white.png
+logo: /uploads/image-22.png
 tier: partner
 order: 0
 ---
