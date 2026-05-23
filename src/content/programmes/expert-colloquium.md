@@ -8,9 +8,9 @@ description: The TRI AI Expert Colloquium is a recurring talk series where
   leading practitioners present their work and take questions from the
   community. Speakers come from academic labs, industry research teams, and the
   broader African AI ecosystem.
-status: archived
+status: active
 cover: https://picsum.photos/seed/triai-colloquium/1600/1200
-location: Lagos and online
+location: Virtual
 cadence: Quarterly
 order: 5
 ---
