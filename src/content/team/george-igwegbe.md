@@ -4,7 +4,7 @@ role: Principal Investigator, ChowNET
 affiliation: TRI AI
 photo: /uploads/frame-34.png
 division: teaching
-group: team
+group: leadership
 order: 20
 ---
 
