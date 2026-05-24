@@ -1,8 +1,8 @@
 ---
 name: Lawrence Francis
-role: Research Lead, Sauti Project
+role: Principal Investigator, Sauti Project
 affiliation: TRI AI
-photo: https://picsum.photos/seed/triai-team-lawrence-francis/800/800
+photo: /uploads/frame-35.png
 division: research
 group: team
 order: 21
