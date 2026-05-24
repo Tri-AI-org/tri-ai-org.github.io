@@ -4,7 +4,7 @@ role: Principal Investigator, Sauti Project
 affiliation: TRI AI
 photo: /uploads/frame-35.png
 division: research
-group: team
+group: leadership
 order: 21
 ---
 
