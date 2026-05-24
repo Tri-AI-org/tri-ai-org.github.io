@@ -1,6 +1,6 @@
 ---
 name: Ibrahim Gana
-role: Board Member
+role: Head of Partnership
 affiliation: TRI AI
 photo: /uploads/ibra.png
 division: parent
