@@ -3,6 +3,7 @@ name: Oluwafemi Azeez
 role: Co-founder
 affiliation: TRI AI
 photo: /uploads/femi.png
+linkedin: https://www.linkedin.com/in/azeez-oluwafemi/
 division: research
 group: leadership
 order: 2

@@ -3,6 +3,7 @@ name: Ibrahim Gana
 role: Head of Partnership
 affiliation: TRI AI
 photo: /uploads/ibra.png
+linkedin: https://www.linkedin.com/in/ibrahimgana/
 division: parent
 group: leadership
 order: 6

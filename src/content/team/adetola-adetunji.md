@@ -3,6 +3,7 @@ name: Adetola Adetunji
 role: Head of Human Resource
 affiliation: TRI AI
 photo: /uploads/tola.png
+linkedin: https://www.linkedin.com/in/tola-adetunji-9577bb36/
 division: parent
 group: leadership
 order: 8

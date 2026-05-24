@@ -3,6 +3,7 @@ name: Tejumade Afonja
 role: Co-founder
 affiliation: TRI AI
 photo: /uploads/teju.png
+linkedin: https://www.linkedin.com/in/tejumadeafonja/
 division: parent
 group: leadership
 order: 1
