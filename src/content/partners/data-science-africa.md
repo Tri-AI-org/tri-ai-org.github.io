@@ -1,9 +1,7 @@
 ---
-name: Data Science Africa
-logo: /uploads/logo2x.png
-url: https://www.datascienceafrica.org
+name: Cohere
+logo: /uploads/cohere_logo_2023.png
+url: https://cohere.com/
 tier: partner
 order: 2
 ---
-
-Long-standing partner in the African machine learning research community, supporting collaborative research, summer schools, and the broader continental AI ecosystem.
