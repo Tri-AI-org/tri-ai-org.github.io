@@ -25,7 +25,7 @@ order: 1
 ---
 ## Our story
 
-TRI AI Saturdays (formerly AI Saturdays Lagos) began in 2018 as a small community study group of engineers who wanted to bridge the distance between curiosity about AI and the structured knowledge most lacked access to. The first cohort had five teams exploring the major deep learning frameworks of the era: PyTorch, TensorFlow, Keras, Theano, and Nervana Neon. Each team published their findings as public writeups.
+AI Saturdays Lagos began in 2018 as a small community study group of engineers who wanted to bridge the distance between curiosity about AI and the structured knowledge most lacked access to. The first cohort had five teams exploring the major deep learning frameworks of the era: PyTorch, TensorFlow, Keras, Theano, and Nervana Neon. Each team published their findings as public writeups.
 
 Nearly a decade later, the programme has grown into a continent-spanning network of alumni working at AI labs, research groups, and product teams. Several alumni return as mentors and instructors for subsequent cohorts. The programme is now run under the **TRI AI** umbrella alongside research initiatives like the Sauti Project and ChowNet.
 
@@ -35,17 +35,40 @@ Nearly a decade later, the programme has grown into a continent-spanning network
 
 Ten cohorts, in the open, spanning 2018 to today.
 
-| Cohort | Year | Format | Focus |
-|--------|------|--------|-------|
-| 10 | 2026 | Hybrid · Google DeepMind | Research foundations · SLMs |
-| 9 | 2025 | Flipped classroom | 10 capstone teams |
-| 7 | 2024 | 16-week + 11-week practical | Team capstones |
-| 6 | 2023 | In-person | Project archive on GitHub |
-| 5 | 2022 | Two tracks | DS/ML · Deep Learning |
-| 4 | 2021 | Four tracks | DS · ML · CV · NLP |
-| 3 | 2019 | Two parallel tracks | ML · Deep Learning |
-| 2 | 2018 | In-person | Building on Cohort 1 |
-| 1 | 2018 | Inaugural | DL framework survey |
+### Cohort 10 · 2026
+- Hybrid, with Google DeepMind
+- AI Research Foundations (Courses 1–4), Small Language Models
+
+### Cohort 9 · 2025
+- Flipped classroom
+- Curated lectures with Saturday discussion
+- 10 capstone teams
+
+### Cohort 7 · 2024
+- 16-week classes + 11-week practicals
+- Team-based capstones on real-estate, recommendation, food prices
+
+### Cohort 6 · 2023
+- In-person
+- Cumulative project archive on GitHub
+
+### Cohort 5 · 2022
+- Two tracks: Data Science / ML and Deep Learning
+- 8 capstone teams
+
+### Cohort 4 · 2021
+- Four tracks: Data Science, ML, Computer Vision, NLP
+
+### Cohort 3 · 2019
+- Two parallel tracks: Machine Learning and Deep Learning
+
+### Cohort 2 · 2018
+- In-person
+- Building on the inaugural intake
+
+### Cohort 1 · 2018
+- In-person, inaugural
+- Deep learning framework survey across five teams
 
 Full archive on the [cohort archive page](/programmes/tri-ai-saturdays/cohorts/).
 
