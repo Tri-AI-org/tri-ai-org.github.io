@@ -1,6 +1,6 @@
 ---
 name: Oluwafemi Azeez
-role: Co-founder
+role: Co-founder and Director of Research and Innovation
 affiliation: TRI AI
 photo: /uploads/femi.png
 linkedin: https://www.linkedin.com/in/azeez-oluwafemi/
