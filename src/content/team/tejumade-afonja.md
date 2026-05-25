@@ -1,6 +1,6 @@
 ---
 name: Tejumade Afonja
-role: Co-founder
+role: Co-founder and Director of Programmes
 affiliation: TRI AI
 photo: /uploads/teju.png
 linkedin: https://www.linkedin.com/in/tejumadeafonja/
