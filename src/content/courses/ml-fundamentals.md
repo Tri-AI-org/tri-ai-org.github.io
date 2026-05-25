@@ -11,13 +11,13 @@ order: 3
 ---
 ## About this program
  
-**AI Saturdays**, known to its community as **AI6**, is a global, volunteer-led movement founded under Nurture.AI to make AI education at the quality and rigor of top universities accessible to anyone, for free. The program runs as in-person and online Saturday study cohorts in local chapters around the world.
+**AI Saturdays**, known to its community as **AI6**, is a global, volunteer-led movement founded under Nurture.AI to make AI education at the quality and rigor of top universities accessible to anyone, for free. The programme runs as in-person and online Saturday study cohorts in local chapters around the world.
  
-By 2018 the program had already grown to more than 5,000 participants across 50+ cities, from Kathmandu and Lagos to Kharagpur, Seattle, Kuala Lumpur, Warsaw, Kigali, and Sunnyvale. Each chapter is led locally, which keeps the program rooted in its community while sharing a common spirit and core curriculum.
+By 2018 the programme had already grown to more than 5,000 participants across 50+ cities, from Kathmandu and Lagos to Kharagpur, Seattle, Kuala Lumpur, Warsaw, Kigali, and Sunnyvale. Each chapter is led locally, which keeps the programme rooted in its community while sharing a common spirit and core curriculum.
  
 ## Who it's for
  
-Everyone, by design. Past cohorts have included complete beginners alongside Kaggle masters, Fast.ai Fellows, and people holding Masters and PhDs from universities like Stanford, Harvard, and Oxford. The program is structured so multiple skill levels can learn in parallel within the same chapter.
+Everyone, by design. Past cohorts have included complete beginners alongside Kaggle masters, Fast.ai Fellows, and people holding Masters and PhDs from universities like Stanford, Harvard, and Oxford. The programme is structured so multiple skill levels can learn in parallel within the same chapter.
  
 ## What learners do
  
