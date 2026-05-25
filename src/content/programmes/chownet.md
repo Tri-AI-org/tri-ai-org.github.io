@@ -62,6 +62,7 @@ Reach out at [research@tri-ai.org](mailto:research@tri-ai.org)
 ## Dataset
 
 **CHOWNET-V1: An Image Dataset of Nigerian Food**
+
 A human-annotated dataset of Nigerian food images for multi-label classification, object detection, clustering, and captioning.
 
 Available on Zenodo:
@@ -70,5 +71,6 @@ Available on Zenodo:
 ## Poster presentation
 
 **CHOWNET: An Image Dataset for Local African Food**
+
 Authors: Tejumade Afonja, Oluwafemi Azeez, George Igwegbe\
 https://instadeep.com/2018/12/instadeep-presents-two-ai-research-papers-at-neurips-2018/
