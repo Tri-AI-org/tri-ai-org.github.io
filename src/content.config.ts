@@ -123,6 +123,13 @@ const partners = defineCollection({
     url: z.string().url().optional(),
     tier: z.enum(['lead', 'partner', 'supporter']).default('partner'),
     order: z.number().default(0),
+    // True when the supplied logo file has a baked-in background (typically
+    // a JPG with a white rectangle around the mark). Such files can't be
+    // inverted on dark backgrounds because the filter would turn the
+    // background into a bright tile. Set true to opt out of dark-mode
+    // inversion for this partner — the logo will render as-is with only
+    // a small opacity reduction. Defaults to false (transparent SVG/PNG).
+    hasBackground: z.boolean().default(false),
   }),
 });
 

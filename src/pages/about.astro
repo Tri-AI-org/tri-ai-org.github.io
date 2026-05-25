@@ -209,7 +209,10 @@ const values = [
           </div>
           <div class="partner-row" data-reveal-stagger>
             {partners.map(p => (
-              <a href={p.data.url || '#'} class="partner-logo">
+              <a
+                href={p.data.url || '#'}
+                class={`partner-logo ${p.data.hasBackground ? 'partner-logo-has-bg' : ''}`}
+              >
                 <img src={p.data.logo} alt={p.data.name} loading="lazy" />
               </a>
             ))}
@@ -480,6 +483,25 @@ const values = [
     filter: grayscale(0%) brightness(1) invert(0);
     opacity: 1;
   }
+  /* Exception: logos with a baked-in light background (JPGs). The invert
+     trick can't distinguish "background white" from "logo white" and would
+     turn the whole tile into a bright rectangle. So these opt out of the
+     invert — they keep their grayscale + reduced opacity treatment from
+     light mode. The result is a slightly faded but recognisable logo
+     instead of a glowing tile. Best long-term fix is re-exporting these
+     as transparent PNGs. */
+  [data-theme='dark'] .partner-logo-has-bg img {
+    filter: grayscale(100%);
+    opacity: 0.65;
+    /* Tiny dark surround inside the cell helps the white tile feel less
+       jarring. Mix slightly into the bg-soft so it isn't a hard rectangle. */
+    mix-blend-mode: luminosity;
+  }
+  [data-theme='dark'] .partner-logo-has-bg:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+    mix-blend-mode: normal;
+  }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme]) .partner-logo img {
       filter: grayscale(100%) brightness(0) invert(1);
@@ -488,6 +510,16 @@ const values = [
     :root:not([data-theme]) .partner-logo:hover img {
       filter: grayscale(0%) brightness(1) invert(0);
       opacity: 1;
+    }
+    :root:not([data-theme]) .partner-logo-has-bg img {
+      filter: grayscale(100%);
+      opacity: 0.65;
+      mix-blend-mode: luminosity;
+    }
+    :root:not([data-theme]) .partner-logo-has-bg:hover img {
+      filter: grayscale(0%);
+      opacity: 1;
+      mix-blend-mode: normal;
     }
   }
 

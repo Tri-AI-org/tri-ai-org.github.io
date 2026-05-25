@@ -229,6 +229,11 @@ collections:
         options: [lead, partner, supporter]
         default: partner
       - { label: Order, name: order, widget: number, default: 0, value_type: int }
+      - label: "Logo has white background?"
+        name: hasBackground
+        widget: boolean
+        default: false
+        hint: "Check this if the logo file has a built-in white/coloured background (most JPGs). Prevents the logo turning into a bright tile in dark mode. Leave unchecked for transparent PNG or SVG logos."
       - { label: Body, name: body, widget: markdown, required: false }
 
   # ─────────── News ───────────
