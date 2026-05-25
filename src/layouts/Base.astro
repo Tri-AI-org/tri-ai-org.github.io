@@ -78,7 +78,19 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" defer></script>
 
     <!-- Scroll-reveal: hides [data-reveal] and slides them into view as they enter the viewport.
-         Visible-by-default fallback: if this script never runs, content stays visible. -->
+         Visible-by-default fallback: if this script never runs, content stays visible.
+
+         CRITICAL: the order of operations matters on mobile. If we add the
+         `js-reveal-active` class before marking in-viewport elements as visible,
+         there's a paint window where the entire page is opacity: 0 until the
+         IntersectionObserver fires its first callback. On slow mobile browsers
+         (and after soft navigation through bfcache restore) this window can be
+         long enough that the user sees a blank screen and reaches for refresh.
+
+         Fix: walk targets synchronously, mark every above-the-fold one with
+         .in-view BEFORE adding the gating class. So when the CSS takes effect,
+         the visible content is already exempt. The observer only animates
+         elements scrolled to later. Result: zero-blank-screen window. -->
     <script is:inline>
       (function () {
         if (typeof window === 'undefined' || typeof document === 'undefined') return;
@@ -91,44 +103,63 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
         // No IntersectionObserver: skip animations, content stays visible by default.
         if (!('IntersectionObserver' in window)) return;
 
-        // OK - we can animate. Activate the gating class so [data-reveal] becomes invisible.
-        root.classList.add('js-reveal-active');
-
-        function attachReveal() {
+        function setup() {
           var targets = document.querySelectorAll('[data-reveal], [data-reveal-stagger]');
-          if (!targets.length) return;
+          var viewportH = window.innerHeight || document.documentElement.clientHeight;
 
-          var io = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('in-view');
-                io.unobserve(entry.target);
-              }
-            });
-          }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+          // Phase 1 (synchronous): walk every target and mark any that is
+          // already at or above the fold as .in-view. Do this BEFORE adding
+          // the gating class, so when the gating CSS takes effect those
+          // elements are already exempt from being hidden.
+          var deferred = [];
+          for (var i = 0; i < targets.length; i++) {
+            var el = targets[i];
+            var rect = el.getBoundingClientRect();
+            // "In viewport or above" - anything visible on first paint, or
+            // already scrolled past (which we still want shown immediately).
+            if (rect.top < viewportH * 1.05) {
+              el.classList.add('in-view');
+            } else {
+              deferred.push(el);
+            }
+          }
 
-          targets.forEach(function (el) { io.observe(el); });
+          // Phase 2: now safe to enable the gating class. Hidden elements
+          // are only the ones scrolled below the fold, which is what the
+          // observer is for.
+          root.classList.add('js-reveal-active');
 
-          // Safety net: after 1.5s, force any still-hidden element visible.
-          // Catches edge cases - observer not firing on bfcache restore, slow mobile paint, etc.
-          setTimeout(function () {
-            targets.forEach(function (el) {
-              if (!el.classList.contains('in-view')) {
-                el.classList.add('in-view');
-              }
-            });
-          }, 1500);
+          // Phase 3: observer for the rest
+          if (deferred.length) {
+            var io = new IntersectionObserver(function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('in-view');
+                  io.unobserve(entry.target);
+                }
+              });
+            }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+            deferred.forEach(function (el) { io.observe(el); });
+
+            // Safety net: after 1.5s, force any still-hidden element visible.
+            setTimeout(function () {
+              deferred.forEach(function (el) {
+                if (!el.classList.contains('in-view')) el.classList.add('in-view');
+              });
+            }, 1500);
+          }
         }
 
         if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', attachReveal, { once: true });
+          document.addEventListener('DOMContentLoaded', setup, { once: true });
         } else {
-          attachReveal();
+          setup();
         }
 
-        // bfcache restore (mobile back/forward): re-evaluate on pageshow.
-        // If anything is still missing .in-view at this point, force it visible.
-        // Also force-finish any .reveal CSS animations that might have been paused mid-flight.
+        // bfcache restore (mobile back/forward): force everything visible.
+        // The new-page setup() above never ran in this case - the previous
+        // page was restored from cache. So we have to defensively mark
+        // every reveal element as visible.
         window.addEventListener('pageshow', function (e) {
           if (e.persisted) {
             document.querySelectorAll('[data-reveal], [data-reveal-stagger]').forEach(function (el) {
