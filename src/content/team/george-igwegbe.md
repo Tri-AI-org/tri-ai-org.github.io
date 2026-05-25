@@ -3,7 +3,7 @@ name: George Igwegbe
 role: Principal Investigator, ChowNET
 affiliation: TRI AI
 photo: /uploads/frame-34.png
-linkedin: https://www.linkedin.com/in/ifeanyi-igwegbe/
+linkedin: https://www.linkedin.com/in/george-igwegbe/
 division: teaching
 group: leadership
 order: 20
