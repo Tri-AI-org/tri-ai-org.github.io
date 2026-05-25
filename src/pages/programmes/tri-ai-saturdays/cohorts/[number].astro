@@ -35,7 +35,7 @@ const statusLabels: Record<string, string> = {
 ---
 
 <Base
-  title={`Cohort ${d.number} - ${programme?.data.title ?? 'TRI AI Saturdays Lagos'}`}
+  title={`Cohort ${d.number} - ${programme?.data.title ?? 'TRI AI Saturdays'}`}
   description={d.summary}
 >
   <article class="ch">
@@ -45,7 +45,7 @@ const statusLabels: Record<string, string> = {
         <nav class="ch-bread mono" aria-label="Breadcrumb">
           <a href="/programmes">Programmes</a>
           <span aria-hidden="true">›</span>
-          <a href={`/programmes/${d.programme}`}>{programme?.data.title ?? 'TRI AI Saturdays Lagos'}</a>
+          <a href={`/programmes/${d.programme}`}>{programme?.data.title ?? 'TRI AI Saturdays'}</a>
           <span aria-hidden="true">›</span>
           <a href={`/programmes/${d.programme}/cohorts`}>Cohorts</a>
         </nav>

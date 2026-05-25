@@ -1,6 +1,6 @@
 ---
 name: Mmesomachukwu Osele
-role: Technology and Communications Volunteer
+role: Technology and Communications Expert Volunteer
 photo: /uploads/oma.png
 division: parent
 group: team
