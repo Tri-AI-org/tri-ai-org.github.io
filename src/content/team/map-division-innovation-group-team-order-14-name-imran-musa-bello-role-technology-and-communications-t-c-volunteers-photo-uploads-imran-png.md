@@ -1,6 +1,6 @@
 ---
 name: Imran Musa Bello
-role: Technology and Communications (T&C) Volunteers
+role: Technology and Communications Volunteer
 photo: /uploads/imran.png
 division: innovation
 group: team
