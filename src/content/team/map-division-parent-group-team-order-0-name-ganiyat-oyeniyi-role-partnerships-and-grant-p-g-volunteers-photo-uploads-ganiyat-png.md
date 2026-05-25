@@ -1,6 +1,6 @@
 ---
 name: Ganiyat Oyeniyi
-role: Partnerships and Grant (P&G) Volunteers
+role: Partnerships and Grant Volunteer
 photo: /uploads/ganiyat.png
 division: parent
 group: team

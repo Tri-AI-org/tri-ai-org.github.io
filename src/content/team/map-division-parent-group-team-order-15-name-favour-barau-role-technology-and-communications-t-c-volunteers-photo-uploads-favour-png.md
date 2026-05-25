@@ -1,6 +1,6 @@
 ---
 name: Favour Barau
-role: Technology and Communications (T&C) Volunteers
+role: Technology and Communications Volunteer
 photo: /uploads/favour.png
 division: parent
 group: team

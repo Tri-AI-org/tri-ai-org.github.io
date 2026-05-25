@@ -1,6 +1,6 @@
 ---
 name: Jesuyanmife Egbewale
-role: Program Volunteers
+role: Program Volunteer
 photo: /uploads/jesu.png
 division: parent
 group: team

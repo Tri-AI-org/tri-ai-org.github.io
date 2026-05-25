@@ -1,6 +1,6 @@
 ---
 name: Nimatallahi Masuud
-role: Research and Innovation (R&I) Volunteer
+role: Research and Innovation Volunteer
 photo: /uploads/nimu.png
 division: research
 group: team

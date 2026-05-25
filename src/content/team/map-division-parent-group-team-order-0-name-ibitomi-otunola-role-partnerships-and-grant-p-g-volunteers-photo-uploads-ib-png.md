@@ -1,6 +1,6 @@
 ---
 name: Ibitomi Otunola
-role: Partnerships and Grant (P&G) Volunteers
+role: Partnerships and Grant Volunteer
 photo: /uploads/ib.png
 division: parent
 group: team
