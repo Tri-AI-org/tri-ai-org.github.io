@@ -27,4 +27,4 @@ Working AI engineers, researchers, and advanced students. No application, just s
  
 ## Launching soon
  
-The first watch party is being scheduled. Session dates, the curated talk lineup, and the in-person venue in Lagos will be announced through the **TRI AI Dispatch** newsletter. [Subscribe to the newsletter](#newsletter) to be notified when sessions go live, and follow [@triai](https://x.com/triai) and the [TRI AI YouTube channel](https://www.youtube.com/@AISaturdaysLagos) for stream links on the day.
+The first watch party is being scheduled. Session dates, the curated talk lineup, and the in-person venue in Lagos will be announced through the **The Encoder** newsletter. [Subscribe to the newsletter](#newsletter) to be notified when sessions go live, and follow [@triai](https://x.com/triai) and the [TRI AI YouTube channel](https://www.youtube.com/@AISaturdaysLagos) for stream links on the day.
