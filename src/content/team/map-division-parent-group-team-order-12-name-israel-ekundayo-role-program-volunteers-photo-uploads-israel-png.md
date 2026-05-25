@@ -1,6 +1,6 @@
 ---
 name: Israel Ekundayo
-role: Program Volunteer
+role: Programmes Volunteer
 photo: /uploads/israel.png
 division: parent
 group: team
