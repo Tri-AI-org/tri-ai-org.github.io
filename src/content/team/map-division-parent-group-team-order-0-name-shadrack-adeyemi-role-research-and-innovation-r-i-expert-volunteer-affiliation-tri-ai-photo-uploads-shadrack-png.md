@@ -5,5 +5,5 @@ affiliation: TRI AI
 photo: /uploads/shadrack.png
 division: research
 group: team
-order: 9
+order: 1
 ---
