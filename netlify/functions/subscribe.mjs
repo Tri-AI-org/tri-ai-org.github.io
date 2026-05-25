@@ -27,6 +27,22 @@ export const handler = async (event) => {
     };
   }
 
+  // The upstream API requires a bearer token. Read it from Netlify's
+  // environment variables — NEVER hardcode it. If the env var isn't set,
+  // fail fast with a clear server-side error so the deploy doesn't silently
+  // call the API with no auth and 401 for every visitor.
+  const apiKey = process.env.NEWSLETTER_API_KEY;
+  if (!apiKey) {
+    console.error('NEWSLETTER_API_KEY environment variable is not set');
+    return {
+      statusCode: 500,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: 'Subscription service is not configured. Please try again later.',
+      }),
+    };
+  }
+
   let body;
   try {
     body = JSON.parse(event.body || '{}');
@@ -63,7 +79,11 @@ export const handler = async (event) => {
   try {
     const upstreamResponse = await fetch(UPSTREAM, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+        'Cache-Control': 'no-cache',
+      },
       body: JSON.stringify(payload),
     });
 
@@ -79,6 +99,7 @@ export const handler = async (event) => {
     };
   } catch (err) {
     // Upstream API unreachable. Report a clean error to the client.
+    console.error('Upstream subscribe call failed:', err);
     return {
       statusCode: 502,
       headers: { 'Content-Type': 'application/json' },
