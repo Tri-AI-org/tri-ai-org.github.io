@@ -59,8 +59,8 @@ const division = target?.data.division ?? 'teaching';
         {target.data.partner && <span class="anb-detail"> · with {target.data.partner}</span>}
       </p>
 
-      <a href={target.data.applyUrl} class={`anb-cta anb-cta-${division}`}>
-        Apply <span aria-hidden="true">→</span>
+      <a href={`/programmes/${target.id}`} class={`anb-cta anb-cta-${division}`}>
+        Learn more <span aria-hidden="true">→</span>
       </a>
 
       <button

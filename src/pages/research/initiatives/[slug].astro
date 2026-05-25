@@ -1,15 +1,14 @@
 ---
-import Base from '../../layouts/Base.astro';
-import Newsletter from '../../components/Newsletter.astro';
+import Base from '../../../layouts/Base.astro';
+import Newsletter from '../../../components/Newsletter.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const programmes = await getCollection('programmes');
-  // This page renders teaching-division programmes only.
-  // Research-division programmes are served by /research/initiatives/[slug]
-  // so they share the same URL hierarchy as the rest of the Research division.
+  // This page renders research-division programmes (the "initiatives").
+  // Teaching programmes are served by /programmes/[slug].
   return programmes
-    .filter(p => p.data.division === 'teaching')
+    .filter(p => p.data.division === 'research')
     .map(p => ({
       params: { slug: p.id },
       props: { programme: p },
@@ -35,7 +34,7 @@ facts.push({ label: 'Status', value: d.status, capitalize: true });
     <header class={`prog-hd prog-hd-${d.division}`}>
       <div class="container">
         <p class="prog-hd-bread">
-          <a href="/programmes">Programmes</a>
+          <a href="/research">Research</a>
           <span aria-hidden="true">·</span>
           <span class="prog-hd-div">{d.division}</span>
         </p>

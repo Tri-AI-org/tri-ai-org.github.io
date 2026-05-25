@@ -104,6 +104,15 @@
   --teaching-text: #FF8B3D;
   --research-text: #4A7CC9;
   --innovation-text: #2ECDB8;
+
+  /* Tinted backgrounds (programme hero bleeds, tag chips).
+     In light mode these are pale peach/blue/teal. In dark mode they need
+     to be dark with a division tint, otherwise white text on pale tint
+     becomes unreadable. */
+  --teaching-light: rgba(254, 102, 18, 0.10);
+  --research-light: rgba(74, 124, 201, 0.10);
+  --innovation-light: rgba(46, 205, 184, 0.10);
+  --gold-light: rgba(212, 160, 23, 0.12);
 }
 
 /* Respect OS preference on first load if user hasn't chosen */
@@ -119,6 +128,12 @@
     --line-strong: rgba(255, 255, 255, 0.16);
     --mono-color: var(--gold);
     --wm-tri: #FAFAFA;
+
+    /* Same tint remap for system-dark users who haven't toggled */
+    --teaching-light: rgba(254, 102, 18, 0.10);
+    --research-light: rgba(74, 124, 201, 0.10);
+    --innovation-light: rgba(46, 205, 184, 0.10);
+    --gold-light: rgba(212, 160, 23, 0.12);
   }
 }
 
@@ -311,10 +326,19 @@ p { color: var(--ink-mid); }
 .tag-innovation { background: var(--innovation-light); color: var(--innovation); }
 .tag-gold { background: var(--gold-light); color: var(--gold-deep); }
 
-[data-theme='dark'] .tag-teaching { background: rgba(254, 102, 18, 0.12); color: var(--teaching-text); }
-[data-theme='dark'] .tag-research { background: rgba(74, 124, 201, 0.12); color: var(--research-text); }
-[data-theme='dark'] .tag-innovation { background: rgba(46, 205, 184, 0.12); color: var(--innovation-text); }
-[data-theme='dark'] .tag-gold { background: rgba(212, 160, 23, 0.14); color: var(--gold); }
+/* Tag chips on dark backgrounds need a brighter text variant.
+   Background is already handled by --xxx-light remapping. */
+[data-theme='dark'] .tag-teaching { color: var(--teaching-text); }
+[data-theme='dark'] .tag-research { color: var(--research-text); }
+[data-theme='dark'] .tag-innovation { color: var(--innovation-text); }
+[data-theme='dark'] .tag-gold { color: var(--gold); }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .tag-teaching { color: var(--teaching-text); }
+  :root:not([data-theme]) .tag-research { color: var(--research-text); }
+  :root:not([data-theme]) .tag-innovation { color: var(--innovation-text); }
+  :root:not([data-theme]) .tag-gold { color: var(--gold); }
+}
 
 /* ----- Division accent bars (per brand spec - "Division colour in the divider") ----- */
 .accent-bar {

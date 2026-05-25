@@ -344,7 +344,10 @@ const statusLabels: Record<string, string> = {
     padding: 4px 12px;
     border-radius: 4px;
   }
-  [data-theme='dark'] .ch-num { background: rgba(254, 102, 18, 0.12); }
+  [data-theme='dark'] .ch-num { color: var(--teaching-text); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) .ch-num { color: var(--teaching-text); }
+  }
 
   .ch-status {
     display: inline-flex;

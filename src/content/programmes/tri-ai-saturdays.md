@@ -101,7 +101,7 @@ The community particularly welcomes applicants from groups under-represented in 
 
 Past cohorts have produced concrete, public outputs that go well beyond a certificate of completion:
 
-* **[ChowNet](/research/chownet/)**, a Nigerian food image dataset released on Zenodo under CC-BY 4.0, with contributions from across the community
+* **[ChowNet](/research/initiatives/chownet/)**, a Nigerian food image dataset released on Zenodo under CC-BY 4.0, with contributions from across the community
 * **[SautiDB-Naija](/research/publications#sautidb-naija)**, a Nigerian accent speech corpus and accent classification system published on arXiv in 2021
 * **Two AI6 Lagos projects** selected for the [2020 IndabaX-AI4D Innovation Grants](/news#indabax-ai4d) from 109 submissions across Africa
 * **Dozens of capstone projects** from recent cohorts spanning telecom churn prediction, cholera risk mapping, real-estate prediction, food price forecasting, and recommendation systems
@@ -114,4 +114,4 @@ TRI AI Saturdays sits alongside other TRI AI initiatives:
 
 * **[Watch parties](/programmes/watch-parties/)** for live group viewing of seminal AI lectures and talks
 * **[Expert colloquium](/programmes/expert-colloquium/)** featuring researchers and practitioners working in the field
-* **[Sauti Project](/programmes/sauti-project/)** and **[ChowNet](/programmes/chownet/)** research initiatives
+* **[Sauti Project](/research/initiatives/sauti-project/)** and **[ChowNet](/research/initiatives/chownet/)** research initiatives

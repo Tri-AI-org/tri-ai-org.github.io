@@ -34,7 +34,7 @@ const fmt = (d: Date) =>
           <span class="hero-r-current-label">Currently studying</span>
           {researchProgs.map((p, i) => (
             <>
-              <a href={`/programmes/${p.id}`} class="hero-r-current-item">{p.data.title}</a>
+              <a href={`/research/initiatives/${p.id}`} class="hero-r-current-item">{p.data.title}</a>
               {i < researchProgs.length - 1 && <span class="hero-r-current-sep" aria-hidden="true">·</span>}
             </>
           ))}
@@ -53,7 +53,7 @@ const fmt = (d: Date) =>
         </div>
         <div class="r-list" data-reveal-stagger>
           {researchProgs.map(p => (
-            <a href={`/programmes/${p.id}`} class="r-card">
+            <a href={`/research/initiatives/${p.id}`} class="r-card">
               {p.data.cover && (
                 <div class="r-card-cover">
                   <img src={p.data.cover} alt="" loading="lazy" />

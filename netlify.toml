@@ -17,6 +17,17 @@
   to = "/research/publications/:splat"
   status = 301
 
+# Research initiatives moved out of /programmes/ to live under their division
+[[redirects]]
+  from = "/programmes/sauti-project"
+  to = "/research/initiatives/sauti-project"
+  status = 301
+
+[[redirects]]
+  from = "/programmes/chownet"
+  to = "/research/initiatives/chownet"
+  status = 301
+
 # Netlify Identity → git-gateway for Decap auth
 [[headers]]
   for = "/admin/*"
