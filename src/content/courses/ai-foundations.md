@@ -5,8 +5,8 @@ partner: Google DeepMind
 cover: ""
 summary: A free, university-level AI curriculum from Google DeepMind, developed
   with University College London
-duration: ~ 10 weeks
-level: beginner
+duration: 34 hours 45 minutes
+level: intermediate
 enrollUrl: https://www.skills.google/paths/3135
 order: 1
 ---
