@@ -25,7 +25,7 @@ order: 1
 ---
 ## Our story
 
-AI Saturdays Lagos began in 2018 as a small community study group of engineers who wanted to bridge the distance between curiosity about AI and the structured knowledge most lacked access to. The first cohort had five teams exploring the major deep learning frameworks of the era: PyTorch, TensorFlow, Keras, Theano, and Nervana Neon. Each team published their findings as public writeups.
+TRI AI Saturdays (formerly AI Saturdays Lagos) began in 2018 as a small community study group of engineers who wanted to bridge the distance between curiosity about AI and the structured knowledge most lacked access to. The first cohort had five teams exploring the major deep learning frameworks of the era: PyTorch, TensorFlow, Keras, Theano, and Nervana Neon. Each team published their findings as public writeups.
 
 Nearly a decade later, the programme has grown into a continent-spanning network of alumni working at AI labs, research groups, and product teams. Several alumni return as mentors and instructors for subsequent cohorts. The programme is now run under the **TRI AI** umbrella alongside research initiatives like the Sauti Project and ChowNet.
 
