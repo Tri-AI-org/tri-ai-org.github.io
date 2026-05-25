@@ -1,6 +1,6 @@
 ---
 name: " Arewa Data Science Academy"
-logo: /uploads/116644408.jpeg
+logo: /uploads/frame-39.png
 tier: partner
 order: 0
 ---
