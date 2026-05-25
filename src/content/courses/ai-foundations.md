@@ -7,7 +7,7 @@ summary: A free, university-level AI curriculum from Google DeepMind, developed
   with University College London
 duration: 34 hours 45 minutes
 level: intermediate
-enrollUrl: https://www.skills.google/paths/3135
+enrollUrl: ""
 order: 1
 ---
 ## About this path
@@ -49,7 +49,7 @@ Responsible AI content runs throughout, including ethical dataset design, stakeh
 University students and community learners who want a serious, research-oriented introduction to how modern language models actually work. Not just how to call an API, but how the systems behind them are designed, built, trained, fine-tuned, aligned, and scaled.
  
 ## Open-source materials
- 
+See full course information here: https://www.skills.google/paths/3135
 The practical labs are openly available at [github.com/google-deepmind/ai-foundations](https://github.com/google-deepmind/ai-foundations). Software is under Apache 2.0, course materials under CC-BY 4.0.
  
 ---
