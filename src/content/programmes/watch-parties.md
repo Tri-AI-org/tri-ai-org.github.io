@@ -8,7 +8,7 @@ description: TRI AI Watch Parties bring the community together to watch and
   discuss landmark AI talks, paper walkthroughs, and live streams from major
   conferences such as NeurIPS, ICML, and the Deep Learning Indaba.
 status: upcoming
-cover: /uploads/frame-37.png
+cover: /uploads/frame-40.png
 location: Virtual
 cadence: Monthly during conference seasons
 order: 4
