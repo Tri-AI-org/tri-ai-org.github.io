@@ -421,23 +421,84 @@ const values = [
   [data-theme='dark'] .team-link { color: var(--gold); }
 
   .partners-sec { background: var(--bg-soft); }
+
+  /* Uniform grid cells: each partner gets a same-sized box, logo centered
+     inside with generous padding. This is what makes a logo wall look
+     coherent even though every brand provides their logo in a different
+     aspect ratio and file format. */
   .partner-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 8px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .partner-logo {
+    /* Each cell: fixed height, centered content, comfortable inner padding.
+       The padding is what lets logos with built-in whitespace (Arewa, CMU
+       JPGs) read at roughly the same scale as wordmark SVGs. */
     display: flex;
-    gap: 56px;
-    justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
+    justify-content: center;
+    height: 110px;
+    padding: 18px 22px;
+    border-radius: 4px;
+    transition: background 0.2s var(--ease-quick);
+  }
+  .partner-logo:hover {
+    background: var(--bg);
   }
   .partner-logo img {
-    max-height: 44px;
+    /* Cap both dimensions so wide and tall logos both stay inside the cell.
+       object-fit ensures aspect ratio is preserved regardless of source. */
+    max-width: 100%;
+    max-height: 100%;
     width: auto;
-    opacity: 0.75;
-    filter: grayscale(20%);
-    transition: opacity 0.2s, filter 0.2s;
+    height: auto;
+    object-fit: contain;
+
+    /* Grayscale + reduced opacity normalizes brands across the wall.
+       Google's blue, Cohere's coral, Cisco's blue all compete for
+       attention in full color; rendered as monotone they read as
+       typography with equal weight. On hover, restore full color. */
+    filter: grayscale(100%);
+    opacity: 0.55;
+    transition: filter 0.25s var(--ease-quick), opacity 0.25s var(--ease-quick);
   }
   .partner-logo:hover img {
+    filter: grayscale(0%);
     opacity: 1;
-    filter: grayscale(0);
+  }
+
+  /* Dark mode: dark logos disappear against dark background. Invert them
+     so light marks float on dark, restored to brand color on hover. */
+  [data-theme='dark'] .partner-logo img {
+    filter: grayscale(100%) brightness(0) invert(1);
+    opacity: 0.5;
+  }
+  [data-theme='dark'] .partner-logo:hover img {
+    filter: grayscale(0%) brightness(1) invert(0);
+    opacity: 1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) .partner-logo img {
+      filter: grayscale(100%) brightness(0) invert(1);
+      opacity: 0.5;
+    }
+    :root:not([data-theme]) .partner-logo:hover img {
+      filter: grayscale(0%) brightness(1) invert(0);
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .partner-row {
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    }
+    .partner-logo {
+      height: 90px;
+      padding: 14px 16px;
+    }
   }
 
   .empty {

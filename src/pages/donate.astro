@@ -2,6 +2,30 @@
 import Base from '../layouts/Base.astro';
 import Newsletter from '../components/Newsletter.astro';
 
+// ─── Payment integration ────────────────────────────────────────────
+// Replace these two URLs with the Payment Links you create in Stripe
+// and Paystack. Both providers let you configure a hosted payment page
+// in their dashboard — no code required on our side.
+//
+//   Stripe:   dashboard.stripe.com → Payment Links → Create
+//             Configure as "Donation", let customer pick amount,
+//             enable Apple/Google Pay.
+//
+//   Paystack: dashboard.paystack.com → Payment Pages → Create
+//             "Donations" page type, allow custom amount, enable
+//             bank transfer + USSD for Nigerian donors.
+//
+// Both URLs accept an `?amount=` query parameter that pre-fills the
+// suggested donation. The donor still has the final say on the amount
+// on the payment page itself.
+//
+// While these are placeholder URLs the donate buttons will fall back
+// to an inline message rather than navigating to a broken link.
+// ────────────────────────────────────────────────────────────────────
+const STRIPE_LINK = 'https://donate.stripe.com/REPLACE_ME';
+const PAYSTACK_LINK = 'https://paystack.com/pay/REPLACE_ME';
+const PAYMENT_CONFIGURED = !STRIPE_LINK.includes('REPLACE_ME') || !PAYSTACK_LINK.includes('REPLACE_ME');
+
 const tiers = [
   { amount: 25, label: 'Sponsor a learner for a week' },
   { amount: 100, label: 'Equip a study group with materials' },
@@ -39,12 +63,38 @@ const tiers = [
           <span class="mono-faint">Custom amount (USD)</span>
           <input type="number" min="1" placeholder="Enter amount" id="custom-amt" />
         </label>
-        <a href="#" class="btn btn-primary btn-arrow donate-cta" id="donate-go">
-          Continue
-        </a>
+
+        <div class="donate-actions">
+          <a
+            href={STRIPE_LINK}
+            class="btn btn-primary btn-arrow donate-cta"
+            data-pay="stripe"
+            data-base-url={STRIPE_LINK}
+            target="_blank"
+            rel="noopener"
+          >
+            Donate with card
+          </a>
+          <a
+            href={PAYSTACK_LINK}
+            class="btn btn-ghost btn-arrow donate-cta donate-cta-alt"
+            data-pay="paystack"
+            data-base-url={PAYSTACK_LINK}
+            target="_blank"
+            rel="noopener"
+          >
+            Pay via Naira (Paystack)
+          </a>
+        </div>
+
         <p class="donate-note">
-          You'll be redirected to our secure payment processor. Tax-deductibility varies by jurisdiction - see receipt details after payment.
+          You'll be redirected to a secure payment page. Card donors will use Stripe (Apple Pay and Google Pay supported); Naira donors will use Paystack (cards, bank transfer, USSD). Tax-deductibility varies by jurisdiction — see receipt details after payment.
         </p>
+        {!PAYMENT_CONFIGURED && (
+          <p class="donate-config-warning mono">
+            Payment links not yet configured. See <code>src/pages/donate.astro</code> to replace placeholders.
+          </p>
+        )}
       </aside>
     </div>
   </section>
@@ -78,42 +128,46 @@ const tiers = [
 </Base>
 
 <script is:inline>
-  document.addEventListener('astro:page-load', () => {
-    const tiers = document.querySelectorAll('[data-tier]');
-    const custom = document.getElementById('custom-amt');
-    const cta = document.getElementById('donate-go');
-    let selected = null;
+  (function () {
+    var tiers = document.querySelectorAll('[data-tier]');
+    var custom = document.getElementById('custom-amt');
+    var ctas = document.querySelectorAll('[data-pay]');
+    var selected = null;
 
-    tiers.forEach(t => {
-      t.addEventListener('click', () => {
-        tiers.forEach(x => x.classList.remove('is-on'));
+    function rewriteCtaUrls() {
+      ctas.forEach(function (cta) {
+        var base = cta.getAttribute('data-base-url');
+        if (!base) return;
+        if (selected && Number(selected) > 0) {
+          // Stripe Payment Links and Paystack Payment Pages both
+          // accept an ?amount= query param to pre-fill the donation.
+          // The donor can still override on the payment page itself.
+          var separator = base.indexOf('?') === -1 ? '?' : '&';
+          cta.setAttribute('href', base + separator + 'amount=' + encodeURIComponent(selected));
+        } else {
+          cta.setAttribute('href', base);
+        }
+      });
+    }
+
+    tiers.forEach(function (t) {
+      t.addEventListener('click', function () {
+        tiers.forEach(function (x) { x.classList.remove('is-on'); });
         t.classList.add('is-on');
         selected = t.dataset.amount;
         if (custom) custom.value = '';
+        rewriteCtaUrls();
       });
     });
 
     if (custom) {
-      custom.addEventListener('input', () => {
-        tiers.forEach(x => x.classList.remove('is-on'));
+      custom.addEventListener('input', function () {
+        tiers.forEach(function (x) { x.classList.remove('is-on'); });
         selected = custom.value;
+        rewriteCtaUrls();
       });
     }
-
-    if (cta) {
-      cta.addEventListener('click', e => {
-        e.preventDefault();
-        const amt = selected || custom?.value;
-        if (!amt || amt <= 0) {
-          alert('Please choose or enter an amount.');
-          return;
-        }
-        // Wire up to Stripe / Paystack / Flutterwave at deploy time
-        alert(`Continuing with $${amt}. Payment integration to be configured.`);
-      });
-    }
-  });
-  window.dispatchEvent(new Event('astro:page-load'));
+  })();
 </script>
 
 <style>
@@ -196,12 +250,33 @@ const tiers = [
     border-color: var(--gold);
   }
 
+  .donate-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 6px;
+  }
   .donate-cta { width: 100%; justify-content: center; }
   .donate-note {
     font-size: var(--t-mono);
     color: var(--ink-faint);
     margin-top: 14px;
     line-height: 1.5;
+  }
+  .donate-config-warning {
+    margin-top: 12px;
+    padding: 10px 12px;
+    background: rgba(217, 65, 65, 0.08);
+    border-left: 3px solid #D94141;
+    color: #D94141;
+    font-size: var(--t-mono-sm);
+    line-height: 1.5;
+  }
+  .donate-config-warning code {
+    font-family: var(--font-mono);
+    background: rgba(217, 65, 65, 0.10);
+    padding: 1px 5px;
+    border-radius: 3px;
   }
 
   .d-h2 {
