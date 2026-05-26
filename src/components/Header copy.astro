@@ -1,0 +1,246 @@
+---
+import Wordmark from './Wordmark.astro';
+
+const path = Astro.url.pathname;
+const isActive = (p: string) => path === p || (p !== '/' && path.startsWith(p));
+
+const nav = [
+  { label: 'About', href: '/about' },
+  { label: 'Programmes', href: '/programmes' },
+  { label: 'Research', href: '/research' },
+  { label: 'Get Involved', href: '/get-involved' },
+];
+---
+
+<header class="hdr" data-header>
+  <div class="container hdr-inner">
+    <a href="/" class="hdr-brand" aria-label="triAI home">
+      <!-- Below 24px equivalent: nav uses no dots (brand rule) -->
+      <Wordmark size={28} showDots={true} />
+    </a>
+
+    <nav class="hdr-nav" aria-label="Primary">
+      {nav.map(item => (
+        <a
+          href={item.href}
+          class={`hdr-link ${isActive(item.href) ? 'is-active' : ''}`}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="hdr-actions">
+      <button
+        type="button"
+        class="theme-toggle"
+        aria-label="Toggle theme"
+        data-theme-toggle
+      >
+        <svg class="i-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="i-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+      </button>
+      <a href="/donate" class="btn btn-primary hdr-cta">Donate</a>
+      <button
+        type="button"
+        class="hdr-burger"
+        aria-label="Open menu"
+        aria-expanded="false"
+        data-burger
+      >
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile drawer -->
+  <div class="hdr-drawer" data-drawer hidden>
+    <nav class="drawer-nav" aria-label="Mobile">
+      {nav.map(item => (
+        <a href={item.href} class={`drawer-link ${isActive(item.href) ? 'is-active' : ''}`}>
+          {item.label}
+        </a>
+      ))}
+      <a href="/donate" class="btn btn-primary drawer-cta">Donate</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .hdr {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in oklab, var(--bg) 88%, transparent);
+    backdrop-filter: saturate(140%) blur(12px);
+    -webkit-backdrop-filter: saturate(140%) blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .hdr-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding-block: 14px;
+  }
+  .hdr-brand {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .hdr-nav {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+  .hdr-link {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-mid);
+    position: relative;
+    padding: 6px 2px;
+    transition: color 0.18s var(--ease-quick);
+  }
+  .hdr-link:hover { color: var(--ink); }
+  .hdr-link.is-active { color: var(--ink); }
+  .hdr-link.is-active::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    bottom: -2px;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  .hdr-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .theme-toggle {
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    color: var(--ink-mid);
+    transition: background 0.2s var(--ease-quick), color 0.2s var(--ease-quick);
+  }
+  .theme-toggle:hover {
+    background: var(--bg-soft);
+    color: var(--ink);
+  }
+  .theme-toggle .i-moon { display: none; }
+  [data-theme='dark'] .theme-toggle .i-sun { display: none; }
+  [data-theme='dark'] .theme-toggle .i-moon { display: inline; }
+
+  .hdr-cta { padding: 10px 18px; }
+
+  .hdr-burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 38px;
+    height: 38px;
+    align-items: center;
+  }
+  .hdr-burger span {
+    width: 18px;
+    height: 1.5px;
+    background: var(--ink);
+    transition: transform 0.25s var(--ease-quick), opacity 0.2s;
+    border-radius: 1px;
+  }
+  .hdr-burger[aria-expanded='true'] span:nth-child(1) {
+    transform: translateY(3px) rotate(45deg);
+  }
+  .hdr-burger[aria-expanded='true'] span:nth-child(2) {
+    transform: translateY(-3.5px) rotate(-45deg);
+  }
+
+  /* Drawer */
+  .hdr-drawer {
+    border-top: 1px solid var(--line);
+    background: var(--bg);
+    overflow: hidden;
+    animation: drawerIn 0.25s var(--ease) both;
+  }
+  .hdr-drawer[hidden] { display: none; }
+  @keyframes drawerIn {
+    from { max-height: 0; opacity: 0; }
+    to { max-height: 600px; opacity: 1; }
+  }
+  .drawer-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 16px var(--gutter) 28px;
+    gap: 4px;
+  }
+  .drawer-link {
+    padding: 14px 4px;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line);
+  }
+  .drawer-link.is-active { color: var(--gold-deep); }
+  [data-theme='dark'] .drawer-link.is-active { color: var(--gold); }
+  .drawer-cta { margin-top: 16px; align-self: flex-start; }
+
+  @media (max-width: 920px) {
+    .hdr-nav { display: none; }
+    .hdr-cta { display: none; }
+    .hdr-burger { display: inline-flex; }
+  }
+</style>
+
+<script is:inline>
+  // Theme bootstrap: read saved → apply (OS pref handled by CSS @media when no data-theme set)
+  (function () {
+    var saved = localStorage.getItem('triai-theme');
+    if (saved === 'light' || saved === 'dark') {
+      document.documentElement.setAttribute('data-theme', saved);
+    }
+  })();
+
+  // Bind toggle + burger handlers as soon as the DOM is ready.
+  (function () {
+    function bind() {
+      var toggle = document.querySelector('[data-theme-toggle]');
+      if (toggle && !toggle.dataset.bound) {
+        toggle.dataset.bound = 'true';
+        toggle.addEventListener('click', function () {
+          // Resolve current effective theme: explicit attr wins, else OS pref
+          var cur = document.documentElement.getAttribute('data-theme');
+          if (!cur) {
+            cur = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          var next = cur === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          try { localStorage.setItem('triai-theme', next); } catch (e) {}
+        });
+      }
+
+      var burger = document.querySelector('[data-burger]');
+      var drawer = document.querySelector('[data-drawer]');
+      if (burger && drawer && !burger.dataset.bound) {
+        burger.dataset.bound = 'true';
+        burger.addEventListener('click', function () {
+          var open = burger.getAttribute('aria-expanded') === 'true';
+          burger.setAttribute('aria-expanded', String(!open));
+          drawer.hidden = open;
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bind);
+    } else {
+      bind();
+    }
+  })();
+</script>
