@@ -1,7 +1,7 @@
 ---
-name: Ibitomi Otunola
-role: Partnerships and Grant Volunteer
-photo: /uploads/ib.png
+name: Oluwole Kolawole
+role: Monitoring, Evaluation, and Learnings (MEL) Volunteer
+photo: /uploads/frame-43.png
 division: parent
 group: team
 order: 16
