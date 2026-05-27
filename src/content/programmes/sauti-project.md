@@ -2,7 +2,7 @@
 title: Sauti Project
 division: research
 kind: research-init
-tagline: Building speech and language resources for under-resourced African languages.
+tagline: Building African accented speech datasets and models
 description: Sauti Project is a TRI AI research initiative focused on advancing
   speech research for African accents and under-represented speech communities.
   The project explores how technology can improve communication, learning, and
