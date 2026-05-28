@@ -6,7 +6,7 @@ summary: A community-driven, non-profit global movement to make rigorous AI
   education free and accessible. Partnership program
 duration: 16 weeks
 level: beginner
-enrollUrl: https://nurture.ai/ai-saturdays
+enrollUrl: ""
 order: 3
 ---
 ## About this program
