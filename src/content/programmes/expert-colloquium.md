@@ -11,7 +11,7 @@ description: The TRI AI Expert Colloquium is a recurring talk series where
 status: active
 cover: /uploads/expert-colloquium.png
 location: Virtual
-cadence: Quarterly
+cadence: Monthly
 order: 5
 ---
 ## What it is
