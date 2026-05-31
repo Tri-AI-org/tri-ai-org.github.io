@@ -10,6 +10,7 @@ authors:
   - Moshood Yekini
 venue: arXiv
 division: research
+attribution: tri-affiliated
 abstract: Recent strides in automatic speech recognition (ASR) have accelerated
   their application in the medical domain where their performance on accented
   medical named entities (NE) such as drug names, diagnoses, and lab results, is
