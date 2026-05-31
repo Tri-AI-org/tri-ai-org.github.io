@@ -16,6 +16,7 @@ authors:
   - Tejumade Afonja
 venue: ACM
 division: research
+attribution: tri-affiliated
 abstract: "This paper provides guidance for building and maintaining
   infrastructure for participatory AI efforts by sharing reflections on building
   World Wide Dishes (WWD), a bottom-up, community-led image and text dataset of
