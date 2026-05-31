@@ -15,6 +15,7 @@ authors:
 venue: Proceedings of the African NLP Workshop
 division: research
 project: Sauti Project
+attribution: tri-led
 abstract: "This paper describes foundational efforts with SautiDB-Naija, a novel
   corpus of non-native (L2) Nigerian English speech. We describe how the corpus
   was created and curated as well as preliminary experiments with accent
