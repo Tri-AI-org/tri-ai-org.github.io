@@ -5,6 +5,7 @@ authors:
   - Kenechi F Dukor
   - T Afonja
 division: research
+attribution: tri-led
 abstract: The field of autonomous robotics has made significant progress with
   the advent of learning methods that have been successfully applied in robotics
   and have achieved tremendous accuracy. Today, we can observe the successful
