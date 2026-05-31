@@ -3,7 +3,7 @@ title: "AfriSpeech-200: Pan-African Accented Speech Dataset for Clinical and
   General Domain ASR"
 date: 2023-12-19
 authors:
-  - Tobi OlatunjiCorresponding Author
+  - Tobi Olatunji
   - Tejumade Afonja
   - Aditya Yadavalli
   - Chris Chinenye Emezue
@@ -16,6 +16,7 @@ authors:
   - Clinton Mbataku
 venue: Transactions of the Association for Computational Linguistics
 division: research
+attribution: tri-affiliated
 abstract: Africa has a very poor doctor-to-patient ratio. At very busy clinics,
   doctors could see 30+ patients per day—a heavy patient burden compared with
   developed countries—but productivity tools such as clinical automatic speech
