@@ -10,6 +10,7 @@ authors:
   - Nwadike Munachiso
   - Orife Iroro
 division: research
+attribution: tri-led
 project: SautiDB
 abstract: SautiDB is an ongoing effort to build a comprehensive collection of
   Nigerian accented English speech recordings. Data is collected through a

@@ -49,6 +49,15 @@ collections:
         options: [research, teaching, innovation]
         default: research
       - { label: Project, name: project, widget: string, required: false, hint: 'e.g. Sauti Project' }
+      - label: "How this relates to TRI AI"
+        name: attribution
+        widget: select
+        default: tri-affiliated
+        hint: "TRI AI initiative = work led by TRI AI (flagship). TRI AI author = a TRI AI member co-authored, but the work happened elsewhere. Community = adjacent work we're listing without claiming. If unsure, choose 'TRI AI author' — it's the honest default."
+        options:
+          - { label: "TRI AI initiative (we led this)", value: "tri-led" }
+          - { label: "TRI AI author (someone here co-authored)", value: "tri-affiliated" }
+          - { label: "Community publication (we're amplifying it)", value: "community" }
       - { label: Abstract, name: abstract, widget: text }
       - { label: 'PDF URL', name: pdfUrl, widget: string, required: false }
       - { label: 'External URL', name: externalUrl, widget: string, required: false }
