@@ -16,6 +16,7 @@ authors:
   - Lauren Crais
   - Siobhan Mackenzie Hall
 division: research
+attribution: tri-affiliated
 abstract: >-
   We introduce the World Wide recipe, which sets forth a framework for
   culturally aware and participatory data collection, and the resultant
