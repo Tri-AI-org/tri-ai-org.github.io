@@ -6,6 +6,7 @@ authors:
   - Igwegbe George
 venue: arXiv preprint
 division: research
+attribution: tri-led
 project: ChowNet
 attribution: tri-led
 abstract: Off-the-shelf food recognition models perform poorly on Nigerian
