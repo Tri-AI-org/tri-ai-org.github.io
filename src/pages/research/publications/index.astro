@@ -31,22 +31,32 @@ const fmt = (d: Date) =>
     <div class="container">
       {pubs.length > 0 ? (
         <ul class="pub-list" data-reveal-stagger>
-          {pubs.map(p => (
-            <li class="pub-item">
-              <a href={`/research/publications/${p.id}`} class="pub-link">
-                <div class="pub-meta">
-                  <span class="pub-date mono">{fmt(p.data.date)}</span>
-                  <span class={`tag tag-${p.data.division}`}>{p.data.division}</span>
-                  {p.data.venue && <span class="pub-venue">{p.data.venue}</span>}
-                </div>
-                <h2 class="pub-title">{p.data.title}</h2>
-                <p class="pub-authors">
-                  {p.data.authors.slice(0, 5).join(', ')}
-                  {p.data.authors.length > 5 && <span class="pub-etal"> et al.</span>}
-                </p>
-              </a>
-            </li>
-          ))}
+          {pubs.map(p => {
+            // Map attribution to a short, honest tag label.
+            // tri-led → flagship signal; affiliated → honest co-authorship;
+            // community → we're hosting, not authoring.
+            const attr = p.data.attribution;
+            const attrLabel =
+              attr === 'tri-led' ? 'TRI AI initiative'
+              : attr === 'tri-affiliated' ? 'TRI AI author'
+              : 'Community';
+            return (
+              <li class="pub-item">
+                <a href={`/research/publications/${p.id}`} class="pub-link">
+                  <div class="pub-meta">
+                    <span class="pub-date mono">{fmt(p.data.date)}</span>
+                    <span class={`pub-attr pub-attr-${attr}`}>{attrLabel}</span>
+                    {p.data.venue && <span class="pub-venue">{p.data.venue}</span>}
+                  </div>
+                  <h2 class="pub-title">{p.data.title}</h2>
+                  <p class="pub-authors">
+                    {p.data.authors.slice(0, 5).join(', ')}
+                    {p.data.authors.length > 5 && <span class="pub-etal"> et al.</span>}
+                  </p>
+                </a>
+              </li>
+            );
+          })}
         </ul>
       ) : (
         <p class="empty">Publications will appear here as they are released. Add them via /admin.</p>
@@ -99,6 +109,48 @@ const fmt = (d: Date) =>
     font-family: var(--font-mono);
     letter-spacing: 0.1em;
     text-transform: uppercase;
+  }
+
+  /* ─── Attribution tags ────────────────────────────────────────────
+     Three variants signal how the publication relates to TRI AI without
+     changing the visual weight of the entry itself. Same chip dimensions
+     across all three; only color and fill differ. */
+  .pub-attr {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: var(--t-mono-sm);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+  /* TRI AI initiative: flagship signal — gold filled. */
+  .pub-attr-tri-led {
+    background: var(--gold-light);
+    color: var(--gold-deep);
+    font-weight: 700;
+  }
+  [data-theme='dark'] .pub-attr-tri-led { color: var(--gold); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) .pub-attr-tri-led { color: var(--gold); }
+  }
+  /* TRI AI author: honest co-authorship — outlined neutral, no fill. */
+  .pub-attr-tri-affiliated {
+    background: transparent;
+    border: 1px solid var(--line-strong);
+    color: var(--ink-mid);
+  }
+  /* Community publication: most muted — no border, italic, ink-faint. */
+  .pub-attr-community {
+    background: transparent;
+    color: var(--ink-faint);
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+    padding-inline: 0;
   }
 
   .pub-title {

@@ -41,6 +41,16 @@ const related = all
       <p class="pub-date mono">{fmt(d.date)}</p>
       <h1 class="pub-title">{d.title}</h1>
 
+      {d.attribution === 'tri-led' && (
+        <p class="pub-attribution pub-attribution-tri-led mono">A TRI AI initiative</p>
+      )}
+      {d.attribution === 'tri-affiliated' && (
+        <p class="pub-attribution pub-attribution-tri-affiliated mono">Co-authored by a TRI AI member &mdash; not led by TRI AI</p>
+      )}
+      {d.attribution === 'community' && (
+        <p class="pub-attribution pub-attribution-community">Listed from the TRI AI community &mdash; not authored by TRI AI</p>
+      )}
+
       <div class="pub-actions">
         {d.pdfUrl && (
           <a href={d.pdfUrl} class="btn btn-primary btn-arrow" target="_blank" rel="noopener">
@@ -212,8 +222,34 @@ const related = all
     line-height: 1.15;
     letter-spacing: -0.02em;
     color: var(--ink);
-    margin-bottom: 36px;
+    margin-bottom: 14px;
     max-width: 24ch;
+  }
+  .pub-attribution {
+    font-size: var(--t-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+  .pub-attribution-tri-led {
+    color: var(--gold-deep);
+    font-weight: 700;
+  }
+  [data-theme='dark'] .pub-attribution-tri-led { color: var(--gold); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) .pub-attribution-tri-led { color: var(--gold); }
+  }
+  .pub-attribution-tri-affiliated {
+    color: var(--ink-mid);
+  }
+  .pub-attribution-community {
+    color: var(--ink-faint);
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+    font-family: var(--font-sans);
+    font-size: 14.5px;
   }
   .pub-actions {
     display: flex;

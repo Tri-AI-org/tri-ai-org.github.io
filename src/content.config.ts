@@ -17,6 +17,18 @@ const publications = defineCollection({
     codeUrl: z.string().url().optional(),     // e.g. GitHub
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
+    // How this publication relates to TRI AI. Drives the small tag shown
+    // on the publications list so visitors don't mistake co-authored or
+    // community work for TRI AI's own initiatives.
+    //   tri-led        — Originated at TRI AI, led by TRI AI members.
+    //                    Tagged "TRI AI initiative" in gold.
+    //   tri-affiliated — TRI AI members contributed as co-authors but the
+    //                    work happened elsewhere or as part of a broader
+    //                    collaboration. Tagged "Co-authored" in neutral.
+    //   community      — Work by people in the TRI AI community whose
+    //                    research we're amplifying. No tag — listed
+    //                    without implicit ownership claim.
+    attribution: z.enum(['tri-led', 'tri-affiliated', 'community']).default('tri-affiliated'),
   }),
 });
 
