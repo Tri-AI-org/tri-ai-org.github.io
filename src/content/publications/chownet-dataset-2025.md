@@ -7,6 +7,7 @@ authors:
 venue: arXiv preprint
 division: research
 project: ChowNet
+attribution: tri-led
 abstract: Off-the-shelf food recognition models perform poorly on Nigerian
   cuisine, limiting their usefulness for nutrition tracking, agricultural
   research, and consumer applications in the region. We present ChowNet V1, a
