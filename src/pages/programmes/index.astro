@@ -17,6 +17,33 @@ const courses = (await getCollection('courses'))
 
 const cohortArchive = (await getCollection('cohorts'))
   .sort((a, b) => b.data.number - a.data.number);
+
+// ─── Dynamic section roster ─────────────────────────────────────────
+// Each potential section declares its identity and whether it has any
+// content right now. The page renders only sections with content, and
+// the numbering, hero nav, and "what's on" list below all derive from
+// this single source of truth. Delete every entry of a kind through the
+// CMS and the section, its hero nav link, and its mention in the lede
+// will all disappear together — no code edit needed. Add a new entry
+// later and everything reappears, renumbered correctly.
+const sectionRoster = [
+  { id: 'cohorts',       label: 'Cohorts',           hasContent: cohorts.length > 0 },
+  { id: 'courses',       label: 'Courses',           hasContent: courses.length > 0 },
+  { id: 'watch-parties', label: 'Watch parties',     hasContent: watchParties.length > 0 },
+  { id: 'colloquium',    label: 'Expert colloquium', hasContent: colloquia.length > 0 },
+];
+
+// Format helper: pad single-digit section numbers to two digits.
+const num = (n: number) => String(n).padStart(2, '0');
+
+// Filter to only sections with content, then assign sequential numbers.
+const sections = sectionRoster
+  .filter(s => s.hasContent)
+  .map((s, i) => ({ ...s, number: num(i + 1) }));
+
+// Quick lookup so each rendered section can grab its number.
+const numberFor = (id: string) =>
+  sections.find(s => s.id === id)?.number ?? '';
 ---
 
 <Base
@@ -32,25 +59,24 @@ const cohortArchive = (await getCollection('cohorts'))
         <span class="hero-pg-em">African AI practitioners.</span>
       </h1>
       <p class="lede">
-        Teaching is the largest of TRI AI's three divisions. It's structured around four kinds of programmes - long-running cohorts, partner-delivered courses, recurring watch parties, and an invited expert colloquium.
+        Teaching is the largest of TRI AI's three divisions. Here's what's running right now.
       </p>
       <nav class="hero-pg-index mono" aria-label="Section index">
-        <a href="#cohorts"><span class="hero-pg-num">01</span> Cohorts</a>
-        <a href="#courses"><span class="hero-pg-num">02</span> Courses</a>
-        <a href="#watch-parties"><span class="hero-pg-num">03</span> Watch parties</a>
-        <a href="#colloquium"><span class="hero-pg-num">04</span> Colloquium</a>
+        {sections.map(s => (
+          <a href={`#${s.id}`}><span class="hero-pg-num">{s.number}</span> {s.label}</a>
+        ))}
       </nav>
     </div>
   </section>
 
-  <hr class="divider-rule" />
-
   {cohorts.length > 0 && (
-    <section class="section" id="cohorts">
+    <>
+      <hr class="divider-rule" />
+      <section class="section" id="cohorts">
       <div class="container">
         <div data-reveal>
           <SectionHeader
-            num="01"
+            num={numberFor("cohorts")}
             eyebrow="Cohorts"
             title="Multi-week, structured."
             description="Long-running programmes that take learners through a structured curriculum end to end."
@@ -92,16 +118,17 @@ const cohortArchive = (await getCollection('cohorts'))
         )}
       </div>
     </section>
+    </>
   )}
 
-  <hr class="divider-rule" />
-
   {courses.length > 0 && (
-    <section class="section" id="courses">
+    <>
+      <hr class="divider-rule" />
+      <section class="section" id="courses">
       <div class="container">
         <div data-reveal>
           <SectionHeader
-            num="02"
+            num={numberFor("courses")}
             eyebrow="Courses"
             title="Partner-delivered curricula."
             description="Foundational and advanced courses delivered with global partners - free for accepted learners."
@@ -122,16 +149,17 @@ const cohortArchive = (await getCollection('cohorts'))
         </div>
       </div>
     </section>
+    </>
   )}
 
-  <hr class="divider-rule" />
-
   {watchParties.length > 0 && (
-    <section class="section" id="watch-parties">
+    <>
+      <hr class="divider-rule" />
+      <section class="section" id="watch-parties">
       <div class="container">
         <div data-reveal>
           <SectionHeader
-            num="03"
+            num={numberFor("watch-parties")}
             eyebrow="Watch parties"
             title="Talks, watched together."
             description="Recurring group viewings of major AI talks and conference proceedings - followed by community discussion."
@@ -161,16 +189,17 @@ const cohortArchive = (await getCollection('cohorts'))
         </div>
       </div>
     </section>
+    </>
   )}
 
-  <hr class="divider-rule" />
-
   {colloquia.length > 0 && (
-    <section class="section" id="colloquium">
+    <>
+      <hr class="divider-rule" />
+      <section class="section" id="colloquium">
       <div class="container">
         <div data-reveal>
           <SectionHeader
-            num="04"
+            num={numberFor("colloquium")}
             eyebrow="Expert colloquium"
             title="An invited speaker series."
             description="Practising AI researchers and engineers presenting their work to the TRI AI community."
@@ -200,6 +229,7 @@ const cohortArchive = (await getCollection('cohorts'))
         </div>
       </div>
     </section>
+    </>
   )}
 
   {teaching.length === 0 && courses.length === 0 && (
