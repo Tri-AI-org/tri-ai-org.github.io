@@ -14,6 +14,7 @@ authors:
   - Tosin Adewumi
 venue: arXiv
 division: research
+attribution: tri-affiliated
 abstract: Recent advances in speech synthesis have enabled many useful
   applications like audio directions in Google Maps, screen readers, and
   automated content generation on platforms like TikTok. However, these systems
