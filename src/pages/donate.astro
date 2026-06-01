@@ -2,36 +2,36 @@
 import Base from '../layouts/Base.astro';
 import Newsletter from '../components/Newsletter.astro';
 
-// ─── Payment integration ────────────────────────────────────────────
-// Replace these two URLs with the Payment Links you create in Stripe
-// and Paystack. Both providers let you configure a hosted payment page
-// in their dashboard — no code required on our side.
+// ─── Donation integration ───────────────────────────────────────────
+// We use a hosted Paystack Payment Page. Donors enter card details
+// on Paystack's domain, not ours — no card data ever touches our
+// servers and we never hold any Paystack credentials. The integration
+// is just a hyperlink with the amount appended as a query parameter,
+// which the Paystack page reads and pre-fills.
 //
-//   Stripe:   dashboard.stripe.com → Payment Links → Create
-//             Configure as "Donation", let customer pick amount,
-//             enable Apple/Google Pay.
+// Reference for the query format: amount is in kobo (₦1 = 100 kobo).
+// So ₦5,000 → ?amount=500000 and ₦2,000,000 → ?amount=200000000.
+// The donor can still adjust the amount on Paystack's page itself.
 //
-//   Paystack: dashboard.paystack.com → Payment Pages → Create
-//             "Donations" page type, allow custom amount, enable
-//             bank transfer + USSD for Nigerian donors.
-//
-// Both URLs accept an `?amount=` query parameter that pre-fills the
-// suggested donation. The donor still has the final say on the amount
-// on the payment page itself.
-//
-// While these are placeholder URLs the donate buttons will fall back
-// to an inline message rather than navigating to a broken link.
-// ────────────────────────────────────────────────────────────────────
-const STRIPE_LINK = 'https://donate.stripe.com/REPLACE_ME';
-const PAYSTACK_LINK = 'https://paystack.com/pay/REPLACE_ME';
-const PAYMENT_CONFIGURED = !STRIPE_LINK.includes('REPLACE_ME') || !PAYSTACK_LINK.includes('REPLACE_ME');
+// Anti-money-laundering policy: per-transaction cap below. Donations
+// above the cap need a real conversation, not a one-click form. Anyone
+// giving that much deserves it.
+const PAYSTACK_LINK = 'https://paystack.shop/pay/triai';
+const CAP_NAIRA = 2_000_000;
+const PARTNERSHIPS_EMAIL = 'partnerships@tri-ai.org';
 
+// Suggested tiers. Each rises ~5x. The largest is well below the cap
+// to leave headroom for custom amounts. Labels keep the language
+// invitation-rather-than-transactional.
 const tiers = [
-  { amount: 25, label: 'Sponsor a learner for a week' },
-  { amount: 100, label: 'Equip a study group with materials' },
-  { amount: 500, label: 'Fund a cohort scholarship' },
-  { amount: 2500, label: 'Underwrite a research milestone' },
+  { amount: 5_000,   label: 'Sponsor a learner for a week' },
+  { amount: 20_000,  label: 'Equip a study group with materials' },
+  { amount: 100_000, label: 'Fund a cohort scholarship' },
+  { amount: 500_000, label: 'Underwrite a research milestone' },
 ];
+
+// Human-readable currency formatter for the page.
+const ngn = (n: number) => '₦' + n.toLocaleString('en-NG');
 ---
 
 <Base title="Donate - TRI AI" description="Support AI education, research, and innovation across Africa.">
@@ -54,47 +54,52 @@ const tiers = [
         <div class="tiers">
           {tiers.map(t => (
             <button type="button" class="tier" data-tier data-amount={t.amount}>
-              <span class="tier-amt">${t.amount}</span>
+              <span class="tier-amt">{ngn(t.amount)}</span>
               <span class="tier-label">{t.label}</span>
             </button>
           ))}
         </div>
         <label class="tier-custom">
-          <span class="mono-faint">Custom amount (USD)</span>
-          <input type="number" min="1" placeholder="Enter amount" id="custom-amt" />
+          <span class="mono-faint">Custom amount (Naira)</span>
+          <input
+            type="number"
+            min="100"
+            max={CAP_NAIRA}
+            step="100"
+            placeholder="e.g. 50000"
+            id="custom-amt"
+          />
         </label>
 
         <div class="donate-actions">
           <a
-            href={STRIPE_LINK}
-            class="btn btn-primary btn-arrow donate-cta"
-            data-pay="stripe"
-            data-base-url={STRIPE_LINK}
-            target="_blank"
-            rel="noopener"
-          >
-            Donate with card
-          </a>
-          <a
             href={PAYSTACK_LINK}
-            class="btn btn-ghost btn-arrow donate-cta donate-cta-alt"
-            data-pay="paystack"
+            class="btn btn-primary btn-arrow donate-cta"
+            data-pay-cta
             data-base-url={PAYSTACK_LINK}
             target="_blank"
             rel="noopener"
           >
-            Pay via Naira (Paystack)
+            Donate via Paystack
           </a>
+
+          {/* Large-donation notice — hidden by default. The script
+              reveals this when the donor enters above the cap and
+              disables the Paystack button. */}
+          <div class="donate-cap" data-cap-notice hidden>
+            <p class="donate-cap-h">For donations above {ngn(CAP_NAIRA)}, please reach out directly.</p>
+            <p class="donate-cap-body">
+              We'd love to talk through how a larger gift can support a specific cohort,
+              research initiative, or multi-year programme. Email
+              <a href={`mailto:${PARTNERSHIPS_EMAIL}?subject=Donation%20inquiry`} class="donate-cap-mail">{PARTNERSHIPS_EMAIL}</a>
+              and we'll be in touch within two working days.
+            </p>
+          </div>
         </div>
 
         <p class="donate-note">
-          You'll be redirected to a secure payment page. Card donors will use Stripe (Apple Pay and Google Pay supported); Naira donors will use Paystack (cards, bank transfer, USSD). Tax-deductibility varies by jurisdiction — see receipt details after payment.
+          You'll be redirected to Paystack to complete the donation. Cards, bank transfer, and USSD are all supported. Receipt will be emailed by Paystack after payment.
         </p>
-        {!PAYMENT_CONFIGURED && (
-          <p class="donate-config-warning mono">
-            Payment links not yet configured.
-          </p>
-        )}
       </aside>
     </div>
   </section>
@@ -127,44 +132,69 @@ const tiers = [
   <Newsletter />
 </Base>
 
-<script is:inline>
+<script is:inline define:vars={{ CAP_NAIRA }}>
   (function () {
     var tiers = document.querySelectorAll('[data-tier]');
     var custom = document.getElementById('custom-amt');
-    var ctas = document.querySelectorAll('[data-pay]');
+    var cta = document.querySelector('[data-pay-cta]');
+    var capNotice = document.querySelector('[data-cap-notice]');
     var selected = null;
 
-    function rewriteCtaUrls() {
-      ctas.forEach(function (cta) {
-        var base = cta.getAttribute('data-base-url');
-        if (!base) return;
-        if (selected && Number(selected) > 0) {
-          // Stripe Payment Links and Paystack Payment Pages both
-          // accept an ?amount= query param to pre-fill the donation.
-          // The donor can still override on the payment page itself.
-          var separator = base.indexOf('?') === -1 ? '?' : '&';
-          cta.setAttribute('href', base + separator + 'amount=' + encodeURIComponent(selected));
-        } else {
-          cta.setAttribute('href', base);
-        }
-      });
+    function setCtaState(amountNaira) {
+      if (!cta) return;
+      var base = cta.getAttribute('data-base-url');
+
+      if (amountNaira && amountNaira > CAP_NAIRA) {
+        // Above the cap: disable the button and reveal the email notice.
+        // The button is kept visible (rather than hidden) so the donor
+        // doesn't feel like the page is broken — it's clearly "you've
+        // hit a limit; here's how to proceed."
+        cta.classList.add('is-disabled');
+        cta.setAttribute('aria-disabled', 'true');
+        cta.removeAttribute('href');
+        if (capNotice) capNotice.hidden = false;
+        return;
+      }
+
+      // Within range. Restore href; pre-fill amount via ?amount= in kobo
+      // (Paystack's smallest unit — 100 kobo per Naira).
+      cta.classList.remove('is-disabled');
+      cta.removeAttribute('aria-disabled');
+      if (capNotice) capNotice.hidden = true;
+
+      if (amountNaira && amountNaira > 0) {
+        var kobo = Math.round(amountNaira * 100);
+        var separator = base.indexOf('?') === -1 ? '?' : '&';
+        cta.setAttribute('href', base + separator + 'amount=' + kobo);
+      } else {
+        cta.setAttribute('href', base);
+      }
     }
 
     tiers.forEach(function (t) {
       t.addEventListener('click', function () {
         tiers.forEach(function (x) { x.classList.remove('is-on'); });
         t.classList.add('is-on');
-        selected = t.dataset.amount;
+        selected = Number(t.dataset.amount);
         if (custom) custom.value = '';
-        rewriteCtaUrls();
+        setCtaState(selected);
       });
     });
 
     if (custom) {
       custom.addEventListener('input', function () {
         tiers.forEach(function (x) { x.classList.remove('is-on'); });
-        selected = custom.value;
-        rewriteCtaUrls();
+        selected = Number(custom.value);
+        setCtaState(selected);
+      });
+    }
+
+    // Block accidental click on a disabled CTA (e.g. via keyboard/Enter).
+    if (cta) {
+      cta.addEventListener('click', function (e) {
+        if (cta.classList.contains('is-disabled')) {
+          e.preventDefault();
+        }
       });
     }
   })();
@@ -257,26 +287,57 @@ const tiers = [
     margin-top: 6px;
   }
   .donate-cta { width: 100%; justify-content: center; }
+
+  /* Disabled state: keep the button visible but unclickable, with a
+     visual cue. The cap notice below provides the alternative. */
+  .donate-cta.is-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  /* Cap notice — appears under the CTA when the donor enters above
+     the cap. Gold-accented so it reads as a guided handoff rather than
+     an error. */
+  .donate-cap {
+    margin-top: 10px;
+    padding: 16px 18px;
+    background: var(--gold-light);
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+  }
+  .donate-cap[hidden] { display: none; }
+  .donate-cap-h {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 6px;
+    line-height: 1.4;
+  }
+  .donate-cap-body {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-mid);
+    margin: 0;
+  }
+  .donate-cap-mail {
+    color: var(--gold-deep);
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-underline-offset: 2px;
+    margin-inline: 4px;
+    font-weight: 500;
+  }
+  [data-theme='dark'] .donate-cap-mail { color: var(--gold); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) .donate-cap-mail { color: var(--gold); }
+  }
+
   .donate-note {
     font-size: var(--t-mono);
     color: var(--ink-faint);
     margin-top: 14px;
     line-height: 1.5;
-  }
-  .donate-config-warning {
-    margin-top: 12px;
-    padding: 10px 12px;
-    background: rgba(217, 65, 65, 0.08);
-    border-left: 3px solid #D94141;
-    color: #D94141;
-    font-size: var(--t-mono-sm);
-    line-height: 1.5;
-  }
-  .donate-config-warning code {
-    font-family: var(--font-mono);
-    background: rgba(217, 65, 65, 0.10);
-    padding: 1px 5px;
-    border-radius: 3px;
   }
 
   .d-h2 {
