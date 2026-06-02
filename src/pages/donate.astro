@@ -163,7 +163,7 @@ const ngn = (n: number) => '₦' + n.toLocaleString('en-NG');
       if (capNotice) capNotice.hidden = true;
 
       if (amountNaira && amountNaira > 0) {
-        var kobo = Math.round(amountNaira * 100);
+        var kobo = Math.round(amountNaira);
         var separator = base.indexOf('?') === -1 ? '?' : '&';
         cta.setAttribute('href', base + separator + 'amount=' + kobo);
       } else {
