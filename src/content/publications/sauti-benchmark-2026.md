@@ -14,7 +14,6 @@ authors:
   - Clinton Mbataku
 venue: Proceedings of the African NLP Workshop
 division: research
-attribution: tri-led
 project: Sauti Project
 attribution: tri-led
 abstract: "This paper describes foundational efforts with SautiDB-Naija, a novel
