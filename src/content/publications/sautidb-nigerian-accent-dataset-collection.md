@@ -10,7 +10,6 @@ authors:
   - Nwadike Munachiso
   - Orife Iroro
 division: research
-attribution: tri-led
 project: SautiDB
 attribution: tri-led
 abstract: SautiDB is an ongoing effort to build a comprehensive collection of
