@@ -1,7 +1,7 @@
 ---
 title: "Three Weeks In: How Cohort 10 Learned to Think Like a Language Model"
 date: 2026-07-24
-division: parent
+division: teaching
 excerpt: A progress diary from the TRI AI Saturdays organising team
 draft: false
 ---
