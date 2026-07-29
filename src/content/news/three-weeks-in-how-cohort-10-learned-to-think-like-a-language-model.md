@@ -3,7 +3,7 @@ title: "Three Weeks In: How Cohort 10 Learned to Think Like a Language Model"
 date: 2026-07-24
 division: teaching
 excerpt: A progress diary from the TRI AI Saturdays organising team
-cover: /uploads/img_20260711_131502_202-compressed.pdf.png
+cover: /uploads/img_20260711_131502_202-compressed.14552pdf.png
 draft: false
 ---
 When we opened registration for Cohort 10 of TRI AI Saturdays, we did not expect to see **3,134 people from 83 countries** sign up for a free, 16-week deep dive into how language models actually work. Eighty-three percent of that number is from Africa, proof that the hunger to understand AI from the inside out, not just use it from the outside, is very real on this continent.
