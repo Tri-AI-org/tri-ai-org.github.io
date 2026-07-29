@@ -7,13 +7,13 @@ status: running
 summary: A milestone tenth cohort, delivered in partnership with Google
   DeepMind. Sixteen weeks taking learners through DeepMind's AI Research
   Foundations Course 1–4, with hands-on work on Small Language Models,
-  generative AI, and capstone projects. Applications closed May 17, 2026; the cohort has been running
-  since May 31, 2026.
+  generative AI, and capstone projects. Applications closed May 17, 2026; the
+  cohort has been running since May 31, 2026.
 duration: 16 weeks
 format: Hybrid
 startDate: May 31, 2026
 partner: Google DeepMind
-projectsUrl: https://tinyurl.com/triaicohort10
+projectsUrl: ""
 photoUrl: /uploads/cohorts/cohort-10-flyer.jpg
 ---
 
