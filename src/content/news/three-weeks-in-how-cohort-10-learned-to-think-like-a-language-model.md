@@ -22,7 +22,7 @@ By the time the session closed, teams were being planned, calendars were being s
 
 ## **Week 1: What Does It Mean for a Machine to "Understand" Language?**
 
-**Lecture — [Tejumade Afonja](https://re-publica.com/de/user/26530), PhD Researcher at CISPA & Programme Director, TRI AI**
+**Lecture — Tejumade Afonja, PhD Researcher at CISPA & Programme Director, TRI AI**
 
 Our first real class landed on June 6, and Tejumade opened Cohort 10 the way any good teacher opens a big topic; by grounding it in something everyone already understands: human language itself. She reminded the class that roughly 40% of the world's estimated 7,000 languages are spoken right here on the African continent, a fact that quietly set the tone for the entire cohort: this is not a course about AI happening *elsewhere*, it's a course being built *with* the languages and realities of this continent in mind.
 
@@ -34,7 +34,7 @@ By the end of Week 1, 42% of participants had already completed the pre-work, an
 
 ## **Week 2: From Counting Words to Understanding Them — and the Ethics in Between**
 
-**Lab — [Tobias Lorenz](http://t-lorenz.com), PhD Researcher at CISPA** **Lecture — [Tobias Lorenz](http://t-lorenz.com) & [Deborah Dormah Kanubala](https://www.linkedin.com/in/kanubalad/), PhD Researcher at Saarland University**
+**Lab — Tobias Lorenz, PhD Researcher at CISPA** **Lecture — Tobias Lorenz & Deborah Dormah Kanubala, PhD Researcher at Saarland University**
 
 If Week 1 was about *why* language models matter, Week 2 was about *how* they're actually built — starting with the humble n-gram.
 
@@ -46,7 +46,7 @@ Then the lecture took a turn that made Cohort 10 feel different from a typical t
 
 ## **Week 3: Watching a Model Learn, Line by Line**
 
-**Lab & Lecture — [Oduguwa Damilola](https://x.com/damilojohn), ML Engineer at Bluechip**
+**Lab & Lecture — Oduguwa Damilola, ML Engineer at Bluechip**
 
 By Week 3, the cohort had all the ingredients — tokens, probabilities, n-grams, embeddings — and it was time to put them together and actually **train something**.
 
