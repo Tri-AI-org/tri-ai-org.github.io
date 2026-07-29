@@ -5,11 +5,11 @@ kind: cohort
 tagline: A community-led AI study group running cohorts of learners through
   structured curricula, peer learning, and mentorship.
 description: >-
-  TRI AI Saturdays is the flagship teaching programme of TRI AI
-  (Artificial Intelligence Teaching, Research and Innovation for Africa). It is
-  a community-led AI study group that has run ten cohorts of learners since
-  2018, combining curated curricula with weekly meet-ups, mentorship from
-  working AI practitioners, and hands-on capstone projects.
+  TRI AI Saturdays is the flagship teaching programme of TRI AI (Artificial
+  Intelligence Teaching, Research and Innovation for Africa). It is a
+  community-led AI study group that has run ten cohorts of learners since 2018,
+  combining curated curricula with weekly meet-ups, mentorship from working AI
+  practitioners, and hands-on capstone projects.
 
 
   The programme was founded in Lagos in 2018 to address one specific gap: the shortage of accessible, structured AI education for engineers and curious learners in Nigeria. Since then, the community has grown beyond Lagos to include learners across the African continent.
@@ -18,7 +18,7 @@ cover: https://res.cloudinary.com/kenechi-dukor/image/upload/v1779493712/TRI%20A
 cohortInfo: Cohort 10 running now · applications for Cohort 11 announced via the newsletter
 cadence: 16-week cohorts, multiple per year
 partner: Google DeepMind (Cohort 10)
-applyUrl: ""
+applyUrl: https://tri-ai.org/programmes/tri-ai-saturdays/cohorts/10/
 githubUrl: https://github.com/AISaturdaysLagos
 websiteUrl: https://www.aisaturdayslagos.com/
 order: 1
