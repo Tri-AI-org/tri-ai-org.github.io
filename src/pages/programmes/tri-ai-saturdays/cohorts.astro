@@ -1,7 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import Newsletter from '../../../components/Newsletter.astro';
-import CohortMarquee from '../../../components/CohortMarquee.astro';
 import { getCollection, getEntry } from 'astro:content';
 
 const cohorts = (await getCollection('cohorts'))
@@ -63,7 +62,7 @@ const yearsRange = cohorts.length > 0
     <hr class="divider-rule" />
 
     <!-- Cohort list -->
-    <section class="section">
+    <section class="section ca-list-sec">
       <div class="container">
         {cohorts.length === 0 ? (
           <p class="empty">Cohort entries will appear here. Add them via /admin.</p>
@@ -167,6 +166,9 @@ const yearsRange = cohorts.length > 0
     color: var(--ink-faint);
   }
 
+  .ca-list-sec {
+    padding-block: clamp(36px, 4.5vw, 56px) clamp(72px, 9vw, 120px);
+  }
   .ca-list {
     list-style: none;
     padding: 0;

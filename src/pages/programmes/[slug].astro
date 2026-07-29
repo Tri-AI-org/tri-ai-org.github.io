@@ -20,6 +20,19 @@ const { programme } = Astro.props;
 const { Content, headings } = await render(programme);
 const d = programme.data;
 
+// For cohort-kind programmes, pull the cohort record so the page can show
+// a collection-driven timeline. Single source of truth: the cohorts
+// collection. This replaces hand-maintained cohort lists in the markdown
+// body, which drifted from the archive (e.g. "ten cohorts" vs nine
+// entries) because two places were claiming to be the record.
+const allCohorts = d.kind === 'cohort'
+  ? (await getCollection('cohorts'))
+      .filter(c => c.data.programme === programme.id)
+      .sort((a, b) => b.data.number - a.data.number)
+  : [];
+const currentCohort = allCohorts[0];
+const cNum = (n: number) => 'C' + String(n).padStart(2, '0');
+
 // Build the fact strip — only include facts that exist
 const facts = [];
 if (d.cohortInfo) facts.push({ label: 'Cohort', value: d.cohortInfo });
@@ -83,6 +96,49 @@ facts.push({ label: 'Status', value: d.status, capitalize: true });
         )}
       </div>
     </div>
+
+    {/* Cohort record — collection-driven, only for cohort-kind programmes.
+        The current cohort gets a spotlight; the rest render as a compact
+        timeline. Adding cohort-11.md via the CMS updates this, the archive,
+        and the homepage marquee together — no prose to keep in sync. */}
+    {currentCohort && (
+      <section class="section coh-sec" aria-labelledby="coh-h">
+        <div class="container">
+          <div class="coh-head">
+            <p class="mono coh-eyebrow" id="coh-h">Cohorts</p>
+            <a href={`/programmes/${programme.id}/cohorts`} class="coh-all mono">
+              All {allCohorts.length} cohorts <span aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <a href={`/programmes/${programme.id}/cohorts/${currentCohort.data.number}`} class="coh-current">
+            <div class="coh-current-meta">
+              <span class="coh-num mono">{cNum(currentCohort.data.number)}</span>
+              <span class="coh-year mono">{currentCohort.data.year}</span>
+              <span class="coh-badge mono">Latest</span>
+              {currentCohort.data.partner && (
+                <span class="coh-partner mono">w/ {currentCohort.data.partner}</span>
+              )}
+            </div>
+            <h2 class="coh-current-title">{currentCohort.data.title}</h2>
+            <span class="coh-current-cta mono">Read the cohort page <span aria-hidden="true">→</span></span>
+          </a>
+
+          {allCohorts.length > 1 && (
+            <ul class="coh-strip" aria-label="Previous cohorts">
+              {allCohorts.slice(1).map(c => (
+                <li>
+                  <a href={`/programmes/${programme.id}/cohorts/${c.data.number}`} class="coh-pill">
+                    <span class="coh-pill-num mono">{cNum(c.data.number)}</span>
+                    <span class="coh-pill-year mono">{c.data.year}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </section>
+    )}
 
     <!-- Body content with sticky TOC sidebar -->
     <section class="section prog-body-sec">
@@ -290,6 +346,109 @@ facts.push({ label: 'Status', value: d.status, capitalize: true });
     font-weight: 500;
     margin: 0;
   }
+
+  /* ─── Cohort record (cohort-kind programmes only) ─── */
+  .coh-sec {
+    padding-block: clamp(40px, 5vw, 64px) 0;
+  }
+  .coh-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 20px;
+  }
+  .coh-eyebrow {
+    color: var(--teaching);
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .coh-all {
+    font-size: var(--t-mono-sm);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 3px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .coh-all:hover { color: var(--teaching); border-bottom-color: var(--teaching); }
+
+  .coh-current {
+    display: block;
+    padding: 22px 26px;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--teaching);
+    border-radius: 10px;
+    background: var(--bg-elev);
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.2s var(--ease-quick);
+    margin-bottom: 18px;
+  }
+  .coh-current:hover { border-color: var(--teaching); }
+  .coh-current-meta {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .coh-num {
+    color: var(--teaching);
+    font-weight: 700;
+    font-size: var(--t-mono);
+    letter-spacing: 0.14em;
+  }
+  .coh-year { color: var(--ink-faint); font-size: var(--t-mono-sm); letter-spacing: 0.14em; }
+  .coh-badge {
+    font-size: var(--t-mono-xs);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teaching);
+    background: var(--teaching-light);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+  .coh-partner { color: var(--ink-mid); font-size: var(--t-mono-sm); letter-spacing: 0.1em; text-transform: uppercase; }
+  .coh-current-title {
+    font-size: clamp(18px, 2vw, 22px);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--ink);
+    margin: 0 0 10px;
+  }
+  .coh-current-cta {
+    font-size: var(--t-mono-sm);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+  }
+  .coh-current:hover .coh-current-cta { color: var(--teaching); }
+
+  .coh-strip {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .coh-pill {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .coh-pill:hover { border-color: var(--teaching); background: var(--teaching-light); }
+  .coh-pill-num { color: var(--ink); font-weight: 700; font-size: var(--t-mono-sm); letter-spacing: 0.12em; }
+  .coh-pill-year { color: var(--ink-faint); font-size: var(--t-mono-xs); letter-spacing: 0.12em; }
 
   /* ─── Body grid with TOC sidebar ─── */
   .prog-body-sec { padding-top: clamp(48px, 6vw, 80px); }
