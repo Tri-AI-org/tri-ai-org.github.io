@@ -111,9 +111,17 @@ const numberFor = (id: string) =>
               <span class="archive-num">{cohortArchive.length}+</span>
               cohorts run since {Math.min(...cohortArchive.map(c => c.data.year))}
             </p>
-            <a href="/programmes/tri-ai-saturdays/cohorts" class="archive-link">
-              See cohort archive <span aria-hidden="true">→</span>
-            </a>
+            <div class="archive-links">
+              <a
+                href={`/programmes/tri-ai-saturdays/cohorts/${cohortArchive[0].data.number}`}
+                class="archive-link archive-link-current"
+              >
+                Current cohort: C{String(cohortArchive[0].data.number).padStart(2, '0')} <span aria-hidden="true">→</span>
+              </a>
+              <a href="/programmes/tri-ai-saturdays/cohorts" class="archive-link">
+                All cohorts <span aria-hidden="true">→</span>
+              </a>
+            </div>
           </div>
         )}
       </div>
@@ -420,6 +428,17 @@ const numberFor = (id: string) =>
     transition: border-color 0.2s;
   }
   .archive-link:hover { border-bottom-color: var(--teaching); }
+  .archive-links {
+    display: flex;
+    gap: 28px;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+  .archive-link-current {
+    color: var(--teaching);
+    border-bottom-color: var(--teaching);
+    font-weight: 700;
+  }
 
   .course-grid {
     display: grid;

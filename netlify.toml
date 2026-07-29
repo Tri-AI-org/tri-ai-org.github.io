@@ -18,6 +18,17 @@
   to = "/research/publications/:splat"
   status = 301
 
+# News and Press merged into the Blog
+[[redirects]]
+  from = "/news/*"
+  to = "/blog/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/press"
+  to = "/blog#press"
+  status = 301
+
 # Research initiatives moved out of /programmes/ to live under their division
 [[redirects]]
   from = "/programmes/sauti-project"

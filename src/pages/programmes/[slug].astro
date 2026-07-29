@@ -42,10 +42,13 @@ facts.push({ label: 'Status', value: d.status, capitalize: true });
         <h1 class="prog-hd-title">{d.title}</h1>
         <p class="prog-hd-tag">{d.tagline}</p>
 
-        {(d.applyUrl || d.websiteUrl || d.githubUrl) && (
+        {(d.applyUrl || d.websiteUrl || d.githubUrl || d.kind === 'cohort') && (
           <div class="prog-hd-actions">
             {d.applyUrl && (
               <a href={d.applyUrl} class="btn btn-primary btn-arrow">Apply</a>
+            )}
+            {d.kind === 'cohort' && (
+              <a href={`/programmes/${programme.id}/cohorts`} class="btn btn-ghost btn-arrow">Cohorts</a>
             )}
             {d.websiteUrl && (
               <a href={d.websiteUrl} target="_blank" rel="noopener" class="btn btn-ghost btn-arrow">Visit site</a>
