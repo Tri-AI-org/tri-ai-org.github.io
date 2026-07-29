@@ -13,7 +13,7 @@ duration: 16 weeks
 format: Hybrid
 startDate: May 31, 2026
 partner: Google DeepMind
-projectsUrl: ""
+projectsUrl: https://tri-ai.org/programmes/tri-ai-saturdays/cohorts/10/
 photoUrl: /uploads/cohorts/cohort-10-flyer.jpg
 ---
 
